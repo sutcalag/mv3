@@ -5,6 +5,9 @@
   "version": "0.1.5",
   "author": "zizhao.chen@zilliz.com",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "@sentry/gatsby": "^6.16.1",
     "axios": "^0.24.0",
     "clsx": "^1.1.1",

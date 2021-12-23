@@ -1,27 +1,21 @@
-@import '../../css/variables/responsive.less';
-@import '../../css/variables/color.less';
 @import '../../css/variables/fontStyle.less';
 @import '../../css/variables/main.less';
 
 
 .header {
-  background-color: black;
-  display: flex;
-  height: 120px;
-  justify-content: space-between;
-  padding: 36px 40px;
-  // position: sticky;
-  // top: 0;
-
-  @media @phone, @tablet, @desktop1024 {
-    display: block;
-  }
+  background-color: transparent;
+  padding: 40px 40px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  .spaceBetween;
 
   &.light {
     background-color: white;
     position: fixed;
-    width: 100%;
     transition: all .25s;
+    width: 100%;
 
     .logoSection {
       span {
@@ -39,6 +33,12 @@
         background-color: black;
       }
     }
+
+    .global {
+      path {
+        fill: black;
+      }
+    }
   }
 }
 
@@ -54,10 +54,34 @@
     display: inline-block;
     height: 100%;
     margin: 0 20px;
+
+    @media @tablet, @desktop1024 {
+      margin: 0 10px;
+      border-left: 0;
+    }
+
+    @media @phone {
+      margin: 0 6px;
+      border-left: 0;
+    }
   }
 
-  @media @phone,@tablet {
+  
+
+  @media  @tablet, @desktop1024 {
     height: 30px;
+    
+    span {
+      border-color: @color-primary;
+    }
+  }
+
+  @media @phone {
+    height: 20px;
+
+    span {
+      border-color: @color-primary;
+    }
   }
 }
 
@@ -66,30 +90,62 @@
   .button;
 }
 
+.mobileHead {
+  padding: 35px 0;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  z-index: 100;
+
+  @media @phone {
+    padding: 15px 0;
+  }
+}
+
 .hamburg {
-  width: 35px;
-  height: 30px;
-  position: relative;
   background-color: transparent;
   border: 0;
   cursor: pointer;
+  height: 30px;
+  position: relative;
+  width: 35px;
+
+  @media @phone {
+    height: 20px;
+    width: 25px;
+  }
 
   span {
-    background: white;
+    background: black;
     border: none;
     height: 5px;
-    width: 100%;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
     transition: all .25s ease;
+    width: 100%;
+
+    @media @phone {
+      height: 4px;
+    }
   }
 
   & span:nth-of-type(2) {
     top: 11px;
+
+    @media @phone {
+      top: 7px;
+    }
   }
   & span:nth-of-type(3) {
     top: 22px;
+
+    @media @phone {
+      top: 14px;
+    }
   }
 
   &.active {
@@ -101,6 +157,10 @@
 
     .top {
       transform: translateY(11px) translateX(0) rotate(45deg);
+
+      @media @phone {
+        transform: translateY(7px) translateX(0) rotate(45deg);
+      }
     }
 
     .middle {
@@ -109,25 +169,38 @@
 
     .bottom {
       transform: translateY(-11px) translateX(0) rotate(-45deg);
+
+      @media @phone {
+        transform: translateY(-7px) translateX(0) rotate(-45deg);
+      }
     }
   }
 }
 
 .overlay {
-  position: fixed;
   background: white;
-  top: 0;
+  height: 0;
   left: 0;
-  width: 100%;
-  height: 0%;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .35s, visibility .35s, height .35s;
   overflow: hidden;
+  position: absolute;
+  top: 0;
+  transition: all .25s;
+  width: 100%;
+  z-index: -1;
+  
 
   &.open {
-    opacity: .9;
-    visibility: visible;
     height: 100vh;
+  }
+}
+
+.nav {
+  margin-top: 120px;
+
+}
+
+.global {
+  path {
+    fill: white;
   }
 }
