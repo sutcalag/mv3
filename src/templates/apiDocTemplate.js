@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import Seo from '../components/seo';
 // import Layout from '../components/docLayout';
 import { graphql } from "gatsby";
+import Layout from '../components/layout'
 // import './apiDocTemplate.less';
 // import { useCodeCopy, useMultipleCodeFilter } from '../hooks/doc-dom-operation';
 // import useAlgolia from '../hooks/use-algolia';
@@ -127,89 +128,89 @@ import { graphql } from "gatsby";
 //   );
 // }
 
-export const Query = graphql`
-  query APIDocQuery($locale: String) {
-    allFile(filter: { name: { eq: $locale } }) {
-      edges {
-        node {
-          childI18N {
-            layout {
-              header {
-                quick
-                benchmarks
-                why
-                gui
-                tutorials
-                solution
-                about
-                doc
-                blog
-                try
-                loading
-                noresult
-                tutorial
-                search
-                bootcamp
-              }
-              footer {
-                editBtn {
-                  label
-                }
-                questionBtn {
-                  label
-                  link
-                }
-                issueBtn {
-                  label
-                }
-                docIssueBtn {
-                  label
-                }
-                product {
-                  title
-                  txt1
-                  txt2
-                }
-                doc {
-                  title
-                  txt1
-                  txt2
-                  txt3
-                }
-                tool {
-                  title
-                  txt1
-                }
-                resource {
-                  title
-                  txt1
-                  txt2
-                  txt3
-                  txt4
-                }
-                contact {
-                  title
-                  wechat
-                }
-                content
-              }
-              selectMenu {
-                comment
-                github
-                sendBtn
-                cancelBtn
-                placeholder
-              }
-              menu {
-                home
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+// export const Query = graphql`
+//   query APIDocQuery($locale: String) {
+//     allFile(filter: { name: { eq: $locale } }) {
+//       edges {
+//         node {
+//           childI18N {
+//             layout {
+//               header {
+//                 quick
+//                 benchmarks
+//                 why
+//                 gui
+//                 tutorials
+//                 solution
+//                 about
+//                 doc
+//                 blog
+//                 try
+//                 loading
+//                 noresult
+//                 tutorial
+//                 search
+//                 bootcamp
+//               }
+//               footer {
+//                 editBtn {
+//                   label
+//                 }
+//                 questionBtn {
+//                   label
+//                   link
+//                 }
+//                 issueBtn {
+//                   label
+//                 }
+//                 docIssueBtn {
+//                   label
+//                 }
+//                 product {
+//                   title
+//                   txt1
+//                   txt2
+//                 }
+//                 doc {
+//                   title
+//                   txt1
+//                   txt2
+//                   txt3
+//                 }
+//                 tool {
+//                   title
+//                   txt1
+//                 }
+//                 resource {
+//                   title
+//                   txt1
+//                   txt2
+//                   txt3
+//                   txt4
+//                 }
+//                 contact {
+//                   title
+//                   wechat
+//                 }
+//                 content
+//               }
+//               selectMenu {
+//                 comment
+//                 github
+//                 sendBtn
+//                 cancelBtn
+//                 placeholder
+//               }
+//               menu {
+//                 home
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
 export default function Template({ data, pageContext }) {
   return (
     <Layout>

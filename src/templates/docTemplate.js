@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 // import Layout from '../components/docLayout';
 // import Seo from '../components/seo';
-// import { graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 // import 'highlight.js/styles/stackoverflow-light.css';
 // import './docTemplate.less';
 // import useAlgolia from '../hooks/use-algolia';
@@ -310,145 +310,30 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 //   );
 // }
 
-export const pageQuery = graphql`
-  query ($locale: String, $old: String, $fileAbsolutePath: String) {
-    markdownRemark(
-      fileAbsolutePath: { eq: $fileAbsolutePath }
-      frontmatter: { id: { eq: $old } }
-    ) {
-      frontmatter {
-        id
-        title
-      }
-    }
-    allFile(
-      filter: {
-        name: { eq: $locale }
-        relativeDirectory: { regex: "/(?:layout)/" }
-      }
-    ) {
-      edges {
-        node {
-          relativeDirectory
-
-          childI18N {
-            layout {
-              header {
-                quick
-                benchmarks
-                why
-                gui
-                tutorials
-                solution
-                about
-                doc
-                blog
-                try
-                loading
-                noresult
-                tutorial
-                search
-                bootcamp
-              }
-              footer {
-                faq {
-                  contact {
-                    slack {
-                      label
-                      link
-                    }
-                    github {
-                      label
-                      link
-                    }
-                    follow {
-                      label
-                    }
-                    dialog {
-                      desc
-                      placeholder1
-                      placeholder2
-                      submit
-                      title
-                      invalid
-                    }
-                    title
-                  }
-                  question {
-                    title
-                  }
-                }
-                editBtn {
-                  label
-                }
-                questionBtn {
-                  label
-                  link
-                }
-                issueBtn {
-                  label
-                  docLabel
-                }
-                docIssueBtn {
-                  label
-                  docLabel
-                }
-                product {
-                  title
-                  txt1
-                  txt2
-                }
-                doc {
-                  title
-                  txt1
-                  txt2
-                  txt3
-                }
-                tool {
-                  title
-                  txt1
-                }
-                resource {
-                  title
-                  txt1
-                  txt2
-                  txt3
-                  txt4
-                }
-                contact {
-                  title
-                  wechat
-                }
-                content
-              }
-              selectMenu {
-                comment
-                github
-                sendBtn
-                cancelBtn
-                placeholder
-              }
-              menu {
-                home
-              }
-            }
-            v2 {
-              feedback {
-                text1
-                text2
-              }
-              commit
-              docHome {
-                title
-                btnLabel
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+// export const pageQuery = graphql`
+//   query ($locale: String, $old: String, $fileAbsolutePath: String) {
+//     markdownRemark(
+//       fileAbsolutePath: { eq: $fileAbsolutePath }
+//       frontmatter: { id: { eq: $old } }
+//     ) {
+//       frontmatter {
+//         title
+//       }
+//     }
+//     allFile(
+//       filter: {
+//         name: { eq: $locale }
+//         relativeDirectory: { regex: "/(?:layout)/" }
+//       }
+//     ) {
+//       edges {
+//         node {
+//           relativeDirectory
+//         }
+//       }
+//     }
+//   }
+// `;
 export default function Template({ data, pageContext }) {
   return (
     <Layout>

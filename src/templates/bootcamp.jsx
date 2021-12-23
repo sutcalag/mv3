@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
+import Layout from '../components/layout';
 // import BannerCard from '../components/card/bannerCard';
 // import LinkCard from '../components/card/linkCard';
 // import SolutionCard from '../components/card/solutionCard';
@@ -242,49 +243,49 @@ import { graphql } from "gatsby";
 //   );
 // };
 
-export const Query = graphql`
-  query bootcampQuery($locale: String) {
-    allFile(filter: { name: { eq: $locale } }) {
-      edges {
-        node {
-          childI18N {
-            v2 {
-              footer {
-                licence {
-                  text1 {
-                    label
-                    link
-                  }
-                  text2 {
-                    label
-                    link
-                  }
-                  text3 {
-                    label
-                    link
-                  }
-                  list {
-                    label
-                    link
-                  }
-                }
-              }
-            }
-            layout {
-              footer {
-                content
-              }
-              community {
-                slack
-                github
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+// export const Query = graphql`
+//   query bootcampQuery($locale: String) {
+//     allFile(filter: { name: { eq: $locale } }) {
+//       edges {
+//         node {
+//           childI18N {
+//             v2 {
+//               footer {
+//                 licence {
+//                   text1 {
+//                     label
+//                     link
+//                   }
+//                   text2 {
+//                     label
+//                     link
+//                   }
+//                   text3 {
+//                     label
+//                     link
+//                   }
+//                   list {
+//                     label
+//                     link
+//                   }
+//                 }
+//               }
+//             }
+//             layout {
+//               footer {
+//                 content
+//               }
+//               community {
+//                 slack
+//                 github
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
 
 // export default BootcampTemplate;
 export default function Template({ data, pageContext }) {

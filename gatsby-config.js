@@ -125,20 +125,20 @@ let gatsbyConfigs = {
     //     path: `${__dirname}/src/i18n/`,
     //   },
     // },
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     name: `images`,
-    //     path: `${__dirname}/src/images`,
-    //   },
-    // },
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     name: `blogs`,
-    //     path: `${__dirname}/src/pages/blogs/versions`,
-    //   },
-    // },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `blogs`,
+        path: `${__dirname}/src/pages/blogs/versions`,
+      },
+    },
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -196,14 +196,14 @@ let gatsbyConfigs = {
 
 // ignore some versions will make building faster in dev.
 if (process.env.NODE_ENV == 'development') {
-  // gatsbyConfigs.plugins.push({
-  //   resolve: `gatsby-source-filesystem`,
-  //   options: {
-  //     name: `docs`,
-  //     path: `${__dirname}/src/pages/docs/versions`,
-  //     ignore: [`**/v0.6*`, `**/v0.7*`, `**/v0.8*`, `**/v0.9*`, `**/v0.1*`],
-  //   },
-  // });
+  gatsbyConfigs.plugins.push({
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `docs`,
+      path: `${__dirname}/src/pages/docs/versions`,
+      ignore: [`**/v0.6*`, `**/v0.7*`, `**/v0.8*`, `**/v0.9*`, `**/v0.1*`],
+    },
+  });
 } else {
   gatsbyConfigs.plugins.push(
     {

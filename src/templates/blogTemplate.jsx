@@ -3,6 +3,7 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 // import Seo from '../components/seo';
 // import Footer from '../components/footer/v2';
 import { graphql } from "gatsby";
+import Layout from '../components/layout';
 // import BlogDeatil from '../components/blogDetail';
 // import BlogCard from '../components/card/blogCard/v2';
 // import BlogTag from '../components/blogDetail/blogTag';
@@ -251,50 +252,50 @@ import { graphql } from "gatsby";
 
 // export default BlogTemplate;
 
-export const Query = graphql`
-  query BlogHomeQuery($locale: String) {
-    allFile(filter: { name: { eq: $locale } }) {
-      edges {
-        node {
-          childI18N {
-            v2 {
-              footer {
-                list {
-                  title
-                  text
-                  href
-                  label
-                  icons {
-                    href
-                    name
-                  }
-                }
-                licence {
-                  text1 {
-                    label
-                    link
-                  }
-                  text2 {
-                    label
-                    link
-                  }
-                  text3 {
-                    label
-                    link
-                  }
-                  list {
-                    label
-                    link
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+// export const Query = graphql`
+//   query BlogHomeQuery($locale: String) {
+//     allFile(filter: { name: { eq: $locale } }) {
+//       edges {
+//         node {
+//           childI18N {
+//             v2 {
+//               footer {
+//                 list {
+//                   title
+//                   text
+//                   href
+//                   label
+//                   icons {
+//                     href
+//                     name
+//                   }
+//                 }
+//                 licence {
+//                   text1 {
+//                     label
+//                     link
+//                   }
+//                   text2 {
+//                     label
+//                     link
+//                   }
+//                   text3 {
+//                     label
+//                     link
+//                   }
+//                   list {
+//                     label
+//                     link
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
 export default function Template({ data, pageContext }) {
   return (
     <Layout>

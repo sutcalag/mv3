@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
+import Layout from '../components/layout';
 // import Seo from '../components/seo';
 // import Header from '../components/header/v2';
 // import './community.less';
@@ -418,59 +419,59 @@ import { graphql } from "gatsby";
 //   );
 // }
 
-export const Query = graphql`
-  query communityQuery($locale: String) {
-    allFile(filter: { name: { eq: $locale } }) {
-      edges {
-        node {
-          childI18N {
-            v2 {
-              footer {
-                licence {
-                  text1 {
-                    label
-                    link
-                  }
-                  text2 {
-                    label
-                    link
-                  }
-                  text3 {
-                    label
-                    link
-                  }
-                  list {
-                    label
-                    link
-                  }
-                }
-              }
-            }
-            layout {
-              footer {
-                content
-                editBtn {
-                  label
-                }
-                questionBtn {
-                  label
-                  link
-                }
-                issueBtn {
-                  label
-                }
-              }
-              community {
-                slack
-                github
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+// export const Query = graphql`
+//   query communityQuery($locale: String) {
+//     allFile(filter: { name: { eq: $locale } }) {
+//       edges {
+//         node {
+//           childI18N {
+//             v2 {
+//               footer {
+//                 licence {
+//                   text1 {
+//                     label
+//                     link
+//                   }
+//                   text2 {
+//                     label
+//                     link
+//                   }
+//                   text3 {
+//                     label
+//                     link
+//                   }
+//                   list {
+//                     label
+//                     link
+//                   }
+//                 }
+//               }
+//             }
+//             layout {
+//               footer {
+//                 content
+//                 editBtn {
+//                   label
+//                 }
+//                 questionBtn {
+//                   label
+//                   link
+//                 }
+//                 issueBtn {
+//                   label
+//                 }
+//               }
+//               community {
+//                 slack
+//                 github
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
 export default function Template({ data, pageContext }) {
   return (
     <Layout>

@@ -19,7 +19,6 @@ const query = `
           depth
         }
         frontmatter {
-          id
           related_key
           summary
           date
@@ -259,8 +258,8 @@ const findVersion = (str) => {
     ? match[1]
       ? match[1]
       : env === "preview" && str.includes("preview")
-      ? "preview"
-      : match[1]
+        ? "preview"
+        : match[1]
     : "";
 };
 
@@ -1011,8 +1010,8 @@ const generateDocHomeWidthMd = (
       const [start, originPath, end] = link.split('"');
       const formatPath =
         originPath.charAt(0) === "#" ||
-        originPath.charAt(0) === "/" ||
-        originPath.includes("http")
+          originPath.charAt(0) === "/" ||
+          originPath.includes("http")
           ? originPath
           : `${homePath}/${originPath}`;
       return [start, formatPath, end].join('"');

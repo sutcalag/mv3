@@ -2,3 +2,7 @@
 .cache
 node_modules
 public
+
+
+src/pages/docs
+src/pages/blogs
