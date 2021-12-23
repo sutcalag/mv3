@@ -1,0 +1,133 @@
+@import '../../css/variables/responsive.less';
+@import '../../css/variables/color.less';
+@import '../../css/variables/fontStyle.less';
+@import '../../css/variables/main.less';
+
+
+.header {
+  background-color: black;
+  display: flex;
+  height: 120px;
+  justify-content: space-between;
+  padding: 36px 40px;
+  // position: sticky;
+  // top: 0;
+
+  @media @phone, @tablet, @desktop1024 {
+    display: block;
+  }
+
+  &.light {
+    background-color: white;
+    position: fixed;
+    width: 100%;
+    transition: all .25s;
+
+    .logoSection {
+      span {
+        border-color: @color-primary;
+      }
+    }
+
+    .startBtn {
+      background: @color-primary;
+      color: white;
+    }
+
+    .hamburg {
+      span {
+        background-color: black;
+      }
+    }
+  }
+}
+
+.logoSection {
+  height: 40px;
+
+  img {
+    height: 100%;
+  }
+
+  span {
+    border: 1px solid white;
+    display: inline-block;
+    height: 100%;
+    margin: 0 20px;
+  }
+
+  @media @phone,@tablet {
+    height: 30px;
+  }
+}
+
+.startBtn {
+  background: linear-gradient(90.14deg, #FFFFFF 0.15%, #669DDE 104.21%);
+  .button;
+}
+
+.hamburg {
+  width: 35px;
+  height: 30px;
+  position: relative;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+
+  span {
+    background: white;
+    border: none;
+    height: 5px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .25s ease;
+  }
+
+  & span:nth-of-type(2) {
+    top: 11px;
+  }
+  & span:nth-of-type(3) {
+    top: 22px;
+  }
+
+  &.active {
+    background-color: white;
+
+    span {
+      background: black;
+    }
+
+    .top {
+      transform: translateY(11px) translateX(0) rotate(45deg);
+    }
+
+    .middle {
+      opacity: 0;
+    }
+
+    .bottom {
+      transform: translateY(-11px) translateX(0) rotate(-45deg);
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  background: white;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s, visibility .35s, height .35s;
+  overflow: hidden;
+
+  &.open {
+    opacity: .9;
+    visibility: visible;
+    height: 100vh;
+  }
+}

@@ -1,0 +1,37 @@
+@import './responsive.less';
+@import './color.less';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.button {
+  border-radius: 40px;
+  height: 58px;
+  padding: 20px 40px;
+  font-size: 16px;
+  line-height: 18px;
+  border: 0;
+
+  @media @phone, @tablet, @desktop1024 {
+    height: 38px;
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+}
+
+.primaryBtn {
+  background-color: @color-primary;
+  color: white;
+  .button;
+}
+
+.secondaryBtn {
+  background: transparent;
+  color: black;
+  .button;
+}
