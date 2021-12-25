@@ -1,0 +1,63 @@
+@font-size-normal: 18px;
+@primary-color: #1493cc;
+.listWrapper {
+  margin: 0 auto;
+  .title {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 50px;
+  }
+  .featuredBlog {
+    display: flex;
+    img {
+      width: 470px;
+      margin-right: 158px;
+    }
+    .featuredBlogContent {
+      flex: 1;
+
+      & .tag {
+        color: @primary-color;
+        font-size: @font-size-normal;
+      }
+
+      & .desc {
+        font-size: @font-size-normal;
+        color: #4c5a67;
+      }
+    }
+  }
+
+  .blogList {
+    margin-top: 110px;
+    .tagsWrapper {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+      li:hover {
+        cursor: pointer;
+      }
+      .active {
+        padding: 11px 20px;
+        background: #eff9fe;
+        border-radius: 100px;
+        color: @primary-color;
+      }
+    }
+    ul {
+      display: grid;
+      grid-template-columns: repeat(3, 30%);
+      column-gap: 3%;
+      row-gap: 92px;
+
+      padding: 0;
+      li {
+        list-style: none;
+        text-transform: capitalize;
+      }
+      .blogcard {
+        flex: 0 0 30%;
+      }
+    }
+  }
+}

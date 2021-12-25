@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 // import Layout from '../components/docLayout';
 // import Seo from '../components/seo';
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby";
 // import 'highlight.js/styles/stackoverflow-light.css';
 // import './docTemplate.less';
 // import useAlgolia from '../hooks/use-algolia';
@@ -336,8 +336,8 @@ import { graphql } from 'gatsby';
 // `;
 export default function Template({ data, pageContext }) {
   return (
-    <Layout>
-      <div>test</div>
-    </Layout>
+    // <Layout>
+    <div>test</div>
+    // </Layout>
   );
 }

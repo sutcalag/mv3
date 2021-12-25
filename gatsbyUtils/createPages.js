@@ -19,6 +19,7 @@ const query = `
           depth
         }
         frontmatter {
+          id
           related_key
           summary
           date
@@ -258,8 +259,8 @@ const findVersion = (str) => {
     ? match[1]
       ? match[1]
       : env === "preview" && str.includes("preview")
-        ? "preview"
-        : match[1]
+      ? "preview"
+      : match[1]
     : "";
 };
 
@@ -1010,8 +1011,8 @@ const generateDocHomeWidthMd = (
       const [start, originPath, end] = link.split('"');
       const formatPath =
         originPath.charAt(0) === "#" ||
-          originPath.charAt(0) === "/" ||
-          originPath.includes("http")
+        originPath.charAt(0) === "/" ||
+        originPath.includes("http")
           ? originPath
           : `${homePath}/${originPath}`;
       return [start, formatPath, end].join('"');
@@ -1175,7 +1176,7 @@ const generateAllDocPages = (
 
 const generateBlogArticlePage = (
   createPage,
-  { nodes: blogMD, template: blogTemplate }
+  { nodes: blogMD, template: blogTemplate, listTemplate: blogListTemplate }
 ) => {
   const generateTags = (tag) => {
     if (!tag) return [];
@@ -1215,15 +1216,14 @@ const generateBlogArticlePage = (
     cn: filterAndSortBlogs(list, "cn"),
     en: filterAndSortBlogs(list, "en"),
   };
-
+  console.log(list.filter((v) => v.id));
   for (let key in allBlogsList) {
     createPage({
       path: key === "cn" ? `/${key}/blog` : `/blog`,
-      component: blogTemplate,
+      component: blogListTemplate,
       context: {
         locale: key,
         blogList: allBlogsList[key],
-        isBlogListPage: true,
       },
     });
   }
