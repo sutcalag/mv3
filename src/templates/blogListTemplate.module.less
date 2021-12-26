@@ -30,10 +30,19 @@
 
   .blogList {
     margin-top: 110px;
+    ul {
+      padding: 0;
+      li {
+        list-style: none;
+        text-transform: capitalize;
+      }
+    }
     .tagsWrapper {
       display: flex;
       align-items: center;
       margin-bottom: 40px;
+      gap: 34px;
+
       li:hover {
         cursor: pointer;
       }
@@ -44,20 +53,11 @@
         color: @primary-color;
       }
     }
-    ul {
+    .blogCards {
       display: grid;
       grid-template-columns: repeat(3, 30%);
       column-gap: 3%;
       row-gap: 92px;
-
-      padding: 0;
-      li {
-        list-style: none;
-        text-transform: capitalize;
-      }
-      .blogcard {
-        flex: 0 0 30%;
-      }
     }
   }
 }

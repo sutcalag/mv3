@@ -3,13 +3,20 @@ import * as styles from "./blogListTemplate.module.less";
 import Seo from "../components/seo";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
-import { FILTER_TAG } from "../consts/index";
+import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
+import Pagination from "../components/pagination";
+
+const PAGE_SIZE = 9;
+
+const getCurrentPageArray = (list, pageIndex) =>
+  list.slice((pageIndex - 1) * PAGE_SIZE, pageIndex * PAGE_SIZE);
 
 const BlogTemplate = ({ data, pageContext }) => {
   const { blogList, locale } = pageContext;
   const [currentTag, setCurrentTag] = useState("all");
-  console.log(blogList);
+  const [pageIndex, setPageIndex] = useState(1);
+
   const featuredBlog = useMemo(() => blogList[0], [blogList]);
 
   // list of tags
@@ -26,33 +33,23 @@ const BlogTemplate = ({ data, pageContext }) => {
     return Object.keys(resObj);
   }, [blogList]);
 
-  const renderBlogList = useMemo(() => {
-    if (currentTag === "all") return blogList;
-    return blogList.filter((v) => v.tags.includes(currentTag));
-  }, [currentTag, blogList]);
+  const { renderBlogList, total } = useMemo(() => {
+    if (currentTag === "all")
+      return {
+        total: blogList.length,
+        renderBlogList: getCurrentPageArray(blogList, pageIndex),
+      };
+    const list = blogList.filter((v) => v.tags.includes(currentTag));
+    return {
+      total: list.length,
+      renderBlogList: getCurrentPageArray(list, pageIndex),
+    };
+  }, [currentTag, blogList, pageIndex]);
 
   const filterByTag = useCallback(
     (tag) => {
       setCurrentTag(tag);
-      if (tag === "all") {
-        // setCurrentPageList(getCurrentPageArray(blogList, 1));
-        // setPageIndex(1);
-        // setPaginationConfig({
-        //   total: blogList.length,
-        //   pageSize: PAGE_SIZE,
-        //   pageIndex: 1,
-        // });
-        return;
-      }
-      // const filteredArray = blogList.filter((i) => i.tags.includes(tag));
-      // setFilteredArray(filteredArray);
-      // setPageIndex(1);
-      // setCurrentPageList(getCurrentPageArray(filteredArray, 1));
-      // setPaginationConfig({
-      //   total: filteredArray.length,
-      //   pageSize: PAGE_SIZE,
-      //   pageIndex: 1,
-      // });
+      setPageIndex(1);
     },
     [blogList]
   );
@@ -66,6 +63,18 @@ const BlogTemplate = ({ data, pageContext }) => {
     [filterByTag]
   );
 
+  const handlePagination = useCallback(
+    (idx, isRestore = true) => {
+      window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
+      isRestore && window.sessionStorage.setItem(PAGE_INDEX, idx);
+      setPageIndex(idx);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
+    [currentTag]
+  );
   return (
     <div className={`${styles.listWrapper} col-12 col-8 col-4`}>
       <section className={`${styles.featuredBlog} `}>
@@ -98,10 +107,9 @@ const BlogTemplate = ({ data, pageContext }) => {
             </li>
           ))}
         </ul>
-        <ul>
+        <ul className={styles.blogCards}>
           {renderBlogList.map((v, index) => {
             const { desc, cover, date, tags, title, id } = v;
-            console.log(id);
             return (
               <li key={index} className={styles.blogcard}>
                 <BlogCard
@@ -117,6 +125,12 @@ const BlogTemplate = ({ data, pageContext }) => {
             );
           })}
         </ul>
+        <Pagination
+          total={total}
+          pageIndex={pageIndex}
+          pageSize={PAGE_SIZE}
+          handlePageIndexChange={handlePagination}
+        />
       </section>
     </div>
   );

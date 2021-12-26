@@ -1,0 +1,58 @@
+@import "../../css/variables/color.less";
+
+.pageinationWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 60px 0;
+
+  .iconWrapper {
+    display: flex;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    cursor: pointer;
+    color: #000;
+    margin: 0 20px;
+
+    &.disabled {
+      cursor: unset;
+      color: #ccc;
+
+      &:hover {
+        background: #fff;
+      }
+    }
+  }
+
+  .pagesList {
+    list-style: none;
+    display: flex;
+    align-items: center;
+
+    .pagesItem {
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+      line-height: 32px;
+      cursor: pointer;
+      margin: 0 5px;
+      border-radius: 50%;
+      text-align: center;
+      display: block;
+
+      &:hover {
+        color: @color-text;
+      }
+
+      &.active {
+        color: @color-text;
+      }
+    }
+
+    .ellipsis {
+      user-select: none;
+    }
+  }
+}
