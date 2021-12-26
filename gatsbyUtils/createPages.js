@@ -2,6 +2,8 @@ const locales = require("../src/consts/locales");
 const fs = require("fs");
 const { start } = require("repl");
 const env = process.env.IS_PREVIEW;
+const HTMLParser = require("node-html-parser");
+
 // const env = 'preview';
 
 // createPages: graphql query
@@ -29,6 +31,10 @@ const query = `
           cover
           desc
           isPublish
+          id {
+            ext
+            name
+          }
         }
         fileAbsolutePath
         html
@@ -258,8 +264,8 @@ const findVersion = (str) => {
     ? match[1]
       ? match[1]
       : env === "preview" && str.includes("preview")
-        ? "preview"
-        : match[1]
+      ? "preview"
+      : match[1]
     : "";
 };
 
@@ -427,7 +433,7 @@ const filterMdWithVersion = (edges) => {
         fileAbsolutePath.includes("bootcampArticles") ||
         fileAbsolutePath.includes("/docs/versions/benchmarks/")) &&
       frontmatter.id &&
-      frontmatter.id !== "home.md"
+      `${frontmatter?.id?.name}${frontmatter?.id?.ext}` !== "home.md"
     );
   });
 };
@@ -457,7 +463,10 @@ const filterHomeMdWithVersion = (edges) => {
       node: { fileAbsolutePath, frontmatter, html },
     } = cur;
 
-    if (filterVersion(fileAbsolutePath) && frontmatter.id === "home.md") {
+    if (
+      filterVersion(fileAbsolutePath) &&
+      `${frontmatter?.id?.name}${frontmatter?.id?.ext}` === "home.md"
+    ) {
       const version = findVersion(fileAbsolutePath) || "master";
       const fileLang = findLang(fileAbsolutePath);
       acc.push({
@@ -1004,19 +1013,27 @@ const generateDocHomeWidthMd = (
       .slice(0, 2);
   };
 
-  const formatHtml = (html, homePath, version) => {
+  const formatDocHomeHtml = (html, homePath, version) => {
     const regex = /\<a (\S*)\>/g;
     let newHtml = html.replace(regex, (link) => {
       const [start, originPath, end] = link.split('"');
       const formatPath =
         originPath.charAt(0) === "#" ||
-          originPath.charAt(0) === "/" ||
-          originPath.includes("http")
+        originPath.charAt(0) === "/" ||
+        originPath.includes("http")
           ? originPath
           : `${homePath}/${originPath}`;
       return [start, formatPath, end].join('"');
     });
-    return newHtml;
+    let doc = HTMLParser.parse(newHtml);
+    const title = doc.querySelector("h1#Welcome-to-Milvus-Docs");
+    const titleHtml = title?.outerHTML;
+    const subTitle = doc.querySelector("h1#Welcome-to-Milvus-Docs + p");
+    const subTitleHtml = subTitle?.outerHTML;
+    subTitle?.remove();
+    title?.replaceWith(`<div class="banner">${titleHtml}${subTitleHtml}</div>`);
+    // return newHtml;
+    return doc.outerHTML;
   };
 
   homeMd.forEach(({ language, html, path, version }) => {
@@ -1029,7 +1046,7 @@ const generateDocHomeWidthMd = (
         path: homePath,
         component: docTemplate,
         context: {
-          homeData: formatHtml(html, homePath, version),
+          homeData: formatDocHomeHtml(html, homePath, version),
           locale: language,
           versions: Array.from(versions),
           newestVersion,
@@ -1053,7 +1070,7 @@ const generateDocHomeWidthMd = (
       path: homePath,
       component: docTemplate,
       context: {
-        homeData: formatHtml(html, homePath, version),
+        homeData: formatDocHomeHtml(html, homePath, version),
         locale: language,
         versions: Array.from(versions),
         newestVersion,
@@ -1093,7 +1110,7 @@ const generateAllDocPages = (
   legalMd.forEach(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
     const isBlog = checkIsblog(fileAbsolutePath);
-    const fileId = node.frontmatter.id;
+    const fileId = `${node.frontmatter?.id?.name}.${node.frontmatter?.id?.ext}`;
     const relatedKey = node.frontmatter.related_key;
     const summary = node.frontmatter.summary || "";
     let version = findVersion(fileAbsolutePath) || "master";
