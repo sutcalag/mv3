@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import LocalizedLink from "../localizedLink/localizedLink";
 import * as styles from "./BlogCard.module.less";
-const BlogCard = ({ title, desc, tags, cover, locale, path }) => {
+const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
   const to = `/blog/${path}`;
 
   return (
-    <div locale={locale} to={to} className={styles.BlogCardWrapper}>
+    <div
+      locale={locale}
+      to={to}
+      className={`${styles.BlogCardWrapper} ${className}`}
+    >
       <div
         className={styles.coverWrapper}
         style={{ backgroundImage: `url(${cover})` }}

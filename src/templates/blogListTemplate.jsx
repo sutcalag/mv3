@@ -8,7 +8,7 @@ import BlogCard from "../components/card/BlogCard";
 import Pagination from "../components/pagination";
 import { globalHistory } from "@reach/router";
 
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 6;
 
 const getCurrentPageArray = (list, pageIndex) =>
   list.slice((pageIndex - 1) * PAGE_SIZE, pageIndex * PAGE_SIZE);
@@ -85,15 +85,15 @@ const BlogTemplate = ({ data, pageContext }) => {
 
     setCurrentTag(tag);
     setPageIndex(parseInt(pageIdx));
-
-    // eslint-disable-next-line
   }, []);
 
   return (
     <div className={`${styles.listWrapper} col-12 col-8 col-4`}>
       <section className={`${styles.featuredBlog} `}>
-        <img src={`https://${featuredBlog.cover}  `} className="col-8 col-4" />
-        <div className={styles.featuredBlogContent}>
+        <div className={`${styles.featuredImg}  col-6`}>
+          <img src={`https://${featuredBlog.cover}  `} />
+        </div>
+        <div className={styles.featuredBlogContent} className="col-7">
           <p className={styles.tag}>SCENARIOS</p>
           <p className={styles.title}>
             Milvus in IP Protection：Building a Trademark Similarity Search
@@ -105,6 +105,16 @@ const BlogTemplate = ({ data, pageContext }) => {
           </p>
         </div>
       </section>
+      <BlogCard
+        className={styles.mobileFeatured}
+        locale={locale}
+        title={featuredBlog.title}
+        date={featuredBlog.date}
+        cover={`https://${featuredBlog.cover}`}
+        desc={featuredBlog.desc}
+        tags={featuredBlog.tags}
+        path={`${featuredBlog.id}`}
+      />
 
       <section className={styles.blogList}>
         <p className={styles.title}>More Articles</p>
