@@ -21,6 +21,7 @@ const query = `
           depth
         }
         frontmatter {
+          id
           related_key
           summary
           date
@@ -1192,7 +1193,7 @@ const generateAllDocPages = (
 
 const generateBlogArticlePage = (
   createPage,
-  { nodes: blogMD, template: blogTemplate }
+  { nodes: blogMD, template: blogTemplate, listTemplate: blogListTemplate }
 ) => {
   const generateTags = (tag) => {
     if (!tag) return [];
@@ -1232,15 +1233,13 @@ const generateBlogArticlePage = (
     cn: filterAndSortBlogs(list, "cn"),
     en: filterAndSortBlogs(list, "en"),
   };
-
   for (let key in allBlogsList) {
     createPage({
       path: key === "cn" ? `/${key}/blog` : `/blog`,
-      component: blogTemplate,
+      component: blogListTemplate,
       context: {
         locale: key,
         blogList: allBlogsList[key],
-        isBlogListPage: true,
       },
     });
   }
