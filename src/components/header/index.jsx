@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 
 
-// import LocalizedLink from '../localizedLink/localizedLink';
+import LocalizedLink from '../localizedLink/localizedLink';
 
 const Header = () => {
   const [isLightHeader, setIsLightHeader] = useState(false);
@@ -44,14 +44,14 @@ const Header = () => {
 
   const logoSection = (
     <div className={styles.logoSection}>
-      <a
-        href="/"
+      <LocalizedLink
+        to="/"
       >
         <img
           src={milvusLogo}
           alt="milvus-logo"
         />
-      </a>
+      </LocalizedLink>
       <span />
       <a
         href="https://lfaidata.foundation/projects/"
@@ -79,7 +79,7 @@ const Header = () => {
       <div className={`${styles.overlay} ${isMenuOpen ? styles.open : ''}`}>
         <nav className={styles.nav}>
           <ul>
-            <li className="overlay-li"><a href="#">Docs</a></li>
+            <li><a href="#">Docs</a></li>
             <li><a href="#">Tutorials</a></li>
             <li><a href="#">Tools</a></li>
             <li><a href="#">Blog</a></li>
@@ -94,18 +94,18 @@ const Header = () => {
     <header className={`${styles.header} ${isLightHeader ? styles.light : ''} `} >
       <div className={styles.flexstart}>
         {logoSection}
-        {/* <nav>
-          <ul className={styles.flexstart}>
-            <li className="overlay-li"><a href="#">Docs</a></li>
-            <li><a href="#">Tutorials</a></li>
-            <li><a href="#">Tools</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Community</a></li>
+        <nav>
+          <ul className={`${styles.flexstart} ${styles.menu}`}>
+            <li><a className={styles.menuLink} href="#">Docs</a></li>
+            <li><a className={styles.menuLink} href="#">Tutorials</a></li>
+            <li><a className={styles.menuLink} href="#">Tools</a></li>
+            <li><a className={styles.menuLink} href="#">Blog</a></li>
+            <li><a className={styles.menuLink} href="#">Community</a></li>
           </ul>
-        </nav> */}
+        </nav>
       </div>
       <div className={styles.flexend}>
-        {/* <div >
+        <div >
           <a href="https://github.com/milvus-io/milvus" >
             <div class="index-module--iconWrapper--3t3Fb">
               <i class="fab fa-github"></i>
@@ -127,11 +127,11 @@ const Header = () => {
             <span>1378</span>
           </a>
         </div>
-        <FontAwesomeIcon className={styles.global} icon={faGlobe} /> */}
+        <FontAwesomeIcon className={styles.global} icon={faGlobe} />
         <button className={styles.startBtn}>Get Started</button>
       </div>
 
-    </header>
+    </header >
   );
 
   return isMobile ? mobileHead : desktopHead;

@@ -3,8 +3,10 @@
 
 
 .header {
+  align-items: center;
   background-color: transparent;
-  padding: 40px 40px;
+  height: 120px;
+  padding: 0 40px;
   position: absolute;
   top: 0;
   width: 100%;
@@ -23,21 +25,8 @@
       }
     }
 
-    .startBtn {
-      background: @color-primary;
-      color: white;
-    }
-
-    .hamburg {
-      span {
-        background-color: black;
-      }
-    }
-
-    .global {
-      path {
-        fill: black;
-      }
+    .menuLink {
+      color: black;
     }
   }
 }
@@ -47,6 +36,7 @@
 
   img {
     height: 100%;
+    .hover;
   }
 
   span {
@@ -202,5 +192,23 @@
 .global {
   path {
     fill: white;
+  }
+}
+
+.menu {
+  margin: 0;
+
+  li {
+    display: block;
+    margin-right: 40px;
+  }
+
+  .menuLink {
+    color: white;
+    font-family: Inter;
+    font-size: 14px;
+    line-height: 40px;
+    text-decoration: none;
+    .hover;
   }
 }
