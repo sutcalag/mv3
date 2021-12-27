@@ -188,6 +188,7 @@ exports.createPages = async ({ actions, graphql }) => {
   const communityTemplate = path.resolve(`src/templates/community.jsx`);
   const bootcampTemplate = path.resolve(`src/templates/bootcamp.jsx`);
   const blogTemplate = path.resolve("src/templates/blogTemplate.jsx");
+  const blogListTemplate = path.resolve("src/templates/blogListTemplate.jsx");
 
   return graphql(query).then((result) => {
     if (result.errors) {
@@ -251,6 +252,7 @@ exports.createPages = async ({ actions, graphql }) => {
     generateBlogArticlePage(createPage, {
       nodes: blogMD,
       template: blogTemplate,
+      listTemplate: blogListTemplate,
     });
 
     generateDocHomeWidthMd(createPage, {
