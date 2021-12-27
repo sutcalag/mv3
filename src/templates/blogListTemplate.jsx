@@ -6,6 +6,7 @@ import Layout from "../components/layout";
 import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
 import Pagination from "../components/pagination";
+import { globalHistory } from "@reach/router";
 
 const PAGE_SIZE = 9;
 
@@ -75,6 +76,19 @@ const BlogTemplate = ({ data, pageContext }) => {
     },
     [currentTag]
   );
+
+  useEffect(() => {
+    const { search, hash } = globalHistory.location;
+
+    const pageIdx = search.replace(/\?page=/g, "") || 1;
+    const tag = hash.replace(/#/g, "") || "all";
+
+    setCurrentTag(tag);
+    setPageIndex(parseInt(pageIdx));
+
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className={`${styles.listWrapper} col-12 col-8 col-4`}>
       <section className={`${styles.featuredBlog} `}>
