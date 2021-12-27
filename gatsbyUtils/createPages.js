@@ -1216,7 +1216,6 @@ const generateBlogArticlePage = (
     cn: filterAndSortBlogs(list, "cn"),
     en: filterAndSortBlogs(list, "en"),
   };
-  console.log(list.filter((v) => v.id));
   for (let key in allBlogsList) {
     createPage({
       path: key === "cn" ? `/${key}/blog` : `/blog`,

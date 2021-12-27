@@ -89,6 +89,8 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   return (
     <div className={`${styles.listWrapper} col-12 col-8 col-4`}>
+      {/* screen > 1024  */}
+
       <section className={`${styles.featuredBlog} `}>
         <div className={`${styles.featuredImg}  col-6`}>
           <img src={`https://${featuredBlog.cover}  `} />
@@ -105,6 +107,7 @@ const BlogTemplate = ({ data, pageContext }) => {
           </p>
         </div>
       </section>
+      {/* tablet phone, screen <= 1024  */}
       <BlogCard
         className={styles.mobileFeatured}
         locale={locale}
