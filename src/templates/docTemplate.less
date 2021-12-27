@@ -35,6 +35,8 @@
 }
 
 .doc-home-html-Wrapper {
+  flex: 66%;
+
   > p {
     background: #f5f8fb;
     border-radius: 4px;
@@ -544,5 +546,17 @@
 
   h5 {
     font-weight: unset;
+  }
+}
+
+.container {
+  display: flex;
+  padding-top: 120px;
+
+  .doc-sidebar {
+    border-right: 1px solid #eaeef2;
+    flex: 33%;
+    padding-right: 80px;
+    padding-left: calc(33vw - 280px);
   }
 }
