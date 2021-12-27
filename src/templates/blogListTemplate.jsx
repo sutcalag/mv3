@@ -6,6 +6,7 @@ import Layout from "../components/layout";
 import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
 import Pagination from "../components/pagination";
+import Tags from "../components/tags";
 import { globalHistory } from "@reach/router";
 
 const PAGE_SIZE = 6;
@@ -17,7 +18,6 @@ const BlogTemplate = ({ data, pageContext }) => {
   const { blogList, locale } = pageContext;
   const [currentTag, setCurrentTag] = useState("all");
   const [pageIndex, setPageIndex] = useState(1);
-
   const featuredBlog = useMemo(() => blogList[0], [blogList]);
 
   // list of tags
@@ -121,19 +121,13 @@ const BlogTemplate = ({ data, pageContext }) => {
 
       <section className={styles.blogList}>
         <p className={styles.title}>More Articles</p>
-        <ul className={styles.tagsWrapper}>
-          {tagList.map((tag) => (
-            <li
-              key={tag}
-              role="button"
-              onClick={() => handleFilter(tag)}
-              onKeyDown={() => handleFilter(tag)}
-              className={`${currentTag === tag ? styles.active : ""}`}
-            >
-              {tag}
-            </li>
-          ))}
-        </ul>
+        <Tags
+          list={tagList}
+          tagsClass={styles.tagsWrapper}
+          genTagClass={(tag) => (currentTag === tag ? styles.active : "")}
+          onClick={handleFilter}
+        />
+
         <ul className={styles.blogCards}>
           {renderBlogList.map((v, index) => {
             const { desc, cover, date, tags, title, id } = v;
