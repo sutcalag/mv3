@@ -21,7 +21,6 @@ const query = `
           depth
         }
         frontmatter {
-          id
           related_key
           summary
           date
