@@ -4,6 +4,7 @@ import * as styles from "./blogTemplate.module.less";
 // import Footer from '../components/footer/v2';
 import Layout from "../components/layout";
 import Tags from "../components/tags";
+import BlogCard from "../components/card/BlogCard";
 import dayjs from "dayjs";
 
 export default function Template({ data, pageContext }) {
@@ -21,7 +22,12 @@ export default function Template({ data, pageContext }) {
     cover,
   } = pageContext;
 
-  const dateTime = useMemo(() => dayjs(date).format("YYYY-MM-DD"), [date]);
+  const dateTime = useMemo(() => dayjs(date).format("MMMM DD, YYYY"), [date]);
+  const moreBlogs = useMemo(() =>
+    blogList
+      .filter((v) => v.tags.some((tag) => tags.includes(tag) && v.id !== id))
+      .slice(0, 3)
+  );
   // for seo
   // const canonicalLink = origin
   //   ? {
@@ -52,6 +58,27 @@ export default function Template({ data, pageContext }) {
           className={`${styles.articleContent} col-8`}
           dangerouslySetInnerHTML={{ __html: newHtml }}
         ></div>
+      </section>
+      <section className={`${styles.moreBlog} col-12 col-8 col-4`}>
+        <h2>Keep Reading</h2>
+        <ul className={styles.blogCards}>
+          {moreBlogs.map((v, index) => {
+            const { desc, cover, date, tags, title, id } = v;
+            return (
+              <li key={index}>
+                <BlogCard
+                  locale={locale}
+                  title={title}
+                  date={date}
+                  cover={`https://${cover}`}
+                  desc={desc}
+                  tags={tags}
+                  path={`${id}`}
+                />
+              </li>
+            );
+          })}
+        </ul>
       </section>
     </>
   );

@@ -6,7 +6,7 @@ const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
   const to = `/blog/${path}`;
 
   return (
-    <div
+    <LocalizedLink
       locale={locale}
       to={to}
       className={`${styles.BlogCardWrapper} ${className}`}
@@ -22,7 +22,7 @@ const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
         <h6 className={styles.title}>{title}</h6>
         <p className={styles.desc}>{desc}</p>
       </div>
-    </div>
+    </LocalizedLink>
   );
 };
 

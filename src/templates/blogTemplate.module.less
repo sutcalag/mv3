@@ -35,10 +35,12 @@
   }
 
   .tags {
+    display: flex;
     margin: 0 auto 100px auto;
     list-style: none;
     padding: 0;
-    text-align: center;
+    justify-content: center;
+    font-weight: bold;
     li {
       color: @color-text;
       text-transform: uppercase;
@@ -69,5 +71,36 @@
   .articleContent {
     margin: 0 auto;
     text-align: left;
+  }
+}
+
+.moreBlog {
+  margin: 100px auto 0 auto;
+  h2 {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 50px;
+    @media @desktop1024 {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+
+  .blogCards {
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    column-gap: 3%;
+    row-gap: 92px;
+    padding: 0;
+    @media @desktop1024 {
+      grid-template-columns: repeat(2, 50%);
+    }
+    @media @tablet, @phone {
+      grid-template-columns: repeat(1, 100%);
+      row-gap: 40px;
+    }
+    li {
+      list-style: none;
+    }
   }
 }
