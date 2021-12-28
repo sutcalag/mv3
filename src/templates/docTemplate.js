@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Layout from "../components/layout";
-import Sidebar from "../components/sidebar";
+import LeftNav from "../components/leftNav";
 // import Seo from '../components/seo';
 import { graphql } from "gatsby";
 // import 'highlight.js/styles/stackoverflow-light.css';
@@ -403,19 +403,23 @@ export default function Template({ data, pageContext }) {
     // filter master version
     versions: versions.filter((v) => v !== "master"),
   };
+
+  const leftNavMenus =
+    menuConfig.menuList.find((menu) => menu.lang === locale)?.menuList || [];
+  const leftNavHomeUrl = `/docs/${version}`;
+
   return (
     <Layout>
       <div className="container">
-        <Sidebar
+        <LeftNav
+          showHome={true}
+          menus={leftNavMenus}
+          apiMenus={allApiMenus}
+          currentVersion={version}
           locale={locale}
-          showVersions={true}
-          wrapperClass="doc-sidebar"
-          allApiMenus={allApiMenus}
-          menuConfig={menuConfig}
-          // searchConfig={searchConfig}
-          showSearch={false}
-          versionConfig={versionConfig}
-          isVersionWithHome={false}
+          docVersions={versionConfig.versions}
+          homeUrl={leftNavHomeUrl}
+          homeLabel={versionConfig.homeTitle}
         />
         <div
           className="doc-home-html-Wrapper"
