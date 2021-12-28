@@ -1,0 +1,42 @@
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/color.less";
+
+.selectorItem {
+  color: black;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.aside {
+  min-width: 196px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.treeItemLink {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  > svg {
+    height: 16px;
+    width: 16px;
+  }
+}
+
+.treeItem,
+.treeItemLink {
+  color: @color-grey-01;
+}
