@@ -213,42 +213,42 @@ exports.createPages = async ({ actions, graphql }) => {
       result.data.allFile.edges
     );
 
-    initGlobalSearch(legalMd, newestVersion, __dirname);
+    // initGlobalSearch(legalMd, newestVersion, __dirname);
 
-    generateCommunityPages(createPage, {
-      nodes: communityMd,
-      template: communityTemplate,
-      menu: communityMenu,
-    });
-    generateCommunityHome(createPage, {
-      nodes: communityHome,
-      template: communityTemplate,
-      menu: communityMenu,
-    });
+    // generateCommunityPages(createPage, {
+    //   nodes: communityMd,
+    //   template: communityTemplate,
+    //   menu: communityMenu,
+    // });
+    // generateCommunityHome(createPage, {
+    //   nodes: communityHome,
+    //   template: communityTemplate,
+    //   menu: communityMenu,
+    // });
 
-    generateBootcampPages(createPage, {
-      nodes: bootcampMd,
-      template: bootcampTemplate,
-      menu: bootcampMenu,
-    });
+    // generateBootcampPages(createPage, {
+    //   nodes: bootcampMd,
+    //   template: bootcampTemplate,
+    //   menu: bootcampMenu,
+    // });
 
-    generateBootcampHome(createPage, {
-      nodes: bootcampHome,
-      template: bootcampTemplate,
-      menu: bootcampMenu,
-    });
+    // generateBootcampHome(createPage, {
+    //   nodes: bootcampHome,
+    //   template: bootcampTemplate,
+    //   menu: bootcampMenu,
+    // });
 
     const allApiMenus = generateApiMenus(result.data.allApIfile.nodes);
-    const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
-    generateApiReferencePages(createPage, {
-      nodes: result.data.allApIfile.nodes,
-      template: apiDocTemplate,
-      allMenus,
-      allApiMenus,
-      versions,
-      newestVersion,
-      versionsWithHome,
-    });
+    // const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
+    // generateApiReferencePages(createPage, {
+    //   nodes: result.data.allApIfile.nodes,
+    //   template: apiDocTemplate,
+    //   allMenus,
+    //   allApiMenus,
+    //   versions,
+    //   newestVersion,
+    //   versionsWithHome,
+    // });
     generateBlogArticlePage(createPage, {
       nodes: blogMD,
       template: blogTemplate,

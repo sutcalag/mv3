@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'gatsby';
-import locales from '../../consts/locales.js';
-import * as styles from './localizedLink.module.less';
+import React from "react";
+import { Link } from "gatsby";
+import locales from "../../consts/locales.js";
+import * as styles from "./localizedLink.module.less";
 
-const LocalizedLink = ({ locale, to, children, className = '' }) => {
+const LocalizedLink = ({ locale, to, children, className = "" }) => {
   const language = locales[locale];
   const reg = /^(http|https)/;
   const isExternal = reg.test(to);
@@ -22,7 +22,7 @@ const LocalizedLink = ({ locale, to, children, className = '' }) => {
 
   let path;
 
-  const title = typeof children === 'string';
+  const title = typeof children === "string";
 
   language && !language.default ? (path = `/${locale}${to}`) : (path = to);
   return title ? (

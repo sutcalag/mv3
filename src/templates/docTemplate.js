@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-// import Layout from '../components/docLayout';
+import Layout from "../components/layout";
+import Sidebar from "../components/sidebar";
 // import Seo from '../components/seo';
 import { graphql } from "gatsby";
 // import 'highlight.js/styles/stackoverflow-light.css';
-// import './docTemplate.less';
+import "./docTemplate.less";
+
 // import useAlgolia from '../hooks/use-algolia';
 // import QueryModal from '../components/query-modal/query-modal';
 // import { sortVersions } from '../utils/docTemplate.util';
@@ -334,10 +336,92 @@ import { graphql } from "gatsby";
 //     }
 //   }
 // `;
+export const pageQuery = graphql`
+  query ($locale: String, $fileAbsolutePath: String) {
+    markdownRemark(fileAbsolutePath: { eq: $fileAbsolutePath }) {
+      frontmatter {
+        title
+      }
+    }
+    allFile(
+      filter: {
+        name: { eq: $locale }
+        relativeDirectory: { regex: "/(?:layout)/" }
+      }
+    ) {
+      edges {
+        node {
+          relativeDirectory
+        }
+      }
+    }
+  }
+`;
 export default function Template({ data, pageContext }) {
+  const {
+    locale,
+    version,
+    versions,
+    headings = [],
+    allMenus,
+    isBlog,
+    isBenchmark = false,
+    editPath,
+    newHtml,
+    homeData,
+    allApiMenus,
+    newestVersion,
+    relatedKey,
+    old,
+    summary,
+    newestBlog,
+    homePath,
+  } = pageContext;
+  // sidebar props
+  const menuList = allMenus.find(
+    (v) =>
+      v.absolutePath.includes(version) &&
+      isBlog === v.isBlog &&
+      locale === v.lang
+  );
+  const id = "home";
+  const menuConfig = menuList && {
+    menuList: [
+      {
+        lang: menuList.lang,
+        menuList: menuList.menuList,
+      },
+    ],
+    activePost: id.split("-")[0],
+    isBlog: menuList.isBlog,
+    formatVersion: version === "master" ? newestVersion : version,
+  };
+
+  const versionConfig = {
+    homeTitle: "Docs Home",
+    version,
+    // filter master version
+    versions: versions.filter((v) => v !== "master"),
+  };
   return (
-    // <Layout>
-    <div>test</div>
-    // </Layout>
+    <Layout>
+      <div className="container">
+        <Sidebar
+          locale={locale}
+          showVersions={true}
+          wrapperClass="doc-sidebar"
+          allApiMenus={allApiMenus}
+          menuConfig={menuConfig}
+          // searchConfig={searchConfig}
+          showSearch={false}
+          versionConfig={versionConfig}
+          isVersionWithHome={false}
+        />
+        <div
+          className="doc-home-html-Wrapper"
+          dangerouslySetInnerHTML={{ __html: homeData }}
+        ></div>
+      </div>
+    </Layout>
   );
 }
