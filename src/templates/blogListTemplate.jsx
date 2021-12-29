@@ -5,8 +5,11 @@ import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
-import Pagination from "../components/pagination";
+import LocalizedLink from "../components/localizedLink/localizedLink";
+
+import Tags from "../components/tags";
 import { globalHistory } from "@reach/router";
+import Pagination from "@mui/material/Pagination";
 
 const PAGE_SIZE = 6;
 
@@ -17,7 +20,6 @@ const BlogTemplate = ({ data, pageContext }) => {
   const { blogList, locale } = pageContext;
   const [currentTag, setCurrentTag] = useState("all");
   const [pageIndex, setPageIndex] = useState(1);
-
   const featuredBlog = useMemo(() => blogList[0], [blogList]);
 
   // list of tags
@@ -37,12 +39,12 @@ const BlogTemplate = ({ data, pageContext }) => {
   const { renderBlogList, total } = useMemo(() => {
     if (currentTag === "all")
       return {
-        total: blogList.length,
+        total: Math.ceil(blogList.length / PAGE_SIZE),
         renderBlogList: getCurrentPageArray(blogList, pageIndex),
       };
     const list = blogList.filter((v) => v.tags.includes(currentTag));
     return {
-      total: list.length,
+      total: Math.ceil(list.length / PAGE_SIZE),
       renderBlogList: getCurrentPageArray(list, pageIndex),
     };
   }, [currentTag, blogList, pageIndex]);
@@ -65,10 +67,10 @@ const BlogTemplate = ({ data, pageContext }) => {
   );
 
   const handlePagination = useCallback(
-    (idx, isRestore = true) => {
-      window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
-      isRestore && window.sessionStorage.setItem(PAGE_INDEX, idx);
-      setPageIndex(idx);
+    (e, page) => {
+      window.history.pushState(null, null, `?page=${page}#${currentTag}`);
+      window.sessionStorage.setItem(PAGE_INDEX, page);
+      setPageIndex(page);
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -95,16 +97,13 @@ const BlogTemplate = ({ data, pageContext }) => {
         <div className={`${styles.featuredImg}  col-6`}>
           <img src={`https://${featuredBlog.cover}  `} />
         </div>
-        <div className={styles.featuredBlogContent} className="col-7">
-          <p className={styles.tag}>SCENARIOS</p>
-          <p className={styles.title}>
-            Milvus in IP Protection：Building a Trademark Similarity Search
-            System with Milvus
-          </p>
-          <p className={styles.desc}>
-            Quickly Test and Deploy Vector Search Solutions with the Milvus 2.0
-            Bootcamp
-          </p>
+        <div className={`${styles.featuredBlogContent} col-7`}>
+          <p className={styles.tag}>{featuredBlog.tags.join(" ")}</p>
+          <LocalizedLink locale={locale} to={featuredBlog.id}>
+            <p className={styles.title}>{featuredBlog.title}</p>
+          </LocalizedLink>
+
+          <p className={styles.desc}>{featuredBlog.desc}</p>
         </div>
       </section>
       {/* tablet phone, screen <= 1024  */}
@@ -121,19 +120,13 @@ const BlogTemplate = ({ data, pageContext }) => {
 
       <section className={styles.blogList}>
         <p className={styles.title}>More Articles</p>
-        <ul className={styles.tagsWrapper}>
-          {tagList.map((tag) => (
-            <li
-              key={tag}
-              role="button"
-              onClick={() => handleFilter(tag)}
-              onKeyDown={() => handleFilter(tag)}
-              className={`${currentTag === tag ? styles.active : ""}`}
-            >
-              {tag}
-            </li>
-          ))}
-        </ul>
+        <Tags
+          list={tagList}
+          tagsClass={styles.tagsWrapper}
+          genTagClass={(tag) => (currentTag === tag ? styles.active : "")}
+          onClick={handleFilter}
+        />
+
         <ul className={styles.blogCards}>
           {renderBlogList.map((v, index) => {
             const { desc, cover, date, tags, title, id } = v;
@@ -152,11 +145,18 @@ const BlogTemplate = ({ data, pageContext }) => {
             );
           })}
         </ul>
-        <Pagination
+        {/* <Pagination
           total={total}
           pageIndex={pageIndex}
           pageSize={PAGE_SIZE}
           handlePageIndexChange={handlePagination}
+        /> */}
+        <Pagination
+          count={total}
+          page={pageIndex}
+          size="small"
+          onChange={handlePagination}
+          className={styles.pagination}
         />
       </section>
     </div>

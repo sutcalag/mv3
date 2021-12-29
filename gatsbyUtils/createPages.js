@@ -31,10 +31,7 @@ const query = `
           cover
           desc
           isPublish
-          id {
-            ext
-            name
-          }
+          id 
         }
         fileAbsolutePath
         html
@@ -1259,7 +1256,7 @@ const generateBlogArticlePage = (
       isBenchmark
     );
     const newHtml = node.html;
-    let [date, tag = "", origin, author, title, id, desc] = [
+    let [date, tag = "", origin, author, title, id, desc, cover] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.origin,
@@ -1267,17 +1264,18 @@ const generateBlogArticlePage = (
       node.frontmatter.title,
       node.frontmatter.id,
       node.frontmatter.desc,
+      node.frontmatter.cover,
     ];
 
     createPage({
       path: localizedPath,
       component: blogTemplate,
       context: {
+        cover,
         locale: fileLang,
         fileAbsolutePath,
         localizedPath,
         newHtml,
-        isBlogListPage: false,
         date,
         tags: generateTags(tag),
         origin,

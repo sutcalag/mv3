@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import LocalizedLink from "../localizedLink/localizedLink";
 import * as styles from "./BlogCard.module.less";
+import Tags from "../tags";
 const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
   const to = `/blog/${path}`;
 
   return (
-    <div
+    <LocalizedLink
       locale={locale}
       to={to}
       className={`${styles.BlogCardWrapper} ${className}`}
@@ -16,16 +17,12 @@ const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
       ></div>
       <div className={styles.descWrapper}>
         <div className={styles.bottomWrapper}>
-          <ul className={styles.tags}>
-            {tags.slice(0, 2).map((tag) => {
-              return <li key={tag}>{tag}</li>;
-            })}
-          </ul>
+          <Tags list={tags} tagsClass={styles.tags} />
         </div>
         <h6 className={styles.title}>{title}</h6>
         <p className={styles.desc}>{desc}</p>
       </div>
-    </div>
+    </LocalizedLink>
   );
 };
 

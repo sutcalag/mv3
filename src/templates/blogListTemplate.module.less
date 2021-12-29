@@ -11,6 +11,7 @@
     font-weight: bold;
     font-size: @font-size-title-large;
     line-height: 50px;
+    color: #000;
     @media @desktop1024 {
       font-size: @font-size-title-normal;
       line-height: 40px;
@@ -34,12 +35,13 @@
       width: 100%;
     }
     .featuredBlogContent {
-      & .tag {
+      .tag {
+        text-transform: uppercase;
         color: @primary-color;
         font-size: @font-size-normal;
       }
 
-      & .desc {
+      .desc {
         font-size: @font-size-normal;
         color: #4c5a67;
       }
@@ -101,6 +103,11 @@
         grid-template-columns: repeat(1, 100%);
         row-gap: 40px;
       }
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 100px auto 120px auto;
     }
   }
 }
