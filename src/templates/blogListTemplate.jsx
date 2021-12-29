@@ -5,8 +5,8 @@ import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
+import LocalizedLink from "../components/localizedLink/localizedLink";
 
-// import Pagination from "../components/pagination";
 import Tags from "../components/tags";
 import { globalHistory } from "@reach/router";
 import Pagination from "@mui/material/Pagination";
@@ -97,16 +97,13 @@ const BlogTemplate = ({ data, pageContext }) => {
         <div className={`${styles.featuredImg}  col-6`}>
           <img src={`https://${featuredBlog.cover}  `} />
         </div>
-        <div className={styles.featuredBlogContent} className="col-7">
-          <p className={styles.tag}>SCENARIOS</p>
-          <p className={styles.title}>
-            Milvus in IP Protection：Building a Trademark Similarity Search
-            System with Milvus
-          </p>
-          <p className={styles.desc}>
-            Quickly Test and Deploy Vector Search Solutions with the Milvus 2.0
-            Bootcamp
-          </p>
+        <div className={`${styles.featuredBlogContent} col-7`}>
+          <p className={styles.tag}>{featuredBlog.tags.join(" ")}</p>
+          <LocalizedLink locale={locale} to={featuredBlog.id}>
+            <p className={styles.title}>{featuredBlog.title}</p>
+          </LocalizedLink>
+
+          <p className={styles.desc}>{featuredBlog.desc}</p>
         </div>
       </section>
       {/* tablet phone, screen <= 1024  */}
