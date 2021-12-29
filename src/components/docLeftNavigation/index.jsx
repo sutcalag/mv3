@@ -57,7 +57,7 @@ const LeftNav = (props) => {
   };
 
   return (
-    <aside className={clsx("left-nav", styles.aside)}>
+    <aside className={clsx(className, "left-nav", styles.aside)}>
       <FormControl fullWidth size="small">
         <Select
           labelId="demo-simple-select-label"

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Layout from "../components/layout";
 import LeftNav from "../components/docLeftNavigation";
+import HorizontalBlogCard from "../components/card/HorizontalBlogCard";
 // import Seo from '../components/seo';
 import { graphql } from "gatsby";
 // import 'highlight.js/styles/stackoverflow-light.css';
 import "./docTemplate.less";
+import Typography from "@mui/material/Typography";
 
 // import useAlgolia from '../hooks/use-algolia';
 // import QueryModal from '../components/query-modal/query-modal';
@@ -420,11 +422,20 @@ export default function Template({ data, pageContext }) {
           currentVersion={version}
           locale={locale}
           docVersions={versionConfig.versions}
+          // className="doc-home-left-nav"
         />
-        <div
-          className="doc-home-html-Wrapper"
-          dangerouslySetInnerHTML={{ __html: homeData }}
-        ></div>
+        <div className="doc-home-content">
+          <div
+            className="doc-home-html-Wrapper"
+            dangerouslySetInnerHTML={{ __html: homeData }}
+          />
+          <Typography component="section" className="doc-home-blog">
+            <Typography variant="h2" component="h2">
+              Blog
+            </Typography>
+            <HorizontalBlogCard blogData={newestBlog[0]} />
+          </Typography>
+        </div>
       </div>
     </Layout>
   );

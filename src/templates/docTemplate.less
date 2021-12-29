@@ -6,39 +6,54 @@
   background-image: url(../images/docs/home_banner.svg);
   background-repeat: no-repeat;
   background-position: right;
-  min-height: 220px;
-  background-color: #f5f8fb;
+  background-color: @color-grey-05;
+  padding: 48px;
 
   h1#Welcome-to-Milvus-Docs {
-    /* H2/Regular */
-    font-family: "Inter";
+    font-family: Inter;
     font-style: normal;
     font-weight: bold;
     font-size: 40px;
     line-height: 50px;
-    color: #000000;
+    color: @color-black;
+    margin: 0;
   }
 
   p {
-    /* H6/Regular */
-
     font-family: Inter;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 24px;
-    /* or 150% */
+    max-width: 626px;
 
-    /* Grey 01 */
-    color: #4c5a67;
+    color: @color-grey-01;
   }
 }
 
+.left-nav {
+  padding-right: 80px;
+  padding-left: calc(25vw - 280px);
+  width: 25%;
+}
+
+.doc-home-content {
+  width: 75%;
+}
+
 .doc-home-html-Wrapper {
-  flex: 66%;
+  > * {
+    margin-left: 48px;
+    width: 75%;
+  }
+
+  .banner {
+    margin-left: 0;
+    width: 100%;
+  }
 
   > p {
-    background: #f5f8fb;
+    background: @color-grey-05;
     border-radius: 4px;
     background-image: url(../images/docs/MilMil.svg);
     background-repeat: no-repeat;
@@ -51,10 +66,11 @@
     font-weight: normal;
     font-size: 16px;
     line-height: 24px;
-    /* or 150% */
 
-    /* Black */
-    color: #000000;
+    padding: 28px 30px;
+    padding-right: 25%;
+
+    color: @color-black;
   }
 }
 
@@ -64,7 +80,7 @@
   grid-column-gap: 20px;
 
   .start_card_container {
-    background: #ffffff;
+    background: @color-white;
     border: 1px solid #dee8f1;
     box-sizing: border-box;
     border-radius: 4px;
@@ -86,37 +102,27 @@
     }
 
     .link-btn {
-      /* H4/Regular */
-
       font-family: Inter;
       font-style: normal;
       font-weight: normal;
       font-size: 24px;
       line-height: 34px;
-      /* or 142% */
 
       text-align: center;
 
-      /* Black */
-
-      color: #000000;
+      color: @color-black;
     }
   }
 }
 
 #Recommended-articles {
-  /* H2/Regular */
-
   font-family: Inter;
   font-style: normal;
   font-weight: bold;
   font-size: 40px;
   line-height: 50px;
-  /* identical to box height, or 125% */
 
-  /* Black */
-
-  color: #000000;
+  color: @color-black;
 }
 
 .doc-home-recommend-section {
@@ -125,26 +131,21 @@
 
   .recomment-item {
     > p {
-      /* H4/Regular */
-
       font-family: Inter;
       font-style: normal;
       font-weight: normal;
       font-size: 24px;
       line-height: 34px;
-      /* identical to box height, or 142% */
 
-      /* Black */
-
-      color: #000000;
+      color: @color-black;
     }
 
     li {
-      color: #1493cc;
+      color: @text-blue;
 
       a {
         text-decoration: none;
-        color: #1493cc;
+        color: @text-blue;
         font-family: Inter;
         font-style: normal;
         font-weight: normal;
@@ -156,23 +157,52 @@
 }
 
 .doc-home-what-is-new {
-  background: #eff9fe;
-  border-left: 4px solid #4fc4f9;
-  padding-left: 26px;
+  background: @bg-blue;
+  border-left: 4px solid @icon-blue;
+  padding: 26px 30px;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: @color-black;
 
   h2 {
-    /* H4/Regular */
-
     font-family: Inter;
     font-style: normal;
     font-weight: normal;
     font-size: 24px;
     line-height: 34px;
-    /* identical to box height, or 142% */
 
-    color: #000000;
+    color: @color-black;
   }
 }
+
+.doc-home-blog {
+  margin: 48px 0 48px 48px;
+  width: 75%;
+
+  > h2 {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 50px;
+    padding: 34px 0;
+
+    color: @color-black;
+  }
+
+  .MuiCard-root {
+    border: 1px solid #dee8f1;
+    box-shadow: none;
+    border-radius: 4px;
+  }
+}
+
+// ---old----
 
 :root {
   --color-primary: #191919;
