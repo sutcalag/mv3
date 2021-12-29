@@ -38,7 +38,9 @@ const ExpansionTreeView = (props) => {
               link ? (
                 <LocalizedLink
                   to={link}
-                  className={linkClassName}
+                  className={clsx("mv3-item-link", {
+                    [linkClassName]: linkClassName,
+                  })}
                   showIcon={true}
                 >
                   {label}
@@ -54,7 +56,7 @@ const ExpansionTreeView = (props) => {
   };
   return (
     <TreeView
-      className={clsx("mv3-tree-view", { treeClassName: treeClassName })}
+      className={clsx("mv3-tree-view", { [treeClassName]: treeClassName })}
       {...others}
     >
       {homeLabel && homeUrl && (
@@ -64,7 +66,9 @@ const ExpansionTreeView = (props) => {
           label={
             <LocalizedLink
               to={homeUrl}
-              className={linkClassName}
+              className={clsx("mv3-item-link", {
+                [linkClassName]: linkClassName,
+              })}
               showIcon={true}
             >
               {homeLabel}
