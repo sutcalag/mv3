@@ -404,7 +404,7 @@ export default function Template({ data, pageContext }) {
     versions: versions.filter((v) => v !== "master"),
   };
 
-  const leftNavMenus =
+  const leftNavMenus = menuConfig &&
     menuConfig.menuList.find((menu) => menu.lang === locale)?.menuList || [];
   const leftNavHomeUrl = `/docs/${version}`;
 

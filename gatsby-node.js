@@ -100,6 +100,20 @@ exports.onCreatePage = ({ page, actions }) => {
   });
 };
 
+// create cunstom schema for frontmatter
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type MarkdownRemark implements Node {
+      frontmatter: Frontmatter
+    }
+    type Frontmatter {
+      id: String
+    }
+  `
+  createTypes(typeDefs)
+}
+
 // APIReference page: generate source for api reference html
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions;

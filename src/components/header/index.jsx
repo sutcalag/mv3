@@ -1,20 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import milvusLogo from '../../images/milvus_logo.svg';
 import lfLogoDark from '../../images/lf_logo_dark.svg';
 import lfLogoLight from '../../images/lf_logo_light.svg';
 import * as styles from './index.module.less';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGlobe } from '@fortawesome/free-solid-svg-icons'
-
-
+import GitHubButton from '../githubButton';
 import LocalizedLink from '../localizedLink/localizedLink';
 
-const Header = () => {
-  const [isLightHeader, setIsLightHeader] = useState(false);
+const Header = ({ darkMode = false, locale }) => {
+  const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
+    if (!darkMode) {
+      return;
+    }
     const onScroll = e => {
       setIsLightHeader(e.target.documentElement.scrollTop > 100);
     };
@@ -41,6 +45,10 @@ const Header = () => {
       setIsMobile(true);
     }
   }, []);
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+  };
 
   const logoSection = (
     <div className={styles.logoSection}>
@@ -90,6 +98,7 @@ const Header = () => {
     </header>
   );
 
+
   const desktopHead = (
     <header className={`${styles.header} ${isLightHeader ? styles.light : ''} `} >
       <div className={styles.flexstart}>
@@ -104,30 +113,44 @@ const Header = () => {
           </ul>
         </nav>
       </div>
-      <div className={styles.flexend}>
-        <div >
-          <a href="https://github.com/milvus-io/milvus" >
-            <div class="index-module--iconWrapper--3t3Fb">
-              <i class="fab fa-github"></i>
-            </div>
-            <span>Star</span>
-          </a>
-          <a href="https://github.com/milvus-io/milvus/stargazers" >
-            <span>9051</span>
-          </a>
-        </div>
-        <div >
-          <a href="https://github.com/milvus-io/milvus/fork" >
-            <div >
-              <i class="fas fa-code-branch"></i>
-            </div>
-            <span>Forks</span>
-          </a>
-          <a href="https://github.com/milvus-io/milvus/network/members" >
-            <span>1378</span>
-          </a>
-        </div>
-        <FontAwesomeIcon className={styles.global} icon={faGlobe} />
+      <div className={styles.actionBar}>
+        <GitHubButton
+          type="star"
+          // className="star-btn"
+          href="https://github.com/milvus-io/milvus"
+        >
+          Star
+        </GitHubButton>
+
+        <GitHubButton
+          type="fork"
+          href="https://github.com/milvus-io/milvus"
+        >
+          Forks
+        </GitHubButton>
+        <Select
+          defaultValue="en"
+          onChange={handleChange}
+          lable="language"
+          IconComponent={null}
+          className={styles.langSelect}
+          renderValue={v => {
+            return (
+              <>
+                <FontAwesomeIcon className={styles.global} icon={faGlobe} />
+                <span>{v}</span>
+              </>
+            )
+
+          }}
+        >
+          <MenuItem value="cn">
+            中文
+          </MenuItem>
+          <MenuItem value="en">
+            English
+          </MenuItem>
+        </Select>
         <button className={styles.startBtn}>Get Started</button>
       </div>
 
