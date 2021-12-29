@@ -3,8 +3,6 @@ import LocalizedLink from "../localizedLink/localizedLink";
 import * as styles from "./leftNav.module.less";
 import "./leftNav.less";
 // import { AlgoliaSearch } from '../search/algolia';
-import TreeView from "@mui/lab/TreeView";
-import TreeItem from "@mui/lab/TreeItem";
 import clsx from "clsx";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -12,6 +10,7 @@ import { mdMenuListFactory, filterApiMenus, mergeMenuList } from "./utils";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import ExpansionTreeView from "../treeView/ExpansionTreeView";
 
 const LeftNav = (props) => {
   const {
@@ -89,75 +88,6 @@ const LeftNav = (props) => {
         homeLabel={homeLabel}
       />
     </aside>
-  );
-};
-
-const ExpansionTreeView = (props) => {
-  // https://mui.com/components/tree-view/
-  // itemList = [ { id='', children = [], label='', link='' }, ...]
-  const {
-    itemList = [],
-    treeClassName = "",
-    itemClassName = "",
-    linkClassName = "",
-    homeUrl,
-    homeLabel,
-    ...others
-  } = props;
-  const generateTreeItem = ({ id, label, link, children }) => {
-    return (
-      <>
-        {children?.length ? (
-          <TreeItem
-            key={id}
-            className={itemClassName}
-            nodeId={id}
-            label={label}
-          >
-            {children.map((i) => generateTreeItem(i))}
-          </TreeItem>
-        ) : (
-          <TreeItem
-            key={id}
-            className={itemClassName}
-            nodeId={id}
-            label={
-              link ? (
-                <LocalizedLink
-                  to={link}
-                  className={linkClassName}
-                  showIcon={true}
-                >
-                  {label}
-                </LocalizedLink>
-              ) : (
-                label
-              )
-            }
-          />
-        )}
-      </>
-    );
-  };
-  return (
-    <TreeView className={treeClassName} {...others}>
-      {homeLabel && homeUrl && (
-        <TreeItem
-          nodeId={`home-${homeLabel}`}
-          className={itemClassName}
-          label={
-            <LocalizedLink
-              to={homeUrl}
-              className={linkClassName}
-              showIcon={true}
-            >
-              {homeLabel}
-            </LocalizedLink>
-          }
-        />
-      )}
-      {itemList.map((i) => generateTreeItem(i))}
-    </TreeView>
   );
 };
 

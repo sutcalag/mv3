@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Layout from "../components/layout";
-import LeftNav from "../components/leftNav";
+import LeftNav from "../components/docLeftNavigation";
 // import Seo from '../components/seo';
 import { graphql } from "gatsby";
 // import 'highlight.js/styles/stackoverflow-light.css';
@@ -412,14 +412,14 @@ export default function Template({ data, pageContext }) {
     <Layout>
       <div className="container">
         <LeftNav
-          showHome={true}
+          homeUrl={leftNavHomeUrl}
+          homeLabel={versionConfig.homeTitle}
           menus={leftNavMenus}
           apiMenus={allApiMenus}
+          pageType="doc"
           currentVersion={version}
           locale={locale}
           docVersions={versionConfig.versions}
-          homeUrl={leftNavHomeUrl}
-          homeLabel={versionConfig.homeTitle}
         />
         <div
           className="doc-home-html-Wrapper"
