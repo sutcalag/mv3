@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { navigate } from "gatsby";
 import * as styles from "./blogTemplate.module.less";
 // import Seo from '../components/seo';
 // import Footer from '../components/footer/v2';
@@ -6,6 +7,7 @@ import Layout from "../components/layout";
 import Tags from "../components/tags";
 import BlogCard from "../components/card/BlogCard";
 import dayjs from "dayjs";
+import Share from "../components/share";
 
 export default function Template({ data, pageContext }) {
   const {
@@ -22,6 +24,9 @@ export default function Template({ data, pageContext }) {
     cover,
   } = pageContext;
 
+  const html = useMemo(() => newHtml.replace(/<h1.*<\/h1>/, ""));
+  const shareUrl = useMemo(() => `https://www.milvus.io/blog/${id}`);
+
   const dateTime = useMemo(() => dayjs(date).format("MMMM DD, YYYY"), [date]);
   const moreBlogs = useMemo(() =>
     blogList
@@ -36,6 +41,10 @@ export default function Template({ data, pageContext }) {
   //     }
   //   : {};
 
+  const handleTagClick = (tag) => {
+    const path = `/blog?page=1#${tag}`;
+    navigate(locale === "en" ? path : `/cn/${path}`);
+  };
   return (
     <>
       <div
@@ -48,16 +57,39 @@ export default function Template({ data, pageContext }) {
           {author && <span>by {author}</span>}
         </p>
         <h1 className={styles.title}>{title}</h1>
-        <Tags list={tags} tagsClass={`${styles.tags} col-8`} />
+        <Tags
+          list={tags}
+          tagsClass={`${styles.tags} col-8`}
+          onClick={handleTagClick}
+        />
         <section className={`${styles.desc} col-8`}>
           <span className={styles.line}></span>
           <span>{desc}</span>
+          <Share
+            url={shareUrl}
+            quote={title}
+            desc={desc}
+            image={`https://${cover}`}
+            wrapperClass={styles.share}
+            vertical={true}
+          />
         </section>
 
         <div
           className={`${styles.articleContent} col-8`}
-          dangerouslySetInnerHTML={{ __html: newHtml }}
+          dangerouslySetInnerHTML={{ __html: html }}
         ></div>
+      </section>
+      <section className={`${styles.shareSection} col-8`}>
+        <p>Like the article? Spread the word</p>
+        <Share
+          url={shareUrl}
+          quote={title}
+          desc={desc}
+          image={`https://${cover}`}
+          wrapperClass={styles.share}
+          vertical={false}
+        />
       </section>
       <section className={`${styles.moreBlog} col-12 col-8 col-4`}>
         <h2>Keep Reading</h2>

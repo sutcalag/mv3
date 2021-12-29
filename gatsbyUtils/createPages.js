@@ -31,10 +31,7 @@ const query = `
           cover
           desc
           isPublish
-          id {
-            ext
-            name
-          }
+          id 
         }
         fileAbsolutePath
         html

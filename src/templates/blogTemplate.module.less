@@ -7,11 +7,22 @@
 @font-size-normal: 18px;
 
 .blogImg {
+  position: relative;
   width: 100%;
   height: 440px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    opacity: 0.4;
+  }
 }
 
 .blogWrapper {
@@ -44,6 +55,7 @@
     li {
       color: @color-text;
       text-transform: uppercase;
+      cursor: pointer;
     }
     li + li {
       margin-left: 10px;
@@ -52,7 +64,7 @@
 
   .desc {
     position: relative;
-    margin: 0 auto;
+    margin: 0 auto 55px auto;
     text-align: left;
     font-size: 16px;
     line-height: 26px;
@@ -66,11 +78,25 @@
       width: 4px;
       background-color: @gray;
     }
+    .share {
+      position: absolute;
+      right: -20%;
+      top: 0;
+    }
   }
 
   .articleContent {
     margin: 0 auto;
     text-align: left;
+  }
+}
+
+.shareSection {
+  margin: 80px auto 110px auto;
+  text-align: center;
+  .share {
+    margin: 0 auto;
+    justify-content: center;
   }
 }
 

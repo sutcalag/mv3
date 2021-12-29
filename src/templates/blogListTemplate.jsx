@@ -5,9 +5,11 @@ import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
-import Pagination from "../components/pagination";
+
+// import Pagination from "../components/pagination";
 import Tags from "../components/tags";
 import { globalHistory } from "@reach/router";
+import Pagination from "@mui/material/Pagination";
 
 const PAGE_SIZE = 6;
 
@@ -37,12 +39,12 @@ const BlogTemplate = ({ data, pageContext }) => {
   const { renderBlogList, total } = useMemo(() => {
     if (currentTag === "all")
       return {
-        total: blogList.length,
+        total: Math.ceil(blogList.length / PAGE_SIZE),
         renderBlogList: getCurrentPageArray(blogList, pageIndex),
       };
     const list = blogList.filter((v) => v.tags.includes(currentTag));
     return {
-      total: list.length,
+      total: Math.ceil(list.length / PAGE_SIZE),
       renderBlogList: getCurrentPageArray(list, pageIndex),
     };
   }, [currentTag, blogList, pageIndex]);
@@ -65,10 +67,10 @@ const BlogTemplate = ({ data, pageContext }) => {
   );
 
   const handlePagination = useCallback(
-    (idx, isRestore = true) => {
-      window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
-      isRestore && window.sessionStorage.setItem(PAGE_INDEX, idx);
-      setPageIndex(idx);
+    (e, page) => {
+      window.history.pushState(null, null, `?page=${page}#${currentTag}`);
+      window.sessionStorage.setItem(PAGE_INDEX, page);
+      setPageIndex(page);
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -146,11 +148,18 @@ const BlogTemplate = ({ data, pageContext }) => {
             );
           })}
         </ul>
-        <Pagination
+        {/* <Pagination
           total={total}
           pageIndex={pageIndex}
           pageSize={PAGE_SIZE}
           handlePageIndexChange={handlePagination}
+        /> */}
+        <Pagination
+          count={total}
+          page={pageIndex}
+          size="small"
+          onChange={handlePagination}
+          className={styles.pagination}
         />
       </section>
     </div>
