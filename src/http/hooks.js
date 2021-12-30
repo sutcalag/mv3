@@ -193,3 +193,32 @@ export function useGetFaq(relatedKey) {
   // return relatedQuestions;
   return resultMock.response.slice(0, 6);
 }
+
+export function useWindowSize() {
+  const [size, setSize] = useState("desktop1024");
+
+  useEffect(() => {
+    const onResize = () => {
+      const desktop1920 = window.matchMedia("(min-width: 1920px)");
+      const desktop1440 = window.matchMedia("(min-width: 1440px)");
+      const desktop1024 = window.matchMedia("(min-width: 1024px)");
+      const desktop744 = window.matchMedia("(min-width: 744px)");
+
+      if (desktop1920.matches) {
+        setSize("desktop1920");
+      } else if (desktop1440.matches) {
+        setSize("desktop1440");
+      } else if (desktop1024.matches) {
+        setSize("desktop1024");
+      } else if (desktop744.matches) {
+        setSize("tablet");
+      } else {
+        setSize("phone");
+      }
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  });
+
+  return size;
+}
