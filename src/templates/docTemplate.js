@@ -8,7 +8,7 @@ import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
 import Typography from "@mui/material/Typography";
 import LocalizedLink from "../components/localizedLink/localizedLink";
-import { useGithubCommits } from "../utils/hooks";
+import { useGithubCommits } from "../http/hooks";
 import RelatedQuestion from "../components/relatedQuestion";
 
 // import useAlgolia from '../hooks/use-algolia';

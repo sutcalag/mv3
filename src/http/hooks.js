@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getGithubCommits, getFaq } from "./fetch";
+import { getGithubCommits, getFaq } from "./index";
 import dayjs from "dayjs";
 
 export function useGithubCommits({ commitPath, version, isDoc = false }) {
