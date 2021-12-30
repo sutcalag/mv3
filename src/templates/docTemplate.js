@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { useGithubCommits } from "../http/hooks";
 import RelatedQuestion from "../components/relatedQuestion";
 import ScoredFeedback from "../components/scoredFeedback";
+import clsx from "clsx";
 
 export const pageQuery = graphql`
   query ($locale: String, $fileAbsolutePath: String) {
@@ -115,7 +116,7 @@ export default function Template({ data, pageContext }) {
           docVersions={versionConfig.versions}
           // className="doc-home-left-nav"
         />
-        <div className="doc-content-container">
+        <div className={clsx("doc-content-container", { docHome: homeData })}>
           {homeData ? (
             <HomeContent homeData={homeData} newestBlog={newestBlog} />
           ) : (
