@@ -493,6 +493,7 @@ const GitCommitInfo = (props) => {
 
 const DocContent = (props) => {
   const { htmlContent, commitInfo, mdId, faq, relatedKey } = props;
+  //! TO REMOVE
   const faqMock = {
     contact: {
       slack: {

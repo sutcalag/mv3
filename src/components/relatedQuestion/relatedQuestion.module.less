@@ -13,7 +13,21 @@ h2.title {
   color: @color-black;
 }
 
+.subTitle {
+  /* H6/Regular */
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: @color-black;
+}
+
 .container {
+  width: fit-content;
+
   .item,
   .link {
     cursor: pointer;
@@ -36,4 +50,10 @@ h2.title {
       width: 18px;
     }
   }
+}
+
+.btnGroups {
+  display: flex;
+  gap: 10px;
+  padding: 20px 0;
 }

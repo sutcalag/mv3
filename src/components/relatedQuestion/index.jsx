@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import { useGetFaq } from "../../utils/hooks";
+import { useGetFaq } from "../../http/hooks";
 import LocalizedLink from "../localizedLink/localizedLink";
+import { CustomizedDialogs } from "../dialog/Dialog";
+import FeedbackDialog from "../dialog/FeedbackDialog";
 import * as styles from "./relatedQuestion.module.less";
+import "../../css/variables/main.less";
 
 export default function RelatedQuestion(props) {
   const { title, contact, relatedKey } = props;
   const [showModal, setShowModal] = useState(false);
+  const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState({});
 
   const relatedQuestions = useGetFaq(relatedKey);
@@ -20,6 +19,13 @@ export default function RelatedQuestion(props) {
     const [title, content] = question;
     setSelectedQuestion({ q: title, a: content });
     setShowModal(true);
+  };
+
+  const handleClickFollowUp = () => {
+    setShowFeedbackDialog(true);
+  };
+  const handleCancelFollowUp = () => {
+    setShowFeedbackDialog(false);
   };
 
   return (
@@ -56,6 +62,44 @@ export default function RelatedQuestion(props) {
           );
         })}
       </ul>
+      <div className="faq-links">
+        <Typography variant="h6" component="h3" className={styles.subTitle}>
+          Didn't find what you need?
+        </Typography>
+        <div className={styles.btnGroups}>
+          <button
+            className="primaryBtnSm"
+            onClick={() => {
+              handleClickFollowUp();
+            }}
+          >
+            {contact.follow.label}
+          </button>
+          <a
+            className="secondaryBtnSm"
+            href={contact.slack.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {contact.slack.label}
+          </a>
+          <a
+            className="secondaryBtnSm"
+            href={contact.github.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {contact.github.label}
+          </a>
+        </div>
+        {showFeedbackDialog && (
+          <FeedbackDialog
+            open={showFeedbackDialog}
+            handleCancel={handleCancelFollowUp}
+            handleSubmit={handleCancelFollowUp}
+          />
+        )}
+      </div>
       <CustomizedDialogs
         open={showModal}
         handleClose={() => {
@@ -67,44 +111,3 @@ export default function RelatedQuestion(props) {
     </>
   );
 }
-
-const BootstrapDialogTitle = (props) => {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-};
-
-const CustomizedDialogs = (props) => {
-  const { open, handleClose, title, content } = props;
-
-  return (
-    <>
-      <Dialog onClose={handleClose} open={open}>
-        <BootstrapDialogTitle onClose={handleClose}>
-          {title}
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>{content}</Typography>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-};
