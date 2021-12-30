@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import LocalizedLink from "../components/localizedLink/localizedLink";
 import { useGithubCommits } from "../http/hooks";
 import RelatedQuestion from "../components/relatedQuestion";
+import ScoredFeedback from "../components/scoredFeedback";
 
 // import useAlgolia from '../hooks/use-algolia';
 // import QueryModal from '../components/query-modal/query-modal';
@@ -421,7 +422,14 @@ export default function Template({ data, pageContext }) {
   //   isDoc,
   // });
   //! TO REMOVE
-  const commitInfo = {};
+  const commitInfo = {
+    commitUrl:
+      "https://github.com/milvus-io/milvus-docs/commit/f0e455fd80e4585d7bacdf30e35c3938a8e8ba49",
+    date: "2021-12-24 07:31:25",
+    source:
+      "https://github.com/milvus-io/milvus-docs/blob/v2.0.0/site/en/about/overview.md",
+    message: "Update overview.md",
+  };
 
   return (
     <Layout>
@@ -473,20 +481,16 @@ const HomeContent = (props) => {
 };
 
 const GitCommitInfo = (props) => {
-  const { commitInfo = {}, mdId, commitTrans = "" } = props;
+  const { commitInfo = {}, mdId, commitTrans = "was last updated at" } = props;
   return (
     <div className="commit-info-wrapper">
-      <>
-        <a target="_blank" rel="noreferrer" href={commitInfo.source}>
-          {mdId}
-        </a>
-        <span>
-          {commitTrans} {commitInfo.date}:{" "}
-        </span>
-        <a target="_blank" rel="noreferrer" href={commitInfo.commitUrl}>
-          {commitInfo.message}
-        </a>
-      </>
+      <a target="_blank" rel="noreferrer" href={commitInfo.source}>
+        {mdId}
+      </a>
+      <span>{` ${commitTrans} ${commitInfo.date}: `}</span>
+      <a target="_blank" rel="noreferrer" href={commitInfo.commitUrl}>
+        {commitInfo.message}
+      </a>
     </div>
   );
 };
@@ -538,6 +542,7 @@ const DocContent = (props) => {
         {commitInfo?.message && (
           <GitCommitInfo commitInfo={commitInfo} mdId={mdId} />
         )}
+        <ScoredFeedback />
       </div>
     </>
   );
