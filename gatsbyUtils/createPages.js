@@ -31,10 +31,7 @@ const query = `
           cover
           desc
           isPublish
-          id {
-            ext
-            name
-          }
+          id
         }
         fileAbsolutePath
         html
@@ -264,8 +261,8 @@ const findVersion = (str) => {
     ? match[1]
       ? match[1]
       : env === "preview" && str.includes("preview")
-      ? "preview"
-      : match[1]
+        ? "preview"
+        : match[1]
     : "";
 };
 
@@ -432,8 +429,7 @@ const filterMdWithVersion = (edges) => {
         fileAbsolutePath.includes("communityArticles") ||
         fileAbsolutePath.includes("bootcampArticles") ||
         fileAbsolutePath.includes("/docs/versions/benchmarks/")) &&
-      frontmatter.id &&
-      `${frontmatter?.id?.name}${frontmatter?.id?.ext}` !== "home.md"
+      frontmatter.id && frontmatter.id !== "home.md"
     );
   });
 };
@@ -465,7 +461,7 @@ const filterHomeMdWithVersion = (edges) => {
 
     if (
       filterVersion(fileAbsolutePath) &&
-      `${frontmatter?.id?.name}${frontmatter?.id?.ext}` === "home.md"
+      frontmatter.id === "home.md"
     ) {
       const version = findVersion(fileAbsolutePath) || "master";
       const fileLang = findLang(fileAbsolutePath);
@@ -994,6 +990,7 @@ const generateDocHomeWidthMd = (
       node.frontmatter.id,
       node.frontmatter.cover,
     ];
+
     return {
       date,
       tags: tag ? tag.split(",") : [],
@@ -1019,8 +1016,8 @@ const generateDocHomeWidthMd = (
       const [start, originPath, end] = link.split('"');
       const formatPath =
         originPath.charAt(0) === "#" ||
-        originPath.charAt(0) === "/" ||
-        originPath.includes("http")
+          originPath.charAt(0) === "/" ||
+          originPath.includes("http")
           ? originPath
           : `${homePath}/${originPath}`;
       return [start, formatPath, end].join('"');
@@ -1110,7 +1107,7 @@ const generateAllDocPages = (
   legalMd.forEach(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
     const isBlog = checkIsblog(fileAbsolutePath);
-    const fileId = `${node.frontmatter?.id?.name}.${node.frontmatter?.id?.ext}`;
+    const fileId = node.frontmatter?.id;
     const relatedKey = node.frontmatter.related_key;
     const summary = node.frontmatter.summary || "";
     let version = findVersion(fileAbsolutePath) || "master";
@@ -1259,7 +1256,7 @@ const generateBlogArticlePage = (
       isBenchmark
     );
     const newHtml = node.html;
-    let [date, tag = "", origin, author, title, id, desc] = [
+    let [date, tag = "", origin, author, title, id, desc, cover] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.origin,
@@ -1267,17 +1264,18 @@ const generateBlogArticlePage = (
       node.frontmatter.title,
       node.frontmatter.id,
       node.frontmatter.desc,
+      node.frontmatter.cover,
     ];
 
     createPage({
       path: localizedPath,
       component: blogTemplate,
       context: {
+        cover,
         locale: fileLang,
         fileAbsolutePath,
         localizedPath,
         newHtml,
-        isBlogListPage: false,
         date,
         tags: generateTags(tag),
         origin,

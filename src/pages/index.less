@@ -1,9 +1,6 @@
-@import "../css/variables/responsive.less";
-@import "../css/variables/color.less";
+@import "../css/variables/main.less";
 
 .main {
-  height: 2000px;
-  background-color: black;
 
   .banner {
     background-image: url(../images/index/bg.svg);
@@ -166,7 +163,6 @@
       justify-content: center;
       align-items: center;
       padding: 20px 40px;
-      width: 186px;
       height: 58px;
       background: #ffffff;
       border-radius: 100px;
@@ -177,13 +173,15 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 18px;
+
     }
 
     .btn-start {
-      width: 186px;
+      .primaryBtn;
     }
 
     .btn-watch {
+      .secondaryBtn();
       background: #000000;
       color: #ffffff;
     }

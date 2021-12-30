@@ -1,8 +1,9 @@
-@import './responsive.less';
-@import './color.less';
+@import "./responsive.less";
+@import "./color.less";
 
 * {
   box-sizing: border-box;
+  font-family: Inter;
 }
 
 body {
@@ -14,21 +15,22 @@ body {
   cursor: pointer;
   height: 58px;
   padding: 20px 40px;
+  font-family: 'Roboto Mono';
   font-size: 16px;
   line-height: 18px;
   border: 0;
 
-  @media @phone, @tablet, @desktop1024 {
-    height: 38px;
+  @media @phone {
+    height: 52px;
     padding: 10px 20px;
-    font-size: 12px;
+    font-size: 14px;
   }
   .hover;
 }
 
 .hover {
   &:hover {
-    opacity: .8;
+    opacity: 0.8;
   }
 }
 

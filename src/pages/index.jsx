@@ -3,10 +3,12 @@ import "./index.less";
 import Layout from "../components/layout";
 
 // markup
-const IndexPage = () => {
+const IndexPage = ({ pageContext }) => {
+
+  const { locale, versions } = pageContext;
   return (
     <main className="main">
-      <Layout>
+      <Layout darkMode={true} locale={locale} versions={versions}>
         <div className="banner">
           <div className="shooting_star_container1">
             <div className="shooting_star"></div>
@@ -22,8 +24,8 @@ const IndexPage = () => {
               Open-source, highly scalable, and blazing fast
             </p>
             <div className="btn-group">
-              <button className="btn-start col-4">Get Started</button>
-              <button className="btn-watch col-4">
+              <button className="btn-start">Get Started</button>
+              <button className="btn-watch">
                 Watch Video
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
