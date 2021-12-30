@@ -4,16 +4,18 @@ import LeftNav from "../components/docLeftNavigation";
 import HorizontalBlogCard from "../components/card/HorizontalBlogCard";
 // import Seo from '../components/seo';
 import { graphql } from "gatsby";
-// import 'highlight.js/styles/stackoverflow-light.css';
+import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
 import Typography from "@mui/material/Typography";
+import LocalizedLink from "../components/localizedLink/localizedLink";
+import { useGithubCommits } from "../utils/hooks";
+import RelatedQuestion from "../components/relatedQuestion";
 
 // import useAlgolia from '../hooks/use-algolia';
 // import QueryModal from '../components/query-modal/query-modal';
 // import { sortVersions } from '../utils/docTemplate.util';
 // import { NOT_SUPPORTED_VERSION } from '../config';
 // import HomeTemplate from '../components/homeTemplate/homeTemplate';
-// import RelatedQuestion from '../components/relatedQuestion';
 // import {
 //   useEmPanel,
 //   useFilter,
@@ -369,17 +371,17 @@ export default function Template({ data, pageContext }) {
     isBlog,
     isBenchmark = false,
     editPath,
-    newHtml,
+    newHtml: mdHtml,
     homeData,
     allApiMenus,
     newestVersion,
     relatedKey,
-    old,
+    old: mdId,
     summary,
     newestBlog,
     homePath,
   } = pageContext;
-  // sidebar props
+
   const menuList = allMenus.find(
     (v) =>
       v.absolutePath.includes(version) &&
@@ -398,17 +400,28 @@ export default function Template({ data, pageContext }) {
     isBlog: menuList.isBlog,
     formatVersion: version === "master" ? newestVersion : version,
   };
-
   const versionConfig = {
     homeTitle: "Docs Home",
     version,
     // filter master version
     versions: versions.filter((v) => v !== "master"),
   };
-
   const leftNavMenus =
     menuConfig.menuList.find((menu) => menu.lang === locale)?.menuList || [];
-  const leftNavHomeUrl = `/docs/${version}`;
+  const leftNavHomeUrl =
+    version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
+
+  const commitPath = useMemo(() => {
+    return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
+  }, [locale, editPath]);
+  const isDoc = !(isBlog || isBenchmark);
+  // const commitInfo = useGithubCommits({
+  //   commitPath,
+  //   version,
+  //   isDoc,
+  // });
+  //! TO REMOVE
+  const commitInfo = {};
 
   return (
     <Layout>
@@ -424,19 +437,107 @@ export default function Template({ data, pageContext }) {
           docVersions={versionConfig.versions}
           // className="doc-home-left-nav"
         />
-        <div className="doc-home-content">
-          <div
-            className="doc-home-html-Wrapper"
-            dangerouslySetInnerHTML={{ __html: homeData }}
-          />
-          <Typography component="section" className="doc-home-blog">
-            <Typography variant="h2" component="h2">
-              Blog
-            </Typography>
-            <HorizontalBlogCard blogData={newestBlog[0]} />
-          </Typography>
+        <div className="doc-content-container">
+          {homeData ? (
+            <HomeContent homeData={homeData} newestBlog={newestBlog} />
+          ) : (
+            <DocContent
+              htmlContent={mdHtml}
+              commitInfo={commitInfo}
+              mdId={mdId}
+              relatedKey={relatedKey}
+            />
+          )}
         </div>
       </div>
     </Layout>
   );
 }
+
+const HomeContent = (props) => {
+  const { homeData, newestBlog = [] } = props;
+  return (
+    <>
+      <div
+        className="doc-home-html-Wrapper"
+        dangerouslySetInnerHTML={{ __html: homeData }}
+      />
+      <Typography component="section" className="doc-home-blog">
+        <Typography variant="h2" component="h2">
+          Blog
+        </Typography>
+        <HorizontalBlogCard blogData={newestBlog[0]} />
+      </Typography>
+    </>
+  );
+};
+
+const GitCommitInfo = (props) => {
+  const { commitInfo = {}, mdId, commitTrans = "" } = props;
+  return (
+    <div className="commit-info-wrapper">
+      <>
+        <a target="_blank" rel="noreferrer" href={commitInfo.source}>
+          {mdId}
+        </a>
+        <span>
+          {commitTrans} {commitInfo.date}:{" "}
+        </span>
+        <a target="_blank" rel="noreferrer" href={commitInfo.commitUrl}>
+          {commitInfo.message}
+        </a>
+      </>
+    </div>
+  );
+};
+
+const DocContent = (props) => {
+  const { htmlContent, commitInfo, mdId, faq, relatedKey } = props;
+  const faqMock = {
+    contact: {
+      slack: {
+        label: "Discuss on Slack",
+        link: "https://slack.milvus.io/",
+      },
+      github: {
+        label: "Discuss on GitHub",
+        link: "https://github.com/milvus-io/milvus/issues/",
+      },
+      follow: {
+        label: "Follow up with me",
+      },
+      dialog: {
+        desc: "Please leave your question here and we will be in touch.",
+        placeholder1: "Your Email*",
+        placeholder2: "Your Question*",
+        submit: "Submit",
+        title: "We will follow up on your question",
+        invalid: "please input valid email and your question",
+      },
+      title: "Didn't find what you need?",
+    },
+    question: {
+      title: "Most Related Questions",
+    },
+  };
+  return (
+    <>
+      <div>
+        <div
+          className="doc-post-content"
+          dangerouslySetInnerHTML={{ __html: htmlContent }}
+        />
+        {faqMock && (
+          <RelatedQuestion
+            title={faqMock.question.title}
+            contact={faqMock.contact}
+            relatedKey={relatedKey}
+          />
+        )}
+        {commitInfo?.message && (
+          <GitCommitInfo commitInfo={commitInfo} mdId={mdId} />
+        )}
+      </div>
+    </>
+  );
+};
