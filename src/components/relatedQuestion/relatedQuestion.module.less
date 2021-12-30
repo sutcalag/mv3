@@ -1,5 +1,6 @@
 @import "../../css/variables/responsive.less";
 @import "../../css/variables/color.less";
+@import "../../css/variables/main.less";
 
 h2.title {
   /* H3/Bold */
@@ -13,16 +14,18 @@ h2.title {
   color: @color-black;
 }
 
-.subTitle {
-  /* H6/Regular */
+.faqLinks {
+  h3.subTitle {
+    /* H6/Regular */
 
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 24px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
 
-  color: @color-black;
+    color: @color-black;
+  }
 }
 
 .container {
@@ -56,4 +59,8 @@ h2.title {
   display: flex;
   gap: 10px;
   padding: 20px 0;
+
+  .sBtn {
+    .secondaryBtnSm;
+  }
 }

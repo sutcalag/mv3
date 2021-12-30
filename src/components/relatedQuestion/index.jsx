@@ -5,6 +5,7 @@ import LocalizedLink from "../localizedLink/localizedLink";
 import { CustomizedDialogs } from "../dialog/Dialog";
 import FeedbackDialog from "../dialog/FeedbackDialog";
 import * as styles from "./relatedQuestion.module.less";
+import clsx from "clsx";
 import "../../css/variables/main.less";
 
 export default function RelatedQuestion(props) {
@@ -62,13 +63,13 @@ export default function RelatedQuestion(props) {
           );
         })}
       </ul>
-      <div className="faq-links">
+      <div className={styles.faqLinks}>
         <Typography variant="h6" component="h3" className={styles.subTitle}>
           Didn't find what you need?
         </Typography>
         <div className={styles.btnGroups}>
           <button
-            className="primaryBtnSm"
+            className={clsx("primaryBtnSm", styles.pBtn)}
             onClick={() => {
               handleClickFollowUp();
             }}
@@ -76,7 +77,7 @@ export default function RelatedQuestion(props) {
             {contact.follow.label}
           </button>
           <a
-            className="secondaryBtnSm"
+            className={clsx("secondaryBtnSm", styles.sBtn)}
             href={contact.slack.link}
             target="_blank"
             rel="noopener noreferrer"
@@ -84,7 +85,7 @@ export default function RelatedQuestion(props) {
             {contact.slack.label}
           </a>
           <a
-            className="secondaryBtnSm"
+            className={clsx("secondaryBtnSm", styles.sBtn)}
             href={contact.github.link}
             target="_blank"
             rel="noopener noreferrer"
