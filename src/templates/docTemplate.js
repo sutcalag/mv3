@@ -114,6 +114,7 @@ export default function Template({ data, pageContext }) {
           currentVersion={version}
           locale={locale}
           docVersions={versionConfig.versions}
+          mdId={mdId}
           // className="doc-home-left-nav"
         />
         <div className={clsx("doc-content-container", { docHome: homeData })}>

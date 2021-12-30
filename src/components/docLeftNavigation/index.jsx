@@ -23,6 +23,7 @@ const LeftNav = (props) => {
     locale = "en",
     docVersions = [],
     className = "",
+    mdId = "home",
   } = props;
 
   const [treeItems, setTreeItems] = useState([]);
@@ -86,6 +87,7 @@ const LeftNav = (props) => {
         defaultExpandIcon={<ChevronRightIcon />}
         homeUrl={homeUrl}
         homeLabel={homeLabel}
+        currentMdId={mdId}
       />
     </aside>
   );
