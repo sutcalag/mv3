@@ -11,6 +11,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ExpansionTreeView from "../treeView/ExpansionTreeView";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Drawer from "@mui/material/Drawer";
+import { useWindowSize } from "../../http/hooks";
 
 const LeftNav = (props) => {
   const {
@@ -28,6 +32,12 @@ const LeftNav = (props) => {
 
   const [treeItems, setTreeItems] = useState([]);
   const [selectedVersion, setSelectedVersion] = useState(currentVersion);
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  //! bind event twice
+  const currentWindowSize = useWindowSize();
+  const isMobile = ["phone", "tablet"].includes(currentWindowSize);
+  console.log(currentWindowSize);
 
   useEffect(() => {
     const generateMdMenuList = mdMenuListFactory(
@@ -57,9 +67,13 @@ const LeftNav = (props) => {
     setSelectedVersion(v);
   };
 
-  return (
-    <aside className={clsx(className, "left-nav", styles.aside)}>
-      <FormControl fullWidth size="small">
+  const generateContent = () => (
+    <>
+      <FormControl
+        fullWidth
+        size="small"
+        className={clsx(styles.selector, { [styles.mobile]: isMobile })}
+      >
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -80,7 +94,8 @@ const LeftNav = (props) => {
       </FormControl>
       <ExpansionTreeView
         itemList={treeItems}
-        treeClassName={styles.tree}
+        // treeClassName={styles.tree}
+        treeClassName={clsx(styles.tree, { [styles.mobile]: isMobile })}
         itemClassName={styles.treeItem}
         linkClassName={styles.treeItemLink}
         defaultCollapseIcon={<ExpandMoreIcon />}
@@ -89,6 +104,34 @@ const LeftNav = (props) => {
         homeLabel={homeLabel}
         currentMdId={mdId}
       />
+    </>
+  );
+
+  return isMobile ? (
+    <>
+      <IconButton
+        aria-label="open menu"
+        onClick={() => {
+          setOpenDrawer(true);
+        }}
+        className="doc-menu-icon"
+        color="primary"
+      >
+        <MenuIcon />
+      </IconButton>
+      <Drawer
+        // anchor={anchor}
+        open={openDrawer}
+        onClose={() => {
+          setOpenDrawer(false);
+        }}
+      >
+        {generateContent()}
+      </Drawer>
+    </>
+  ) : (
+    <aside className={clsx(className, "left-nav", styles.aside)}>
+      {generateContent()}
     </aside>
   );
 };
