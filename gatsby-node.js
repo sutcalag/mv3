@@ -102,7 +102,7 @@ exports.onCreatePage = ({ page, actions }) => {
 
 // create cunstom schema for frontmatter
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createTypes } = actions;
   const typeDefs = `
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter
@@ -110,9 +110,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Frontmatter {
       id: String
     }
-  `
-  createTypes(typeDefs)
-}
+  `;
+  createTypes(typeDefs);
+};
 
 // APIReference page: generate source for api reference html
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -253,21 +253,21 @@ exports.createPages = async ({ actions, graphql }) => {
     // });
 
     const allApiMenus = generateApiMenus(result.data.allApIfile.nodes);
-    // const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
-    // generateApiReferencePages(createPage, {
-    //   nodes: result.data.allApIfile.nodes,
-    //   template: apiDocTemplate,
-    //   allMenus,
-    //   allApiMenus,
-    //   versions,
-    //   newestVersion,
-    //   versionsWithHome,
-    // });
-    generateBlogArticlePage(createPage, {
-      nodes: blogMD,
-      template: blogTemplate,
-      listTemplate: blogListTemplate,
+    const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
+    generateApiReferencePages(createPage, {
+      nodes: result.data.allApIfile.nodes,
+      template: apiDocTemplate,
+      allMenus,
+      allApiMenus,
+      versions,
+      newestVersion,
+      versionsWithHome,
     });
+    // generateBlogArticlePage(createPage, {
+    //   nodes: blogMD,
+    //   template: blogTemplate,
+    //   listTemplate: blogListTemplate,
+    // });
 
     generateDocHomeWidthMd(createPage, {
       nodes: homeMd,

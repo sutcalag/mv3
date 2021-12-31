@@ -62,31 +62,37 @@ const LeftNav = (props) => {
     setSelectedVersion(v);
   };
 
+  useEffect(() => {
+    setSelectedVersion(currentVersion);
+  }, [currentVersion]);
+
   const generateContent = () => (
     <>
-      <FormControl
-        fullWidth
-        size="small"
-        className={clsx(styles.selector, { [styles.mobile]: isMobile })}
-      >
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={selectedVersion}
-          onChange={handleVersionChange}
+      {selectedVersion && (
+        <FormControl
+          fullWidth
+          size="small"
+          className={clsx(styles.selector, { [styles.mobile]: isMobile })}
         >
-          {docVersions.map((i) => (
-            <MenuItem key={i} value={i}>
-              <LocalizedLink
-                to={i === "v0.x" ? `/docs/${i}/overview.md` : `/docs/${i}`}
-                className={styles.selectorItem}
-              >
-                {i}
-              </LocalizedLink>
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectedVersion}
+            onChange={handleVersionChange}
+          >
+            {docVersions.map((i) => (
+              <MenuItem key={i} value={i}>
+                <LocalizedLink
+                  to={i === "v0.x" ? `/docs/${i}/overview.md` : `/docs/${i}`}
+                  className={styles.selectorItem}
+                >
+                  {i}
+                </LocalizedLink>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
       <ExpansionTreeView
         itemList={treeItems}
         // treeClassName={styles.tree}
