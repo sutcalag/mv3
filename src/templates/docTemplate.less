@@ -381,7 +381,7 @@
 
 // ---new----
 
-.container {
+.doc-temp-container {
   display: flex;
   padding-top: 120px;
 
@@ -616,5 +616,45 @@
     line-height: 24px;
 
     color: @color-grey-02;
+  }
+}
+
+.is-mobile.doc-temp-container {
+  padding-top: 0;
+}
+
+.is-mobile.doc-content-container {
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.is-mobile.docHome {
+  padding: 0;
+
+  .doc-home-html-Wrapper {
+    .banner {
+      padding-left: 16px;
+    }
+
+    > p,
+    .card-wrapper,
+    h2#Recommended-articles,
+    .doc-home-recommend-section,
+    .doc-home-what-is-new {
+      margin-left: 16px;
+      margin-right: 16px;
+    }
+  }
+
+  .doc-home-blog {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 }

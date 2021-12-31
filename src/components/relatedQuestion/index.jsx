@@ -9,7 +9,7 @@ import clsx from "clsx";
 import "../../css/variables/main.less";
 
 export default function RelatedQuestion(props) {
-  const { title, contact, relatedKey } = props;
+  const { title, contact, relatedKey, isMobile } = props;
   const [showModal, setShowModal] = useState(false);
   const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState({});
@@ -63,7 +63,7 @@ export default function RelatedQuestion(props) {
           );
         })}
       </ul>
-      <div className={styles.faqLinks}>
+      <div className={clsx(styles.faqLinks, { [styles.isMobile]: isMobile })}>
         <Typography variant="h6" component="h3" className={styles.subTitle}>
           Didn't find what you need?
         </Typography>

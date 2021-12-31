@@ -14,7 +14,6 @@ import ExpansionTreeView from "../treeView/ExpansionTreeView";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
-import { useWindowSize } from "../../http/hooks";
 
 const LeftNav = (props) => {
   const {
@@ -28,16 +27,12 @@ const LeftNav = (props) => {
     docVersions = [],
     className = "",
     mdId = "home",
+    isMobile = false,
   } = props;
 
   const [treeItems, setTreeItems] = useState([]);
   const [selectedVersion, setSelectedVersion] = useState(currentVersion);
   const [openDrawer, setOpenDrawer] = useState(false);
-
-  //! bind event twice
-  const currentWindowSize = useWindowSize();
-  const isMobile = ["phone", "tablet"].includes(currentWindowSize);
-  console.log(currentWindowSize);
 
   useEffect(() => {
     const generateMdMenuList = mdMenuListFactory(

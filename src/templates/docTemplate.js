@@ -10,6 +10,7 @@ import { useGithubCommits } from "../http/hooks";
 import RelatedQuestion from "../components/relatedQuestion";
 import ScoredFeedback from "../components/scoredFeedback";
 import clsx from "clsx";
+import { useWindowSize } from "../http/hooks";
 
 export const pageQuery = graphql`
   query ($locale: String, $fileAbsolutePath: String) {
@@ -53,6 +54,9 @@ export default function Template({ data, pageContext }) {
     newestBlog,
     homePath,
   } = pageContext;
+
+  const currentWindowSize = useWindowSize();
+  const isMobile = ["phone", "tablet"].includes(currentWindowSize);
 
   const menuList = allMenus.find(
     (v) =>
@@ -104,7 +108,7 @@ export default function Template({ data, pageContext }) {
 
   return (
     <Layout>
-      <div className="container">
+      <div className={clsx("doc-temp-container", { [`is-mobile`]: isMobile })}>
         <LeftNav
           homeUrl={leftNavHomeUrl}
           homeLabel={versionConfig.homeTitle}
@@ -115,9 +119,14 @@ export default function Template({ data, pageContext }) {
           locale={locale}
           docVersions={versionConfig.versions}
           mdId={mdId}
-          // className="doc-home-left-nav"
+          isMobile={isMobile}
         />
-        <div className={clsx("doc-content-container", { docHome: homeData })}>
+        <div
+          className={clsx("doc-content-container", {
+            docHome: homeData,
+            [`is-mobile`]: isMobile,
+          })}
+        >
           {homeData ? (
             <HomeContent homeData={homeData} newestBlog={newestBlog} />
           ) : (
@@ -126,6 +135,7 @@ export default function Template({ data, pageContext }) {
               commitInfo={commitInfo}
               mdId={mdId}
               relatedKey={relatedKey}
+              isMobile={isMobile}
             />
           )}
         </div>
@@ -168,7 +178,7 @@ const GitCommitInfo = (props) => {
 };
 
 const DocContent = (props) => {
-  const { htmlContent, commitInfo, mdId, faq, relatedKey } = props;
+  const { htmlContent, commitInfo, mdId, faq, relatedKey, isMobile } = props;
   //! TO REMOVE
   const faqMock = {
     contact: {
@@ -209,6 +219,7 @@ const DocContent = (props) => {
             title={faqMock.question.title}
             contact={faqMock.contact}
             relatedKey={relatedKey}
+            isMobile={isMobile}
           />
         )}
         {commitInfo?.message && (
