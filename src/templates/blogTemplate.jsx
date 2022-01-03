@@ -46,7 +46,7 @@ export default function Template({ data, pageContext }) {
     navigate(locale === "en" ? path : `/cn/${path}`);
   };
   return (
-    <>
+    <Layout>
       <div
         className={styles.blogImg}
         style={{ backgroundImage: `url("https://${cover}")` }}
@@ -112,6 +112,6 @@ export default function Template({ data, pageContext }) {
           })}
         </ul>
       </section>
-    </>
+    </Layout>
   );
 }

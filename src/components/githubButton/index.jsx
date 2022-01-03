@@ -40,11 +40,9 @@ const GitHubButton = ({
         <FontAwesomeIcon className={styles.iconWrapper} icon={iconClass} />
         <span className={styles.stat}>{children}</span>
       </a>
-      {stat.star !== 0 ? (
-        <a href={sublink} className={`${styles.link} ${styles.num}`} target="_blank" rel="noopener noreferrer">
-          <span className={styles.stat}>{isStar ? stat.star : stat.forks}</span>
-        </a>
-      ) : null}
+      <a href={sublink} className={`${styles.link} ${styles.num}`} target="_blank" rel="noopener noreferrer">
+        <span className={styles.stat}>{isStar ? stat.star : stat.forks}</span>
+      </a>
     </div>
   );
 };

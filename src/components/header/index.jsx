@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Select from "@mui/material/Select";
+import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { globalHistory } from "@reach/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import milvusLogo from "../../images/milvus_logo.svg";
@@ -11,10 +13,20 @@ import GitHubButton from "../githubButton";
 import LocalizedLink from "../localizedLink/localizedLink";
 import { useWindowSize } from "../../http/hooks";
 
+// import { useTranslation, I18NextContext } from "gatsby-plugin-react-i18next";
+
 const Header = ({ darkMode = false, locale }) => {
+  // const { t } = useTranslation();
+  // console.log("I18NextContext", I18NextContext);
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   // const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isTutOpen, setIsTutOpen] = useState(false);
+  const [isToolOpen, setIsToolOpen] = useState(false);
+  const [path, setPath] = useState("/");
+
+  const toolRef = useRef(null);
+  const tutRef = useRef(null);
 
   useEffect(() => {
     if (!darkMode) {
@@ -31,8 +43,31 @@ const Header = ({ darkMode = false, locale }) => {
 
   const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
 
+  useEffect(() => {
+    const { pathname } = globalHistory.location;
+    const to = pathname.replace("/en/", "/").replace("/cn", "");
+    console.log("to", to);
+    setPath(to);
+  }, []);
+
   const handleChange = (e) => {
     console.log(e.target.value);
+  };
+
+  const openTutorial = (open) => {
+    let isOpen = open;
+    if (isOpen === undefined) {
+      isOpen = !isTutOpen;
+    }
+    setIsTutOpen(isOpen);
+  };
+
+  const openTool = (open) => {
+    let isOpen = open;
+    if (isOpen === undefined) {
+      isOpen = !isToolOpen;
+    }
+    setIsToolOpen(isOpen);
   };
 
   const logoSection = (
@@ -102,24 +137,42 @@ const Header = ({ darkMode = false, locale }) => {
         <nav>
           <ul className={`${styles.flexstart} ${styles.menu}`}>
             <li>
-              <a className={styles.menuLink} href="#">
+              <LocalizedLink
+                to="/docs"
+                locale={locale}
+                className={styles.menuLink}
+              >
                 Docs
-              </a>
+              </LocalizedLink>
             </li>
             <li>
-              <a className={styles.menuLink} href="#">
+              <a
+                ref={tutRef}
+                className={styles.menuLink}
+                href="javascript:void(0)"
+                onClick={openTutorial}
+              >
                 Tutorials
               </a>
             </li>
             <li>
-              <a className={styles.menuLink} href="#">
+              <a
+                ref={toolRef}
+                className={styles.menuLink}
+                href="javascript:void(0)"
+                onClick={openTool}
+              >
                 Tools
               </a>
             </li>
             <li>
-              <a className={styles.menuLink} href="#">
+              <LocalizedLink
+                to="/blog"
+                locale={locale}
+                className={styles.menuLink}
+              >
                 Blog
-              </a>
+              </LocalizedLink>
             </li>
             <li>
               <a className={styles.menuLink} href="#">
@@ -127,6 +180,61 @@ const Header = ({ darkMode = false, locale }) => {
               </a>
             </li>
           </ul>
+          <Menu
+            id="demo-positioned-menu"
+            aria-labelledby="demo-positioned-button"
+            anchorEl={tutRef.current}
+            open={isTutOpen}
+            onClose={() => {
+              openTutorial(false);
+            }}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+          >
+            <MenuItem>Bootcamp</MenuItem>
+            <MenuItem>Demo</MenuItem>
+            <MenuItem>
+              <LocalizedLink
+                to="https://www.youtube.com/zillizchannel"
+                className={styles.menuLink}
+              >
+                Video
+              </LocalizedLink>
+            </MenuItem>
+          </Menu>
+          <Menu
+            id="demo-positioned-menu"
+            aria-labelledby="demo-positioned-button"
+            anchorEl={toolRef.current}
+            open={isToolOpen}
+            onClose={() => {
+              openTool(false);
+            }}
+          >
+            <MenuItem>
+              <LocalizedLink
+                to="https://github.com/zilliztech/attu"
+                className={styles.menuLink}
+              >
+                Attu
+              </LocalizedLink>
+            </MenuItem>
+            <MenuItem>
+              <LocalizedLink
+                to="https://github.com/zilliztech/milvus_cli"
+                className={styles.menuLink}
+              >
+                Milvus_CLI
+              </LocalizedLink>
+            </MenuItem>
+            <MenuItem>Sizing Tool</MenuItem>
+          </Menu>
         </nav>
       </div>
       <div className={styles.actionBar}>
@@ -142,22 +250,29 @@ const Header = ({ darkMode = false, locale }) => {
           Forks
         </GitHubButton>
         <Select
-          defaultValue="en"
+          value={locale}
           onChange={handleChange}
           lable="language"
-          IconComponent={null}
           className={styles.langSelect}
           renderValue={(v) => {
             return (
               <>
                 <FontAwesomeIcon className={styles.global} icon={faGlobe} />
-                <span>{v}</span>
+                <span className={styles.globalText}>{v}</span>
               </>
             );
           }}
         >
-          <MenuItem value="cn">中文</MenuItem>
-          <MenuItem value="en">English</MenuItem>
+          <MenuItem value="cn">
+            <LocalizedLink locale="cn" to={path} key="cn">
+              中文
+            </LocalizedLink>
+          </MenuItem>
+          <MenuItem value="en">
+            <LocalizedLink locale="en" to={path} key="en">
+              English
+            </LocalizedLink>
+          </MenuItem>
         </Select>
         <button className={styles.startBtn}>Get Started</button>
       </div>

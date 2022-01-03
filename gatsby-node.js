@@ -109,6 +109,14 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type Frontmatter {
       id: String
+      date: String
+      tag: String
+      title: String
+      desc: String
+      cover: String
+      origin: String
+      isPublish: Boolean
+      author: String
     }
   `;
   createTypes(typeDefs);

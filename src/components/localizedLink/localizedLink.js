@@ -1,17 +1,20 @@
 import React from "react";
 import { Link } from "gatsby";
+// import { useI18next } from 'gatsby-plugin-react-i18next';
 import locales from "../../consts/locales.js";
 import * as styles from "./localizedLink.module.less";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const LocalizedLink = ({
-  locale,
+  locale = 'en',
   to,
   children,
   className = "",
   showIcon = false,
   customIcon,
 }) => {
+  // const {languages, changeLanguage} = useI18next();
+  // changeLanguage(locale);
   const language = locales[locale];
   const reg = /^(http|https)/;
   const isExternal = reg.test(to);

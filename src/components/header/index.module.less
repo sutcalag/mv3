@@ -31,8 +31,39 @@
       }
     }
 
+    .globalText {
+      color: black;
+    }
+
     .menuLink {
       color: black;
+    }
+  }
+
+  .actionBar {
+    .flexend;
+    align-items: center;
+
+    .langSelect {
+      margin-left: 15px;
+      margin-right: 35px;
+
+      fieldset {
+        display: none;
+      }
+      
+      & > div {
+        padding-right: 14px;
+
+        &:focus {
+          outline: 1px dotted #212121;
+          outline: 5px auto -webkit-focus-ring-color;
+        }
+      }
+
+      & > svg {
+        display: none;
+      }
     }
   }
 }
@@ -202,6 +233,12 @@
   }
 }
 
+.globalText {
+  color: white;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
 .menu {
   margin: 0;
 
@@ -212,6 +249,7 @@
 
   .menuLink {
     color: white;
+    display: block;
     font-family: Inter;
     font-size: 14px;
     line-height: 40px;
@@ -220,17 +258,4 @@
   }
 }
 
-.actionBar {
-  .flexend;
-  align-items: center;
-}
 
-.langSelect {
-  fieldset {
-    display: none;
-  }
-
-  .MuiSelect-select {
-    outline: initial;
-  }
-}
