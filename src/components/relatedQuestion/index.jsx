@@ -9,7 +9,7 @@ import clsx from "clsx";
 import "../../css/variables/main.less";
 
 export default function RelatedQuestion(props) {
-  const { title, contact, relatedKey, isMobile } = props;
+  const { title, contact, relatedKey, isMobile, trans } = props;
   const [showModal, setShowModal] = useState(false);
   const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState({});
@@ -61,7 +61,7 @@ export default function RelatedQuestion(props) {
       </ul>
       <div className={clsx(styles.faqLinks, { [styles.isMobile]: isMobile })}>
         <Typography variant="h6" component="h3" className={styles.subTitle}>
-          Didn't find what you need?
+          {trans("v3trans.docs.faqBtnGroupTitle")}
         </Typography>
         <div className={styles.btnGroups}>
           <button
@@ -70,7 +70,7 @@ export default function RelatedQuestion(props) {
               handleClickFollowUp();
             }}
           >
-            {contact.follow.label}
+            {trans("v3trans.docs.contactFollow")}
           </button>
           <a
             className={clsx("secondaryBtnSm", styles.sBtn)}
@@ -78,7 +78,7 @@ export default function RelatedQuestion(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {contact.slack.label}
+            {trans("v3trans.docs.contactSlack")}
           </a>
           <a
             className={clsx("secondaryBtnSm", styles.sBtn)}
@@ -86,7 +86,7 @@ export default function RelatedQuestion(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {contact.github.label}
+            {trans("v3trans.docs.contactGithub")}
           </a>
         </div>
         {showFeedbackDialog && (

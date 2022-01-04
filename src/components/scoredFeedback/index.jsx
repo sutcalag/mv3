@@ -8,12 +8,12 @@ import * as styles from "./scoredFeedback.module.less";
 import { readStatisData, writeStatisData } from "../../http";
 
 export default function ScoredFeedback(props) {
-  const { pageId } = props;
+  const { pageId, trans } = props;
 
   const [score, setScore] = useState("");
 
-  const text1Mock = "Is this page helpful?";
-  const text2Mock = "Scored Successfully!";
+  const scoreQuestion = trans("v3trans.docs.scoreQuestion");
+  const scoreThanks = trans("v3trans.docs.scoreThanks");
 
   const { pathname } = globalHistory.location;
 
@@ -107,14 +107,18 @@ export default function ScoredFeedback(props) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{score ? text2Mock : text1Mock}</div>
-      <BtnGroups score={score} onScoreBtnClick={handleScoreBtnClick} />
+      <div className={styles.title}>{score ? scoreThanks : scoreQuestion}</div>
+      <BtnGroups
+        trans={trans}
+        score={score}
+        onScoreBtnClick={handleScoreBtnClick}
+      />
     </div>
   );
 }
 
 const BtnGroups = (props) => {
-  const { score, onScoreBtnClick } = props;
+  const { score, onScoreBtnClick, trans } = props;
 
   return (
     <div className={styles.btnGroup}>
@@ -128,7 +132,7 @@ const BtnGroups = (props) => {
         }}
       >
         <ThumbUpOffAltIcon />
-        Yes
+        {trans("v3trans.docs.yes")}
       </button>
       <button
         className={clsx(styles.btn, {
@@ -140,7 +144,7 @@ const BtnGroups = (props) => {
         }}
       >
         <ThumbDownOffAltIcon />
-        No
+        {trans("v3trans.docs.no")}
       </button>
     </div>
   );

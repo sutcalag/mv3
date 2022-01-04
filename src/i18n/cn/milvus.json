@@ -671,6 +671,20 @@
     }
   },
   "v3trans": {
-    "desc": "所有第三版翻译放在此目录下"
+    "desc": "所有第三版翻译放在此目录下",
+    "docs": {
+      "homeTitle": "首页",
+      "blogTitle": "博客",
+      "commitTrans": "最后更新于",
+      "faqTitle": "相关问题",
+      "faqBtnGroupTitle": "没有找到您想要的问题？",
+      "scoreQuestion": "该页面是否对你有帮助?",
+      "scoreThanks": "评价成功!",
+      "yes": "是",
+      "no": "否",
+      "contactFollow": "让我们跟进问题",
+      "contactSlack": "在Slack上讨论",
+      "contactGithub": "在Github上讨论"
+    }
   }
 }

@@ -680,6 +680,20 @@
     }
   },
   "v3trans": {
-    "desc": "every thing for V3 translatino will be put here"
+    "desc": "every thing for V3 translatino will be put here",
+    "docs": {
+      "homeTitle": "Docs Home",
+      "blogTitle": "Blog",
+      "commitTrans": "was last updated at",
+      "faqTitle": "Most Related Questions",
+      "faqBtnGroupTitle": "Didn't find what you need?",
+      "scoreQuestion": "Is this page helpful?",
+      "scoreThanks": "Scored Successfully!",
+      "yes": "Yes",
+      "no": "No",
+      "contactFollow": "Follow up with me",
+      "contactSlack": "Discuss on Slack",
+      "contactGithub": "Discuss on Github"
+    }
   }
 }
