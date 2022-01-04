@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
 import LeftNav from "../components/docLeftNavigation";
 import HorizontalBlogCard from "../components/card/HorizontalBlogCard";
@@ -57,6 +58,7 @@ export default function Template({ data, pageContext }) {
 
   const currentWindowSize = useWindowSize();
   const isMobile = ["phone", "tablet"].includes(currentWindowSize);
+  const { language } = useI18next();
 
   const menuList = allMenus.find(
     (v) =>
@@ -120,6 +122,7 @@ export default function Template({ data, pageContext }) {
           docVersions={versionConfig.versions}
           mdId={mdId}
           isMobile={isMobile}
+          language={language}
         />
         <div
           className={clsx("doc-content-container", {

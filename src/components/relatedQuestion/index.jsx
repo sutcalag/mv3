@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import { useGetFaq } from "../../http/hooks";
-import LocalizedLink from "../localizedLink/localizedLink";
+import CustomIconLink from "../customIconLink";
 import { CustomizedDialogs } from "../dialog/Dialog";
 import FeedbackDialog from "../dialog/FeedbackDialog";
 import * as styles from "./relatedQuestion.module.less";
@@ -49,13 +49,9 @@ export default function RelatedQuestion(props) {
               className={styles.item}
             >
               {isLink ? (
-                <LocalizedLink
-                  to={content}
-                  showIcon={true}
-                  className={styles.link}
-                >
+                <CustomIconLink to={content} className={styles.link}>
                   {question[0]}
-                </LocalizedLink>
+                </CustomIconLink>
               ) : (
                 question[0]
               )}

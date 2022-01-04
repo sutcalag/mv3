@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LocalizedLink from "../localizedLink/localizedLink";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./leftNav.module.less";
 import "./leftNav.less";
 // import { AlgoliaSearch } from '../search/algolia';
@@ -28,6 +28,7 @@ const LeftNav = (props) => {
     className = "",
     mdId = "home",
     isMobile = false,
+    language,
   } = props;
 
   const [treeItems, setTreeItems] = useState([]);
@@ -82,12 +83,12 @@ const LeftNav = (props) => {
           >
             {docVersions.map((i) => (
               <MenuItem key={i} value={i}>
-                <LocalizedLink
+                <Link
                   to={i === "v0.x" ? `/docs/${i}/overview.md` : `/docs/${i}`}
                   className={styles.selectorItem}
                 >
                   {i}
-                </LocalizedLink>
+                </Link>
               </MenuItem>
             ))}
           </Select>
@@ -104,6 +105,7 @@ const LeftNav = (props) => {
         homeUrl={homeUrl}
         homeLabel={homeLabel}
         currentMdId={mdId}
+        language={language}
       />
     </>
   );

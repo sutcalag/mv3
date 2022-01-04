@@ -10,7 +10,6 @@ import lfLogoDark from "../../images/lf_logo_dark.svg";
 import lfLogoLight from "../../images/lf_logo_light.svg";
 import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
-// import LocalizedLink from "../localizedLink/localizedLink";
 import { useWindowSize } from "../../http/hooks";
 
 import { Link, useI18next } from "gatsby-plugin-react-i18next";

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "gatsby-plugin-react-i18next";
 import clsx from "clsx";
 import TreeView from "@mui/lab/TreeView";
 import TreeItem from "@mui/lab/TreeItem";
-import LocalizedLink from "../localizedLink/localizedLink";
+import CustomIconLink from "../customIconLink";
 import "./ExpansionTreeView.less";
 
 const ExpansionTreeView = (props) => {
@@ -16,6 +17,7 @@ const ExpansionTreeView = (props) => {
     homeUrl,
     homeLabel,
     currentMdId,
+    language: lng,
     ...others
   } = props;
   const [expandedIds, setExpandedIds] = useState([]);
@@ -52,6 +54,30 @@ const ExpansionTreeView = (props) => {
     }
   };
 
+  const generateLink = (originUrl, label, linkClassName) => {
+    const externalUrlReg = /^(http|https)/;
+    const isExternal = externalUrlReg.test(originUrl);
+    return isExternal ? (
+      <CustomIconLink
+        to={originUrl}
+        className={clsx("mv3-item-link", {
+          [linkClassName]: linkClassName,
+        })}
+      >
+        {label}
+      </CustomIconLink>
+    ) : (
+      <Link
+        to={originUrl}
+        className={clsx("mv3-item-link", {
+          [linkClassName]: linkClassName,
+        })}
+      >
+        {label}
+      </Link>
+    );
+  };
+
   const generateTreeItem = ({ id, label, link, children }) => {
     return (
       <>
@@ -72,21 +98,7 @@ const ExpansionTreeView = (props) => {
             key={id}
             className={itemClassName}
             nodeId={id}
-            label={
-              link ? (
-                <LocalizedLink
-                  to={link}
-                  className={clsx("mv3-item-link", {
-                    [linkClassName]: linkClassName,
-                  })}
-                  showIcon={true}
-                >
-                  {label}
-                </LocalizedLink>
-              ) : (
-                label
-              )
-            }
+            label={link ? generateLink(link, label, linkClassName) : label}
           />
         )}
       </>
@@ -104,15 +116,15 @@ const ExpansionTreeView = (props) => {
           nodeId={`home-${homeLabel}`}
           className={itemClassName}
           label={
-            <LocalizedLink
+            <Link
               to={homeUrl}
               className={clsx("mv3-item-link", {
                 [linkClassName]: linkClassName,
               })}
-              showIcon={true}
+              language={lng}
             >
               {homeLabel}
-            </LocalizedLink>
+            </Link>
           }
         />
       )}
