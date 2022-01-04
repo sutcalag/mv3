@@ -10,14 +10,15 @@ import lfLogoDark from "../../images/lf_logo_dark.svg";
 import lfLogoLight from "../../images/lf_logo_light.svg";
 import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
-import LocalizedLink from "../localizedLink/localizedLink";
+// import LocalizedLink from "../localizedLink/localizedLink";
 import { useWindowSize } from "../../http/hooks";
 
-// import { useTranslation, I18NextContext } from "gatsby-plugin-react-i18next";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 
 const Header = ({ darkMode = false, locale }) => {
   // const { t } = useTranslation();
   // console.log("I18NextContext", I18NextContext);
+  const { languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   // const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,10 +51,6 @@ const Header = ({ darkMode = false, locale }) => {
     setPath(to);
   }, []);
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-  };
-
   const openTutorial = (open) => {
     let isOpen = open;
     if (isOpen === undefined) {
@@ -72,9 +69,9 @@ const Header = ({ darkMode = false, locale }) => {
 
   const logoSection = (
     <div className={styles.logoSection}>
-      <LocalizedLink to="/">
+      <Link to="/">
         <img src={milvusLogo} alt="milvus-logo" />
-      </LocalizedLink>
+      </Link>
       <span />
       <a
         href="https://lfaidata.foundation/projects/"
@@ -137,42 +134,32 @@ const Header = ({ darkMode = false, locale }) => {
         <nav>
           <ul className={`${styles.flexstart} ${styles.menu}`}>
             <li>
-              <LocalizedLink
-                to="/docs"
-                locale={locale}
-                className={styles.menuLink}
-              >
+              <Link to="/docs" locale={locale} className={styles.menuLink}>
                 Docs
-              </LocalizedLink>
+              </Link>
             </li>
             <li>
-              <a
+              <button
                 ref={tutRef}
                 className={styles.menuLink}
-                href="javascript:void(0)"
                 onClick={openTutorial}
               >
                 Tutorials
-              </a>
+              </button>
             </li>
             <li>
-              <a
+              <button
                 ref={toolRef}
                 className={styles.menuLink}
-                href="javascript:void(0)"
                 onClick={openTool}
               >
                 Tools
-              </a>
+              </button>
             </li>
             <li>
-              <LocalizedLink
-                to="/blog"
-                locale={locale}
-                className={styles.menuLink}
-              >
+              <Link to="/blog" locale={locale} className={styles.menuLink}>
                 Blog
-              </LocalizedLink>
+              </Link>
             </li>
             <li>
               <a className={styles.menuLink} href="#">
@@ -200,12 +187,14 @@ const Header = ({ darkMode = false, locale }) => {
             <MenuItem>Bootcamp</MenuItem>
             <MenuItem>Demo</MenuItem>
             <MenuItem>
-              <LocalizedLink
-                to="https://www.youtube.com/zillizchannel"
+              <a
+                href="https://www.youtube.com/zillizchannel"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.menuLink}
               >
                 Video
-              </LocalizedLink>
+              </a>
             </MenuItem>
           </Menu>
           <Menu
@@ -218,20 +207,24 @@ const Header = ({ darkMode = false, locale }) => {
             }}
           >
             <MenuItem>
-              <LocalizedLink
-                to="https://github.com/zilliztech/attu"
+              <a
+                href="https://github.com/zilliztech/attu"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.menuLink}
               >
                 Attu
-              </LocalizedLink>
+              </a>
             </MenuItem>
             <MenuItem>
-              <LocalizedLink
-                to="https://github.com/zilliztech/milvus_cli"
+              <a
+                href="https://github.com/zilliztech/milvus_cli"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.menuLink}
               >
                 Milvus_CLI
-              </LocalizedLink>
+              </a>
             </MenuItem>
             <MenuItem>Sizing Tool</MenuItem>
           </Menu>
@@ -251,28 +244,24 @@ const Header = ({ darkMode = false, locale }) => {
         </GitHubButton>
         <Select
           value={locale}
-          onChange={handleChange}
           lable="language"
           className={styles.langSelect}
-          renderValue={(v) => {
-            return (
-              <>
-                <FontAwesomeIcon className={styles.global} icon={faGlobe} />
-                <span className={styles.globalText}>{v}</span>
-              </>
-            );
-          }}
+          renderValue={(v) => (
+            <>
+              <FontAwesomeIcon className={styles.global} icon={faGlobe} />
+              <span className={styles.globalText}>{v}</span>
+            </>
+          )}
         >
-          <MenuItem value="cn">
-            <LocalizedLink locale="cn" to={path} key="cn">
-              中文
-            </LocalizedLink>
-          </MenuItem>
-          <MenuItem value="en">
-            <LocalizedLink locale="en" to={path} key="en">
-              English
-            </LocalizedLink>
-          </MenuItem>
+          {languages.map((lng) => {
+            return (
+              <MenuItem key={lng} value={lng}>
+                <Link to={originalPath} language={lng}>
+                  {lng === "en" ? "English" : "中文"}
+                </Link>
+              </MenuItem>
+            );
+          })}
         </Select>
         <button className={styles.startBtn}>Get Started</button>
       </div>
