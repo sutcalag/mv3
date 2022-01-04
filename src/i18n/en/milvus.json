@@ -678,5 +678,8 @@
         }
       ]
     }
+  },
+  "v3trans": {
+    "desc": "every thing for V3 translatino will be put here"
   }
 }

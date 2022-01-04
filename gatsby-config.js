@@ -205,7 +205,7 @@ let gatsbyConfigs = {
           },
           debug: true,
           // keySeparator: false,
-          // nsSeparator: false,
+          nsSeparator: false,
           defaultNS: 'milvus',
           ns: ['milvus'],
         },

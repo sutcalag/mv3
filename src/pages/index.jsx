@@ -1,11 +1,19 @@
 import * as React from "react";
+import { graphql } from "gatsby";
 import "./index.less";
 import Layout from "../components/layout";
+import {
+  Link,
+  Trans,
+  useI18next,
+  I18nextContext,
+} from "gatsby-plugin-react-i18next";
 
 // markup
 const IndexPage = ({ pageContext }) => {
-
   const { locale, versions } = pageContext;
+  const { t, language, routed } = useI18next();
+
   return (
     <main className="main">
       <Layout darkMode={true} locale={locale} versions={versions}>
@@ -19,6 +27,7 @@ const IndexPage = ({ pageContext }) => {
           <div className="banner-grid-container col-12 col-8 col-4">
             <p className="title">
               Vector database built for scalable similarity search
+              {t("tt")}
             </p>
             <p className="subtitle">
               Open-source, highly scalable, and blazing fast
@@ -626,5 +635,19 @@ const IndexPage = ({ pageContext }) => {
     </main>
   );
 };
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          data
+          language
+          ns
+        }
+      }
+    }
+  }
+`;
 
 export default IndexPage;
