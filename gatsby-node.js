@@ -70,35 +70,35 @@ fs.writeFile(
 );
 
 /* create static pages from page folder */
-exports.onCreatePage = ({ page, actions }) => {
-  const { createPage, deletePage } = actions;
-  return new Promise((resolve) => {
-    deletePage(page);
-    Object.keys(locales).map((lang) => {
-      let localizedPath = locales[lang].default
-        ? page.path
-        : locales[lang].path + page.path;
-      if (page.path.includes("tool") && !page.path.includes(".md")) {
-        let toolName = page.path.split("-")[1];
-        toolName = toolName.substring(0, toolName.length - 1);
-        localizedPath = locales[lang].default
-          ? `/tools/${toolName}`
-          : `${locales[lang].path}/tools/${toolName}`;
-      }
+// exports.onCreatePage = ({ page, actions }) => {
+//   const { createPage, deletePage } = actions;
+//   return new Promise((resolve) => {
+//     deletePage(page);
+//     Object.keys(locales).map((lang) => {
+//       let localizedPath = locales[lang].default
+//         ? page.path
+//         : locales[lang].path + page.path;
+//       if (page.path.includes("tool") && !page.path.includes(".md")) {
+//         let toolName = page.path.split("-")[1];
+//         toolName = toolName.substring(0, toolName.length - 1);
+//         localizedPath = locales[lang].default
+//           ? `/tools/${toolName}`
+//           : `${locales[lang].path}/tools/${toolName}`;
+//       }
 
-      return createPage({
-        ...page,
-        path: localizedPath,
-        context: {
-          locale: lang,
-          newestVersion,
-          versions,
-        },
-      });
-    });
-    resolve();
-  });
-};
+//       return createPage({
+//         ...page,
+//         path: localizedPath,
+//         context: {
+//           locale: lang,
+//           newestVersion,
+//           versions,
+//         },
+//       });
+//     });
+//     resolve();
+//   });
+// };
 
 // create cunstom schema for frontmatter
 exports.createSchemaCustomization = ({ actions }) => {

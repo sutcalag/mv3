@@ -82,8 +82,6 @@ let gatsbyConfigs = {
       options: {
         typeName: ({ node }) => {
           switch (node.sourceInstanceName) {
-            case "i18n":
-              return `i18n`;
             case "blogs":
               if (node.relativePath.includes("menuStructure")) {
                 return `menu`;
@@ -115,16 +113,17 @@ let gatsbyConfigs = {
               return `json`;
           }
         },
+        ignore: [`${__dirname}/src/i18n/*`],
       },
     },
     // i18n json data
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     name: `i18n`,
-    //     path: `${__dirname}/src/i18n/`,
-    //   },
-    // },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `i18n`,
+        path: `${__dirname}/src/i18n/`,
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -175,22 +174,61 @@ let gatsbyConfigs = {
     {
       resolve: `gatsby-plugin-sharp`,
     },
-    // {
-    //   resolve: `gatsby-plugin-manifest`,
-    //   options: {
-    //     name: `gatsby-starter-default`,
-    //     short_name: `starter`,
-    //     start_url: `/`,
-    //     // background_color: `#663399`,
-    //     // theme_color: `#329ef7`,
-    //     display: `minimal-ui`,
-    //     icon: `src/images/favicon.png`, // This path is relative to the root of the site.
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `gatsby-starter-default`,
+        short_name: `starter`,
+        start_url: `/`,
+        // background_color: `#663399`,
+        // theme_color: `#329ef7`,
+        display: `minimal-ui`,
+        icon: `src/images/favicon.png`, // This path is relative to the root of the site.
+      },
+    },
     {
       resolve: "gatsby-plugin-zopfli",
     },
     `gatsby-plugin-remove-fingerprints`,
+    {
+      resolve: `gatsby-plugin-react-i18next`,
+      options: {
+        localeJsonSourceName: `i18n`,
+        languages: [`en`, `cn`],
+        defaultLanguage: `en`,
+        // if you are using Helmet, you must include siteUrl, and make sure you add http:https
+        siteUrl: `https://milvus.io/`,
+        // you can pass any i18next options
+        i18nextOptions: {
+          interpolation: {
+            escapeValue: false // not needed for react as it escapes by default
+          },
+          debug: true,
+          // keySeparator: false,
+          // nsSeparator: false,
+          defaultNS: 'milvus',
+          ns: ['milvus'],
+        },
+        // pages: [
+        //   {
+        //     matchPath: '/docs',
+        //     languages: ['en']
+        //   }
+        // ]
+        pages: [
+          // {
+          //   matchPath: '/:lang?/blog/:uid',
+          //   getLanguageFromPath: true,
+          //   excludeLanguages: ['es']
+          // },
+          {
+            matchPath: '/',
+            // getLanguageFromPath: true,
+            languages: ['en','cn']
+          }
+        ]
+      }
+    }
   ],
 };
 
