@@ -261,8 +261,8 @@ const findVersion = (str) => {
     ? match[1]
       ? match[1]
       : env === "preview" && str.includes("preview")
-        ? "preview"
-        : match[1]
+      ? "preview"
+      : match[1]
     : "";
 };
 
@@ -317,13 +317,13 @@ const generatePath = (
   let localizedPath = "";
   if (version && version !== "master") {
     localizedPath =
-      lang === defaultLang ? `/docs/${version}/` : `${lang}/docs/${version}/`;
+      lang === defaultLang ? `/docs/${version}/` : `/${lang}/docs/${version}/`;
   } else {
     // for master branch version -> false
-    localizedPath = lang === defaultLang ? `/docs/` : `${lang}/docs/`;
+    localizedPath = lang === defaultLang ? `/docs/` : `/${lang}/docs/`;
   }
 
-  return needLocal ? `${localizedPath}${id}` : `${id}`;
+  return needLocal ? `${localizedPath}${id}` : `/${id}`;
 };
 
 const getVersionsWithHome = (homeData) => {
@@ -429,7 +429,8 @@ const filterMdWithVersion = (edges) => {
         fileAbsolutePath.includes("communityArticles") ||
         fileAbsolutePath.includes("bootcampArticles") ||
         fileAbsolutePath.includes("/docs/versions/benchmarks/")) &&
-      frontmatter.id && frontmatter.id !== "home.md"
+      frontmatter.id &&
+      frontmatter.id !== "home.md"
     );
   });
 };
@@ -459,10 +460,7 @@ const filterHomeMdWithVersion = (edges) => {
       node: { fileAbsolutePath, frontmatter, html },
     } = cur;
 
-    if (
-      filterVersion(fileAbsolutePath) &&
-      frontmatter.id === "home.md"
-    ) {
+    if (filterVersion(fileAbsolutePath) && frontmatter.id === "home.md") {
       const version = findVersion(fileAbsolutePath) || "master";
       const fileLang = findLang(fileAbsolutePath);
       acc.push({
@@ -1016,8 +1014,8 @@ const generateDocHomeWidthMd = (
       const [start, originPath, end] = link.split('"');
       const formatPath =
         originPath.charAt(0) === "#" ||
-          originPath.charAt(0) === "/" ||
-          originPath.includes("http")
+        originPath.charAt(0) === "/" ||
+        originPath.includes("http")
           ? originPath
           : `${homePath}/${originPath}`;
       return [start, formatPath, end].join('"');
