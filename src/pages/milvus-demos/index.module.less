@@ -1,0 +1,201 @@
+.main {
+  padding-top: 120px;
+  font-family: Inter;
+}
+
+.banner {
+  background: url('../../images/demos/demo-banner.svg') center center no-repeat;
+  background-size: contain;
+  background-color: #000;
+  width: 100%;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    font-size: 40px;
+    line-height: 50px;
+    background: linear-gradient(to bottom, #679EDE, #C4C7FF);
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0;
+    margin-bottom: 28px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  p {
+    text-align: center;
+    font-size: 18px;
+    line-height: 26px;
+    color: #fff;
+    margin: 0;
+  }
+
+}
+
+.content {
+  max-width: 1440px;
+  margin: 0 auto;
+  margin-bottom: 120px;
+
+  .demoList {
+    list-style: none;
+    padding: 120px 90px 227px;
+
+    li:not(:last-child) {
+      margin-bottom: 160px;
+    }
+  }
+
+  .milvusCommunity {
+    display: flex;
+    overflow: hidden;
+
+    .drawWrapper {
+      width: 90px;
+      position: relative;
+
+      .draw {
+        width: 144px;
+        height: 220px;
+        border-radius: 50%;
+        background: linear-gradient(to bottom, #87e0ff, #fff, #fff);
+        position: absolute;
+        right: 20px;
+        top: 0;
+
+        .mask {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          background: #fff;
+          width: 104px;
+          height: 180px;
+          border-radius: 50%;
+        }
+      }
+
+    }
+
+    .join {
+      width: calc(60% - 90px);
+
+      h2 {
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 50px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+    .socialMedia {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .logo {
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 34px;
+
+        span {
+          margin-left: 23px;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .mediaLink {
+        display: inline-block;
+        border: 1px solid #000;
+        color: #000;
+        padding: 10px 20px;
+        font-size: 14px;
+        line-height: 18px;
+        border-radius: 19px;
+      }
+    }
+
+  }
+}
+
+.subscribe {
+  padding: 84px 0 64px 0;
+  position: relative;
+  background: linear-gradient(to right, #d7d4ff 20px, #d6e9fd 200px,#F5F8FB 300px, #F5F8FB 100%);
+  .whiteBlock {
+    width: 300px;
+      background: linear-gradient(to right, #fff, #F5F8FB 300px);
+      position: absolute;
+    }
+    .topBlock{
+      height: 48px;
+      bottom: 64px;
+    }
+    .btmBlock{
+      height: 24px;
+      bottom: 0;
+    }
+
+  .inner {
+    max-width: 1440px;
+    display: flex;
+    margin: 0 auto;
+
+    .section {
+      flex: 1;
+
+      h2 {
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 50px;
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      input {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 19px 30px;
+        border-radius: 29px;
+        margin-right: 20px;
+        width: 440px;
+        border: none;
+        outline: none;
+
+        &:focus {
+          outline: #00A1EA auto 1px;
+        }
+      }
+
+      button {
+        font-size: 16px;
+        line-height: 18px;
+        padding: 20px 40px;
+        border-radius: 29px;
+        background: #00A1EA;
+        border: none;
+        color: #fff;
+      }
+    }
+  }
+}
