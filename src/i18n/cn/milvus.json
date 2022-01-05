@@ -692,7 +692,8 @@
       "yourQuestion": "您的问题",
       "yourQuestionInvalid": "请输入正确的问题。",
       "cancel": "取消",
-      "submit": "提交"
+      "submit": "提交",
+      "tocTitle": "本页目录"
     }
   }
 }

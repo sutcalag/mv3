@@ -701,7 +701,8 @@
       "yourQuestion": "Your Question",
       "yourQuestionInvalid": "Please input valid question.",
       "cancel": "Cancel",
-      "submit": "Submit"
+      "submit": "Submit",
+      "tocTitle": "On this page"
     }
   }
 }

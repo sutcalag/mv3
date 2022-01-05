@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import { useGithubCommits } from "../http/hooks";
 import RelatedQuestion from "../components/relatedQuestion";
 import ScoredFeedback from "../components/scoredFeedback";
+import TocTreeView from "../components/treeView/TocTreeView";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 
@@ -50,6 +51,8 @@ export default function Template({ data, pageContext }) {
 
   const currentWindowSize = useWindowSize();
   const isMobile = ["phone", "tablet"].includes(currentWindowSize);
+  const isPhone = ["phone"].includes(currentWindowSize);
+  const desktop1024 = ["desktop1024"].includes(currentWindowSize);
   const { language, t } = useI18next();
 
   const menuList = allMenus.find(
@@ -102,7 +105,13 @@ export default function Template({ data, pageContext }) {
 
   return (
     <Layout>
-      <div className={clsx("doc-temp-container", { [`is-mobile`]: isMobile })}>
+      <div
+        className={clsx("doc-temp-container", {
+          [`is-desktop1024`]: desktop1024,
+          [`is-mobile`]: isMobile,
+          [`is-phone`]: isPhone,
+        })}
+      >
         <LeftNav
           homeUrl={leftNavHomeUrl}
           homeLabel={t("v3trans.docs.homeTitle")}
@@ -140,6 +149,13 @@ export default function Template({ data, pageContext }) {
             />
           )}
         </div>
+        {!isPhone && (
+          <TocTreeView
+            items={headings}
+            title={t("v3trans.docs.tocTitle")}
+            className="doc-toc-container"
+          />
+        )}
       </div>
     </Layout>
   );
