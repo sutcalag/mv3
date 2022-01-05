@@ -2,6 +2,10 @@ import React from 'react';
 import { Button } from '@mui/material';
 import * as styles from './DemoCard.module.less';
 import { Link } from 'gatsby-plugin-react-i18next';
+import VideoPlayer from '../videoPlayer';
+import InfoSubmitter from '../infoSubmitter';
+
+const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
 const DemoCard = ({
   href,
@@ -9,8 +13,55 @@ const DemoCard = ({
   cover,
   name,
   desc,
-  index
+  index,
+  handelOpenDialog,
+  handleOpenSnackbar
 }) => {
+
+  const submitCallback = (statusCode, unique_email_id, href,) => {
+
+    if (statusCode === 200) {
+      window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
+      handleOpenSnackbar({
+        type: 'success',
+        message: 'Thank you, you have been added to our mailing list!',
+      });
+      //
+    } else {
+      handleOpenSnackbar({
+        type: 'warning',
+        message: 'This email is already subscribed!',
+      });
+      window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
+    }
+    window.location.href = href;
+
+  };
+
+  const handleWatchVideo = () => {
+    const { innerWidth } = window;
+    const clientWidth =
+      innerWidth < 800
+        ? innerWidth
+        : innerWidth < 1200
+          ? innerWidth * 0.8
+          : 1200 * 0.8;
+    const content = () => (<VideoPlayer videoSrc={videoSrc} clientWidth={clientWidth} />);
+    handelOpenDialog(content, name);
+  };
+
+  const handleSubmitEmail = () => {
+    const { search } = window.location;
+    const source = ['utm_source', 'utm_medium', 'utm_campaign'].every(v =>
+      search.includes(v)
+    )
+      ? 'Ads：Reddit'
+      : 'Milvus：demo';
+
+    console.log('source--', source);
+    const content = () => (<InfoSubmitter source={source} href={href} submitCb={submitCallback} />);
+    handelOpenDialog(content, 'Before you go...');
+  };
 
   return (
     <div className={styles.demoCard} style={{ flexDirection: index % 2 === 0 ? 'row' : 'row-reverse' }}>
@@ -22,9 +73,9 @@ const DemoCard = ({
         <h3>{name}</h3>
         <p>{desc}</p>
         <div className={styles.btnGroup}>
-          <button className={styles.tryBtn}>Try Demo</button>
+          <button className={styles.tryBtn} onClick={handleSubmitEmail}>Try Demo</button>
 
-          <button className={styles.watchBtn}>Watch Demo
+          <button className={styles.watchBtn} onClick={handleWatchVideo}>Watch Demo
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

@@ -15,7 +15,7 @@ import { useWindowSize } from "../../http/hooks";
 
 // import { useTranslation, I18NextContext } from "gatsby-plugin-react-i18next";
 
-const Header = ({ darkMode = false, locale }) => {
+const Header = ({ darkMode = false, locale, className = "" }) => {
   // const { t } = useTranslation();
   // console.log("I18NextContext", I18NextContext);
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
@@ -91,7 +91,7 @@ const Header = ({ darkMode = false, locale }) => {
   );
 
   const mobileHead = (
-    <header className={styles.mobileHead}>
+    <header className={`${styles.mobileHead} ${className}`}>
       <div className={`${styles.spaceBetween} col-4 col-8 col-12`}>
         {logoSection}
         <button
@@ -130,7 +130,7 @@ const Header = ({ darkMode = false, locale }) => {
 
   const desktopHead = (
     <header
-      className={`${styles.header} ${isLightHeader ? styles.light : ""} `}
+      className={`${styles.header} ${isLightHeader ? styles.light : ""} ${className}`}
     >
       <div className={styles.flexstart}>
         {logoSection}
