@@ -693,7 +693,15 @@
       "no": "No",
       "contactFollow": "Follow up with me",
       "contactSlack": "Discuss on Slack",
-      "contactGithub": "Discuss on Github"
+      "contactGithub": "Discuss on Github",
+      "feedbackDialogTitle": "We will follow up on your question",
+      "feedbackDialogContent": "Please leave your question here and we will be in touch.",
+      "emailAddress": "Email Address",
+      "emailInvaild": "Please input valid email.",
+      "yourQuestion": "Your Question",
+      "yourQuestionInvalid": "Please input valid question.",
+      "cancel": "Cancel",
+      "submit": "Submit"
     }
   }
 }

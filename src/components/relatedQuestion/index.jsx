@@ -94,6 +94,7 @@ export default function RelatedQuestion(props) {
             open={showFeedbackDialog}
             handleCancel={handleCancelFollowUp}
             handleSubmit={handleCancelFollowUp}
+            trans={trans}
           />
         )}
       </div>

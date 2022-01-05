@@ -684,7 +684,15 @@
       "no": "否",
       "contactFollow": "让我们跟进问题",
       "contactSlack": "在Slack上讨论",
-      "contactGithub": "在Github上讨论"
+      "contactGithub": "在Github上讨论",
+      "feedbackDialogTitle": "我们将会跟进您的问题",
+      "feedbackDialogContent": "请留下您的问题，我们将稍后联系您。",
+      "emailAddress": "您的邮箱",
+      "emailInvaild": "请输入正确的邮箱。",
+      "yourQuestion": "您的问题",
+      "yourQuestionInvalid": "请输入正确的问题。",
+      "cancel": "取消",
+      "submit": "提交"
     }
   }
 }
