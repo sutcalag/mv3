@@ -1,8 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import Select from "@mui/material/Select";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { globalHistory } from "@reach/router";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import milvusLogo from "../../images/milvus_logo.svg";
@@ -10,21 +15,16 @@ import lfLogoDark from "../../images/lf_logo_dark.svg";
 import lfLogoLight from "../../images/lf_logo_light.svg";
 import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
-import LocalizedLink from "../localizedLink/localizedLink";
 import { useWindowSize } from "../../http/hooks";
 
-// import { useTranslation, I18NextContext } from "gatsby-plugin-react-i18next";
-
-const Header = ({ darkMode = false, locale, className = "" }) => {
-  // const { t } = useTranslation();
-  // console.log("I18NextContext", I18NextContext);
+const Header = ({ darkMode = false, className = '' }) => {
+  const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
-  // const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
-  const [path, setPath] = useState("/");
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const isLangOpen = Boolean(anchorEl);
   const toolRef = useRef(null);
   const tutRef = useRef(null);
 
@@ -40,18 +40,13 @@ const Header = ({ darkMode = false, locale, className = "" }) => {
   }, [isLightHeader]);
 
   const currentSize = useWindowSize();
-
   const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
 
-  useEffect(() => {
-    const { pathname } = globalHistory.location;
-    const to = pathname.replace("/en/", "/").replace("/cn", "");
-    console.log("to", to);
-    setPath(to);
-  }, []);
-
-  const handleChange = (e) => {
-    console.log(e.target.value);
+  const handleLangClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleLangClose = () => {
+    setAnchorEl(null);
   };
 
   const openTutorial = (open) => {
@@ -72,9 +67,9 @@ const Header = ({ darkMode = false, locale, className = "" }) => {
 
   const logoSection = (
     <div className={styles.logoSection}>
-      <LocalizedLink to="/">
+      <Link to="/">
         <img src={milvusLogo} alt="milvus-logo" />
-      </LocalizedLink>
+      </Link>
       <span />
       <a
         href="https://lfaidata.foundation/projects/"
@@ -87,6 +82,54 @@ const Header = ({ darkMode = false, locale, className = "" }) => {
           <img src={lfLogoDark} alt="lfai-icon" />
         )}
       </a>
+    </div>
+  );
+
+  const actionBar = (
+    <div className={styles.actionBar}>
+      <div className={styles.flexend}>
+        <GitHubButton
+          type="star"
+          // className="star-btn"
+          href="https://github.com/milvus-io/milvus"
+        >
+          Star
+        </GitHubButton>
+
+        <GitHubButton type="fork" href="https://github.com/milvus-io/milvus">
+          Forks
+        </GitHubButton>
+      </div>
+      <button
+        className={styles.langSelect}
+        aria-controls={isLangOpen ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={isLangOpen ? "true" : undefined}
+        onClick={handleLangClick}
+      >
+        <>
+          <FontAwesomeIcon className={styles.global} icon={faGlobe} />
+          <span className={styles.globalText}>{language}</span>
+        </>
+      </button>
+      <Menu
+        anchorEl={anchorEl}
+        open={isLangOpen}
+        onClose={handleLangClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        {languages.map((lng) => {
+          return (
+            <MenuItem key={lng} value={lng} onClick={handleLangClose}>
+              <Link to={originalPath} language={lng}>
+                {lng === "en" ? "English" : "中文"}
+              </Link>
+            </MenuItem>
+          );
+        })}
+      </Menu>
     </div>
   );
 
@@ -104,25 +147,133 @@ const Header = ({ darkMode = false, locale, className = "" }) => {
         </button>
       </div>
 
-      <div className={`${styles.overlay} ${isMenuOpen ? styles.open : ""}`}>
-        <nav className={styles.nav}>
-          <ul>
-            <li>
-              <a href="#">Docs</a>
-            </li>
-            <li>
-              <a href="#">Tutorials</a>
-            </li>
-            <li>
-              <a href="#">Tools</a>
-            </li>
-            <li>
-              <a href="#">Blog</a>
-            </li>
-            <li>
-              <a href="#">Community</a>
-            </li>
-          </ul>
+      <div className={`${styles.overlay}  ${isMenuOpen ? styles.open : ""}`}>
+        <nav className={`${styles.nav} col-4 col-8 col-12`}>
+          <List
+            sx={{ width: "100%" }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+          >
+            <Link to="/docs" className={styles.menuLink}>
+              <ListItemButton>
+                <ListItemText primary={"Docs"} />
+                <ExpandMore className={styles.turnLeft} />
+              </ListItemButton>
+            </Link>
+
+            <Divider variant="middle" />
+
+            <ListItemButton
+              onClick={() => {
+                openTutorial(!isTutOpen);
+              }}
+            >
+              <ListItemText primary="Tutorials" />
+              {isTutOpen ? (
+                <ExpandMore />
+              ) : (
+                <ExpandMore className={styles.turnLeft} />
+              )}
+            </ListItemButton>
+
+            <Collapse in={isTutOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemText
+                  primary={
+                    <>
+                      <Link to="/bootcamp" className={styles.mobileMenuLink}>
+                        Bootcamp
+                      </Link>
+                      <Link to="/demo" className={styles.mobileMenuLink}>
+                        Demo
+                      </Link>
+                      <a
+                        href="https://www.youtube.com/zillizchannel"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.mobileMenuLink}
+                      >
+                        Video
+                      </a>
+                    </>
+                  }
+                />
+              </List>
+            </Collapse>
+
+            <Divider variant="middle" />
+
+            <ListItemButton
+              onClick={() => {
+                openTool(!isToolOpen);
+              }}
+            >
+              <ListItemText primary="Tools" />
+              {isToolOpen ? (
+                <ExpandMore />
+              ) : (
+                <ExpandMore className={styles.turnLeft} />
+              )}
+            </ListItemButton>
+
+            <Collapse in={isToolOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemText
+                  primary={
+                    <>
+                      <a
+                        href="https://github.com/zilliztech/attu"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.mobileMenuLink}
+                      >
+                        Attu
+                      </a>
+                      <a
+                        href="https://github.com/zilliztech/milvus_cli"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.mobileMenuLink}
+                      >
+                        Milvus_CLI
+                      </a>
+                      <Link to="/" className={styles.mobileMenuLink}>
+                        Sizing Tool
+                      </Link>
+                    </>
+                  }
+                />
+              </List>
+            </Collapse>
+
+            <Divider variant="middle" />
+
+            <Link to="/blogs" className={styles.menuLink}>
+              <ListItemButton>
+                <ListItemText primary="Blog" />
+                <ExpandMore className={styles.turnLeft} />
+              </ListItemButton>
+            </Link>
+
+            <Divider variant="middle" />
+
+            <Link to="/community" className={styles.menuLink}>
+              <ListItemButton>
+                <ListItemText primary="Community" />
+                <ExpandMore className={styles.turnLeft} />
+              </ListItemButton>
+            </Link>
+
+            <Divider variant="middle" />
+          </List>
+
+          {actionBar}
+
+          <Divider
+            variant="fullwidth"
+            sx={{ position: "absolute", bottom: "78px", width: "100%" }}
+          />
+          <button className={styles.startBtn}>Get Started</button>
         </nav>
       </div>
     </header>
@@ -137,42 +288,32 @@ const Header = ({ darkMode = false, locale, className = "" }) => {
         <nav>
           <ul className={`${styles.flexstart} ${styles.menu}`}>
             <li>
-              <LocalizedLink
-                to="/docs"
-                locale={locale}
-                className={styles.menuLink}
-              >
+              <Link to="/docs" className={styles.menuLink}>
                 Docs
-              </LocalizedLink>
+              </Link>
             </li>
             <li>
-              <a
+              <button
                 ref={tutRef}
                 className={styles.menuLink}
-                href="javascript:void(0)"
                 onClick={openTutorial}
               >
                 Tutorials
-              </a>
+              </button>
             </li>
             <li>
-              <a
+              <button
                 ref={toolRef}
                 className={styles.menuLink}
-                href="javascript:void(0)"
                 onClick={openTool}
               >
                 Tools
-              </a>
+              </button>
             </li>
             <li>
-              <LocalizedLink
-                to="/blog"
-                locale={locale}
-                className={styles.menuLink}
-              >
+              <Link to="/blog" className={styles.menuLink}>
                 Blog
-              </LocalizedLink>
+              </Link>
             </li>
             <li>
               <a className={styles.menuLink} href="#">
@@ -200,12 +341,14 @@ const Header = ({ darkMode = false, locale, className = "" }) => {
             <MenuItem>Bootcamp</MenuItem>
             <MenuItem>Demo</MenuItem>
             <MenuItem>
-              <LocalizedLink
-                to="https://www.youtube.com/zillizchannel"
+              <a
+                href="https://www.youtube.com/zillizchannel"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.menuLink}
               >
                 Video
-              </LocalizedLink>
+              </a>
             </MenuItem>
           </Menu>
           <Menu
@@ -218,62 +361,32 @@ const Header = ({ darkMode = false, locale, className = "" }) => {
             }}
           >
             <MenuItem>
-              <LocalizedLink
-                to="https://github.com/zilliztech/attu"
+              <a
+                href="https://github.com/zilliztech/attu"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.menuLink}
               >
                 Attu
-              </LocalizedLink>
+              </a>
             </MenuItem>
             <MenuItem>
-              <LocalizedLink
-                to="https://github.com/zilliztech/milvus_cli"
+              <a
+                href="https://github.com/zilliztech/milvus_cli"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.menuLink}
               >
                 Milvus_CLI
-              </LocalizedLink>
+              </a>
             </MenuItem>
             <MenuItem>Sizing Tool</MenuItem>
           </Menu>
         </nav>
       </div>
-      <div className={styles.actionBar}>
-        <GitHubButton
-          type="star"
-          // className="star-btn"
-          href="https://github.com/milvus-io/milvus"
-        >
-          Star
-        </GitHubButton>
 
-        <GitHubButton type="fork" href="https://github.com/milvus-io/milvus">
-          Forks
-        </GitHubButton>
-        <Select
-          value={locale}
-          onChange={handleChange}
-          lable="language"
-          className={styles.langSelect}
-          renderValue={(v) => {
-            return (
-              <>
-                <FontAwesomeIcon className={styles.global} icon={faGlobe} />
-                <span className={styles.globalText}>{v}</span>
-              </>
-            );
-          }}
-        >
-          <MenuItem value="cn">
-            <LocalizedLink locale="cn" to={path} key="cn">
-              中文
-            </LocalizedLink>
-          </MenuItem>
-          <MenuItem value="en">
-            <LocalizedLink locale="en" to={path} key="en">
-              English
-            </LocalizedLink>
-          </MenuItem>
-        </Select>
+      <div className={styles.flexend}>
+        {actionBar}
         <button className={styles.startBtn}>Get Started</button>
       </div>
     </header>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./blogListTemplate.module.less";
 import Seo from "../components/seo";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
-import LocalizedLink from "../components/localizedLink/localizedLink";
 
 import Tags from "../components/tags";
 import { globalHistory } from "@reach/router";
@@ -99,9 +99,9 @@ const BlogTemplate = ({ data, pageContext }) => {
         </div>
         <div className={`${styles.featuredBlogContent} col-7`}>
           <p className={styles.tag}>{featuredBlog.tags.join(" ")}</p>
-          <LocalizedLink locale={locale} to={featuredBlog.id}>
+          <Link to={featuredBlog.id}>
             <p className={styles.title}>{featuredBlog.title}</p>
-          </LocalizedLink>
+          </Link>
 
           <p className={styles.desc}>{featuredBlog.desc}</p>
         </div>

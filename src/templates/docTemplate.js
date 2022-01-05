@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
 import LeftNav from "../components/docLeftNavigation";
 import HorizontalBlogCard from "../components/card/HorizontalBlogCard";
@@ -9,25 +10,18 @@ import Typography from "@mui/material/Typography";
 import { useGithubCommits } from "../http/hooks";
 import RelatedQuestion from "../components/relatedQuestion";
 import ScoredFeedback from "../components/scoredFeedback";
+import TocTreeView from "../components/treeView/TocTreeView";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 
-export const pageQuery = graphql`
-  query ($locale: String, $fileAbsolutePath: String) {
-    markdownRemark(fileAbsolutePath: { eq: $fileAbsolutePath }) {
-      frontmatter {
-        title
-      }
-    }
-    allFile(
-      filter: {
-        name: { eq: $locale }
-        relativeDirectory: { regex: "/(?:layout)/" }
-      }
-    ) {
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
       edges {
         node {
-          relativeDirectory
+          data
+          language
+          ns
         }
       }
     }
@@ -57,6 +51,9 @@ export default function Template({ data, pageContext }) {
 
   const currentWindowSize = useWindowSize();
   const isMobile = ["phone", "tablet"].includes(currentWindowSize);
+  const isPhone = ["phone"].includes(currentWindowSize);
+  const desktop1024 = ["desktop1024"].includes(currentWindowSize);
+  const { language, t } = useI18next();
 
   const menuList = allMenus.find(
     (v) =>
@@ -83,7 +80,7 @@ export default function Template({ data, pageContext }) {
     versions: versions.filter((v) => v !== "master"),
   };
   const leftNavMenus =
-    menuConfig.menuList.find((menu) => menu.lang === locale)?.menuList || [];
+    menuConfig?.menuList?.find((menu) => menu.lang === locale)?.menuList || [];
   const leftNavHomeUrl =
     version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
 
@@ -108,10 +105,16 @@ export default function Template({ data, pageContext }) {
 
   return (
     <Layout>
-      <div className={clsx("doc-temp-container", { [`is-mobile`]: isMobile })}>
+      <div
+        className={clsx("doc-temp-container", {
+          [`is-desktop1024`]: desktop1024,
+          [`is-mobile`]: isMobile,
+          [`is-phone`]: isPhone,
+        })}
+      >
         <LeftNav
           homeUrl={leftNavHomeUrl}
-          homeLabel={versionConfig.homeTitle}
+          homeLabel={t("v3trans.docs.homeTitle")}
           menus={leftNavMenus}
           apiMenus={allApiMenus}
           pageType="doc"
@@ -120,6 +123,8 @@ export default function Template({ data, pageContext }) {
           docVersions={versionConfig.versions}
           mdId={mdId}
           isMobile={isMobile}
+          language={language}
+          trans={t}
         />
         <div
           className={clsx("doc-content-container", {
@@ -128,7 +133,11 @@ export default function Template({ data, pageContext }) {
           })}
         >
           {homeData ? (
-            <HomeContent homeData={homeData} newestBlog={newestBlog} />
+            <HomeContent
+              homeData={homeData}
+              newestBlog={newestBlog}
+              trans={t}
+            />
           ) : (
             <DocContent
               htmlContent={mdHtml}
@@ -136,16 +145,24 @@ export default function Template({ data, pageContext }) {
               mdId={mdId}
               relatedKey={relatedKey}
               isMobile={isMobile}
+              trans={t}
             />
           )}
         </div>
+        {!isPhone && (
+          <TocTreeView
+            items={headings}
+            title={t("v3trans.docs.tocTitle")}
+            className="doc-toc-container"
+          />
+        )}
       </div>
     </Layout>
   );
 }
 
 const HomeContent = (props) => {
-  const { homeData, newestBlog = [] } = props;
+  const { homeData, newestBlog = [], trans } = props;
   return (
     <>
       <div
@@ -154,7 +171,7 @@ const HomeContent = (props) => {
       />
       <Typography component="section" className="doc-home-blog">
         <Typography variant="h2" component="h2">
-          Blog
+          {trans("v3trans.docs.blogTitle")}
         </Typography>
         <HorizontalBlogCard blogData={newestBlog[0]} />
       </Typography>
@@ -178,7 +195,8 @@ const GitCommitInfo = (props) => {
 };
 
 const DocContent = (props) => {
-  const { htmlContent, commitInfo, mdId, faq, relatedKey, isMobile } = props;
+  const { htmlContent, commitInfo, mdId, faq, relatedKey, isMobile, trans } =
+    props;
   //! TO REMOVE
   const faqMock = {
     contact: {
@@ -216,16 +234,21 @@ const DocContent = (props) => {
         />
         {faqMock && (
           <RelatedQuestion
-            title={faqMock.question.title}
+            title={trans("v3trans.docs.faqTitle")}
             contact={faqMock.contact}
             relatedKey={relatedKey}
             isMobile={isMobile}
+            trans={trans}
           />
         )}
         {commitInfo?.message && (
-          <GitCommitInfo commitInfo={commitInfo} mdId={mdId} />
+          <GitCommitInfo
+            commitInfo={commitInfo}
+            mdId={mdId}
+            commitTrans={trans("v3trans.docs.commitTrans")}
+          />
         )}
-        <ScoredFeedback pageId={mdId} />
+        <ScoredFeedback trans={trans} pageId={mdId} />
       </div>
     </>
   );

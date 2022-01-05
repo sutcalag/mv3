@@ -1,13 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Header from '../header';
-import * as styles from './index.module.less';
+import React, { useState, useRef, useEffect } from "react";
+import Header from "../header";
+import * as styles from "./index.module.less";
 
-const Layout = ({ darkMode, children, locale }) => {
-
+const Layout = ({ darkMode, children }) => {
   return (
     <>
-      <Header darkMode={darkMode} locale={locale}
-      />
+      <Header darkMode={darkMode} />
       {children}
       {/* <Footer footer={footer} locale={locale} className={styles.footer} /> */}
     </>

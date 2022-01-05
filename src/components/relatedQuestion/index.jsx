@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import { useGetFaq } from "../../http/hooks";
-import LocalizedLink from "../localizedLink/localizedLink";
+import CustomIconLink from "../customIconLink";
 import { CustomizedDialogs } from "../dialog/Dialog";
 import FeedbackDialog from "../dialog/FeedbackDialog";
 import * as styles from "./relatedQuestion.module.less";
@@ -9,7 +9,7 @@ import clsx from "clsx";
 import "../../css/variables/main.less";
 
 export default function RelatedQuestion(props) {
-  const { title, contact, relatedKey, isMobile } = props;
+  const { title, contact, relatedKey, isMobile, trans } = props;
   const [showModal, setShowModal] = useState(false);
   const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState({});
@@ -49,13 +49,9 @@ export default function RelatedQuestion(props) {
               className={styles.item}
             >
               {isLink ? (
-                <LocalizedLink
-                  to={content}
-                  showIcon={true}
-                  className={styles.link}
-                >
+                <CustomIconLink to={content} className={styles.link}>
                   {question[0]}
-                </LocalizedLink>
+                </CustomIconLink>
               ) : (
                 question[0]
               )}
@@ -65,7 +61,7 @@ export default function RelatedQuestion(props) {
       </ul>
       <div className={clsx(styles.faqLinks, { [styles.isMobile]: isMobile })}>
         <Typography variant="h6" component="h3" className={styles.subTitle}>
-          Didn't find what you need?
+          {trans("v3trans.docs.faqBtnGroupTitle")}
         </Typography>
         <div className={styles.btnGroups}>
           <button
@@ -74,7 +70,7 @@ export default function RelatedQuestion(props) {
               handleClickFollowUp();
             }}
           >
-            {contact.follow.label}
+            {trans("v3trans.docs.contactFollow")}
           </button>
           <a
             className={clsx("secondaryBtnSm", styles.sBtn)}
@@ -82,7 +78,7 @@ export default function RelatedQuestion(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {contact.slack.label}
+            {trans("v3trans.docs.contactSlack")}
           </a>
           <a
             className={clsx("secondaryBtnSm", styles.sBtn)}
@@ -90,7 +86,7 @@ export default function RelatedQuestion(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {contact.github.label}
+            {trans("v3trans.docs.contactGithub")}
           </a>
         </div>
         {showFeedbackDialog && (
@@ -98,6 +94,7 @@ export default function RelatedQuestion(props) {
             open={showFeedbackDialog}
             handleCancel={handleCancelFollowUp}
             handleSubmit={handleCancelFollowUp}
+            trans={trans}
           />
         )}
       </div>

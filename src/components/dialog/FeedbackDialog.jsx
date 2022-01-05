@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { sendQuestion } from "../../http";
 
 export default function FormDialog(props) {
-  const { open, handleCancel, handleSubmit, title, content } = props;
+  const { open, handleCancel, handleSubmit, trans } = props;
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [question, setQuestion] = useState("");
@@ -52,41 +52,42 @@ export default function FormDialog(props) {
   return (
     <div>
       <Dialog open={open} onClose={handleCancelClick}>
-        <DialogTitle>
-          {title || "We will follow up on your question"}
-        </DialogTitle>
+        <DialogTitle>{trans("v3trans.docs.feedbackDialogTitle")}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {content ||
-              "Please leave your question here and we will be in touch."}
+            {trans("v3trans.docs.feedbackDialogContent")}
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
             id="email"
-            label="Email Address"
+            label={trans("v3trans.docs.emailAddress")}
             type="email"
             fullWidth
             variant="standard"
             error={!isEmailValid}
-            helperText={!isEmailValid && "Please input valid email."}
+            helperText={!isEmailValid && trans("v3trans.docs.emailInvaild")}
             onChange={handleEmailChange}
           />
           <TextField
             margin="dense"
             id="question"
-            label="Your Question"
+            label={trans("v3trans.docs.yourQuestion")}
             multiline
             rows={4}
             fullWidth
             variant="standard"
             error={!isQuestionValid}
-            helperText={!isQuestionValid && "Please input valid question."}
+            helperText={
+              !isQuestionValid && trans("v3trans.docs.yourQuestionInvalid")
+            }
             onChange={handleQuestionChange}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelClick}>Cancel</Button>
+          <Button onClick={handleCancelClick}>
+            {trans("v3trans.docs.cancel")}
+          </Button>
           <Button
             onClick={handleSubmitClick}
             disabled={
@@ -95,7 +96,7 @@ export default function FormDialog(props) {
                 : !isEmailValid && !isQuestionValid
             }
           >
-            Submit
+            {trans("v3trans.docs.submit")}
           </Button>
         </DialogActions>
       </Dialog>

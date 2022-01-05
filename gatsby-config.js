@@ -201,13 +201,13 @@ let gatsbyConfigs = {
         // you can pass any i18next options
         i18nextOptions: {
           interpolation: {
-            escapeValue: false // not needed for react as it escapes by default
+            escapeValue: false, // not needed for react as it escapes by default
           },
           debug: true,
           // keySeparator: false,
           nsSeparator: false,
-          defaultNS: 'milvus',
-          ns: ['milvus'],
+          defaultNS: "milvus",
+          ns: ["milvus"],
         },
         // pages: [
         //   {
@@ -221,14 +221,32 @@ let gatsbyConfigs = {
           //   getLanguageFromPath: true,
           //   excludeLanguages: ['es']
           // },
+          // {
+          //   matchPath: "/",
+          //   // getLanguageFromPath: true,
+          //   languages: ["en", "cn"],
+          // },
           {
-            matchPath: '/',
-            // getLanguageFromPath: true,
-            languages: ['en','cn']
-          }
-        ]
-      }
-    }
+            matchPath: "/:lang?/docs(.*)",
+            getLanguageFromPath: true,
+            excludeLanguages: ["cn"],
+            // languages: ["en", "cn"],
+          },
+          // {
+          //   matchPath: "/:lang?/docs",
+          //   getLanguageFromPath: true,
+          //   excludeLanguages: ["cn"],
+          //   // languages: ["en", "cn"],
+          // },
+          {
+            matchPath: "/:lang?/api-reference/(.*)",
+            getLanguageFromPath: true,
+            excludeLanguages: ["cn"],
+            // languages: ["en", "cn"],
+          },
+        ],
+      },
+    },
   ],
 };
 
