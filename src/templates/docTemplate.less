@@ -385,6 +385,10 @@
   padding-top: 120px;
   display: grid;
   grid-template-columns: 1fr 50% 1fr;
+
+  &.home {
+    grid-template-columns: 25% 75%;
+  }
 }
 
 .banner {
@@ -428,6 +432,7 @@
 
   &.docHome {
     padding-left: 0;
+    padding-right: 0;
   }
 
   .doc-home-blog {
@@ -635,6 +640,10 @@
 
 .is-mobile.doc-temp-container {
   grid-template-columns: 3fr 1fr;
+
+  &.home {
+    grid-template-columns: 1fr;
+  }
 
   .left-nav,
   .doc-toc-container {
