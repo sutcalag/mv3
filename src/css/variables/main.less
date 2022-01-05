@@ -24,8 +24,8 @@ a {
   line-height: 18px;
   border: 0;
 
-  @media @phone {
-    height: 52px;
+  @media @phone, @tablet, @desktop1024 {
+    height: 38px;
     padding: 10px 20px;
     font-size: 14px;
   }
@@ -34,7 +34,6 @@ a {
 
 .buttonSm {
   .button;
-
   height: 38px;
   padding: 10px 20px;
   font-size: 14px;
@@ -80,6 +79,11 @@ a {
 .flexend {
   display: flex;
   justify-content: flex-end;
+}
+
+.flexcenter {
+  display: flex;
+  justify-content: center;
 }
 
 .spaceBetween {

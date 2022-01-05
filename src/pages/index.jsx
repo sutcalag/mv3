@@ -11,12 +11,11 @@ import {
 
 // markup
 const IndexPage = ({ pageContext }) => {
-  const { locale, versions } = pageContext;
   const { t, language, routed } = useI18next();
 
   return (
     <main className="main">
-      <Layout darkMode={true} locale={locale} versions={versions}>
+      <Layout darkMode={true}>
         <div className="banner">
           <div className="shooting_star_container1">
             <div className="shooting_star"></div>
