@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./leftNav.module.less";
 import "./leftNav.less";
@@ -35,6 +35,9 @@ const LeftNav = (props) => {
   const [treeItems, setTreeItems] = useState([]);
   const [selectedVersion, setSelectedVersion] = useState(currentVersion);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const showSearch = useMemo(() => {
+    return pageType === "doc" || pageType === "api";
+  }, []);
 
   useEffect(() => {
     const generateMdMenuList = mdMenuListFactory(
@@ -132,13 +135,14 @@ const LeftNav = (props) => {
         }}
         className={styles.drawer}
       >
-        <AlgoliaSearch locale={locale} version={version} />
+        {showSearch && <AlgoliaSearch locale={locale} version={version} />}
+
         {generateContent()}
       </Drawer>
     </>
   ) : (
     <aside className={clsx(className, "left-nav", styles.aside)}>
-      <AlgoliaSearch locale={locale} version={version} />
+      {showSearch && <AlgoliaSearch locale={locale} version={version} />}
       {generateContent()}
     </aside>
   );
