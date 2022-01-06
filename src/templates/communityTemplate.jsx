@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import "./communityTemplate.less";
+import "./commonDocTemplate.less";
 import LeftNav from "../components/leftNavigation";
 import TocTreeView from "../components/treeView/TocTreeView";
 
@@ -71,7 +72,7 @@ export default function Template({ data, pageContext }) {
         />
         <div
           className={clsx("doc-content-container", {
-            docHome: isHomePage,
+            [`community-home`]: isHomePage,
             [`is-mobile`]: isMobile,
           })}
         >
