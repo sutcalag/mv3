@@ -3,12 +3,12 @@ import Header from "../header";
 import Footer from "../footer";
 import * as styles from "./index.module.less";
 
-const Layout = ({ darkMode, children, t }) => {
+const Layout = ({ darkMode, children, showFooter = true, t }) => {
   return (
     <>
       <Header darkMode={darkMode} t={t} />
       {children}
-      <Footer t={t} />
+      {showFooter && <Footer t={t} />}
     </>
   );
 };

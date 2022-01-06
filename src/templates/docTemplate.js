@@ -16,6 +16,7 @@ import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import Aside from "../components/aside";
 import Seo from "../components/seo";
+import Footer from "../components/footer";
 
 export const query = graphql`
   query ($language: String!) {
@@ -131,7 +132,7 @@ export default function Template({ data, pageContext }) {
       : `${headings[0] && headings[0].value}`;
 
   return (
-    <Layout t={t}>
+    <Layout t={t} showFooter={false}>
       <Seo
         title={title}
         lang={locale}
@@ -184,6 +185,7 @@ export default function Template({ data, pageContext }) {
               trans={t}
             />
           )}
+          {/* <Footer t={t} /> */}
         </div>
         {!isPhone && (
           <Aside

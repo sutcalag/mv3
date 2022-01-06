@@ -50,7 +50,7 @@ export default function Template({ data, pageContext }) {
     menuList?.find((menu) => menu.lang === locale)?.menuList || [];
 
   return (
-    <Layout t={t}>
+    <Layout t={t} showFooter={false}>
       <div
         className={clsx("doc-temp-container", {
           [`is-desktop1024`]: desktop1024,
