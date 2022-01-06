@@ -37,7 +37,7 @@ const LeftNav = (props) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const showSearch = useMemo(() => {
     return pageType === "doc" || pageType === "api";
-  }, []);
+  }, [pageType]);
 
   useEffect(() => {
     const generateMdMenuList = mdMenuListFactory(
