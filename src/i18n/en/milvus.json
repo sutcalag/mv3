@@ -714,7 +714,10 @@
         "demo": "demo",
         "video": "video",
         "getstarted": "Get Started",
-        "about": "About"
+        "about": "About",
+        "getinvolved": "Get involved",
+        "repo": "Repo",
+        "forum": "Forum"
       }
     }
   }

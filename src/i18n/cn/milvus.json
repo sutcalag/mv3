@@ -705,7 +705,10 @@
         "demo": "示例",
         "video": "视频",
         "getstarted": "开始",
-        "about": "关于"
+        "about": "关于",
+        "getinvolved": "开始参与",
+        "repo": "项目地址",
+        "forum": "论坛"
       }
     }
   }
