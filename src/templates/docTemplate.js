@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
-import LeftNav from "../components/docLeftNavigation";
+import LeftNav from "../components/leftNavigation";
 import HorizontalBlogCard from "../components/card/HorizontalBlogCard";
 import { graphql } from "gatsby";
 import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
+import "./commonDocTemplate.less";
 import Typography from "@mui/material/Typography";
 import { useGithubCommits } from "../http/hooks";
 import RelatedQuestion from "../components/relatedQuestion";
@@ -13,8 +14,9 @@ import ScoredFeedback from "../components/scoredFeedback";
 import TocTreeView from "../components/treeView/TocTreeView";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
-import Aside from '../components/aside'
+import Aside from "../components/aside";
 import Seo from "../components/seo";
+import Footer from "../components/footer";
 
 export const query = graphql`
   query ($language: String!) {
@@ -130,7 +132,7 @@ export default function Template({ data, pageContext }) {
       : `${headings[0] && headings[0].value}`;
 
   return (
-    <Layout t={t}>
+    <Layout t={t} showFooter={false}>
       <Seo
         title={title}
         lang={locale}
@@ -143,6 +145,7 @@ export default function Template({ data, pageContext }) {
           [`is-desktop1024`]: desktop1024,
           [`is-mobile`]: isMobile,
           [`is-phone`]: isPhone,
+          [`home`]: homeData,
         })}
       >
         <LeftNav
@@ -162,7 +165,7 @@ export default function Template({ data, pageContext }) {
         />
         <div
           className={clsx("doc-content-container", {
-            docHome: homeData,
+            [`doc-home`]: homeData,
             [`is-mobile`]: isMobile,
           })}
         >
@@ -182,14 +185,15 @@ export default function Template({ data, pageContext }) {
               trans={t}
             />
           )}
+          {/* <Footer t={t} /> */}
         </div>
         {!isPhone && (
-          <Aside 
+          <Aside
             locale={locale}
             version={version}
             editPath={editPath}
             mdTitle={headings[0]}
-            category='doc'
+            category="doc"
             isHome={!!homeData}
             items={headings}
             title={t("v3trans.docs.tocTitle")}

@@ -39,13 +39,15 @@ const TocTreeView = (props) => {
         depth,
         children: [],
       };
-      if (depth === 1) {
+      if (depth === 1 || idx === 0) {
         prev.push(newItem);
         return prev;
       }
       const parentItem = getParent(prev, newItem);
       if (parentItem) {
         parentItem.children.push(newItem);
+      } else {
+        prev.push(newItem);
       }
       return prev;
     }, []);

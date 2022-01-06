@@ -147,6 +147,7 @@ let gatsbyConfigs = {
             options: {
               maxWidth: 1000,
               quality: 100,
+              backgroundColor: "transparent",
             },
           },
           {
@@ -230,7 +231,7 @@ let gatsbyConfigs = {
             getLanguageFromPath: true,
             excludeLanguages: ["cn"],
             // languages: ["en", "cn"],
-          }
+          },
         ],
       },
     },

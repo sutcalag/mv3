@@ -512,24 +512,14 @@ const filterCommunityMenus = (edges) => {
 /**
  * filter out community menus from allFile
  * get community page data: home
- * @param {*} edges allFile.edges from graphql query response
+ * @param {*} edges allMarkdownRemark.edges from graphql query response
  * @returns  {array} {nodes} for community home
  */
 const filterCommunityHome = (edges) => {
-  return edges
-    .filter(
-      ({ node: { childCommunity, absolutePath } }) =>
-        childCommunity !== null && absolutePath.includes("communityHome")
-    )
-    .map(({ node: { absolutePath, childCommunity } }) => {
-      const language = absolutePath.includes("/en") ? "en" : "cn";
-      const data = childCommunity;
-      return {
-        language,
-        data,
-        path: absolutePath,
-      };
-    });
+  return edges.filter(
+    ({ node: { fileAbsolutePath, frontmatter } }) =>
+      frontmatter.id && fileAbsolutePath.includes("communityHome")
+  );
 };
 
 const filterBootcampMd = (edges) => {
@@ -581,7 +571,7 @@ const filterBootcampHome = (edges) => {
 const handleCommunityData = (allMarkdownRemark, allFile) => {
   const communityMd = filterCommunityMd(allMarkdownRemark);
   const communityMenu = filterCommunityMenus(allFile);
-  const communityHome = filterCommunityHome(allFile);
+  const communityHome = filterCommunityHome(allMarkdownRemark);
   return { communityMd, communityMenu, communityHome };
 };
 
@@ -722,18 +712,23 @@ const generateCommunityHome = (
   createPage,
   { nodes: communityHome, template: communityTemplate, menu: communityMenu }
 ) => {
-  communityHome.forEach(({ language, data, path }) => {
+  communityHome.forEach(({ node }) => {
+    const {
+      fileAbsolutePath,
+      frontmatter: { id: fileId },
+      html,
+    } = node;
+    const fileLang = findLang(fileAbsolutePath);
     createPage({
-      path: language === "en" ? "/community" : `/${language}/community`,
+      path: fileLang === "en" ? "/community" : `/${fileLang}/community`,
       component: communityTemplate,
       context: {
-        locale: language,
-        fileAbsolutePath: path,
-        homeData: data,
-        html: null,
+        locale: fileLang,
+        fileAbsolutePath,
+        html,
         headings: [],
         menuList: communityMenu,
-        activePost: "community",
+        activePost: fileId,
         editPath: null,
         isCommunity: true,
       },
@@ -1020,15 +1015,7 @@ const generateDocHomeWidthMd = (
           : `${homePath}/${originPath}`;
       return [start, formatPath, end].join('"');
     });
-    let doc = HTMLParser.parse(newHtml);
-    const title = doc.querySelector("h1#Welcome-to-Milvus-Docs");
-    const titleHtml = title?.outerHTML;
-    const subTitle = doc.querySelector("h1#Welcome-to-Milvus-Docs + p");
-    const subTitleHtml = subTitle?.outerHTML;
-    subTitle?.remove();
-    title?.replaceWith(`<div class="banner">${titleHtml}${subTitleHtml}</div>`);
-    // return newHtml;
-    return doc.outerHTML;
+    return newHtml;
   };
 
   homeMd.forEach(({ language, html, path, version }) => {

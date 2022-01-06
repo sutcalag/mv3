@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
-import LeftNav from "../components/docLeftNavigation";
+import LeftNav from "../components/leftNavigation";
 import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
-import Aside from '../components/aside'
+import Aside from "../components/aside";
 
 export const query = graphql`
   query ($language: String!) {
@@ -111,7 +111,7 @@ export default function Template({ data, pageContext }) {
     ) || [];
 
   return (
-    <Layout t={t}>
+    <Layout t={t} showFooter={false}>
       <div className={clsx("doc-temp-container", { [`is-mobile`]: isMobile })}>
         <LeftNav
           homeUrl={leftNavHomeUrl}
@@ -137,9 +137,9 @@ export default function Template({ data, pageContext }) {
           ></div>
         </div>
         {!isMobile && (
-          <Aside 
+          <Aside
             apiReferenceData={apiReferenceData}
-            category='api'
+            category="api"
             isHome={false}
           />
         )}

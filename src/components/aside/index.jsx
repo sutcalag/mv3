@@ -10,6 +10,7 @@ import {
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./index.module.less";
+import clsx from "clsx";
 
 const result = {
   doc: {},
@@ -174,7 +175,7 @@ const Aside = (props) => {
     );
   };
   return (
-    <section className={styles.rightNavWrapper}>
+    <section className={clsx("right-nav", styles.rightNavWrapper)}>
       {!isHome && (
         <>
           {isShowBtnGroup && (
