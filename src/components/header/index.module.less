@@ -1,6 +1,4 @@
-@import '../../css/variables/fontStyle.less';
-@import '../../css/variables/main.less';
-
+@import "../../css/variables/main.less";
 
 .header {
   align-items: center;
@@ -15,8 +13,7 @@
 
   &.light {
     background-color: white;
-    position: fixed;
-    transition: all .25s;
+    position: sticky;
     width: 100%;
 
     .logoSection {
@@ -39,31 +36,36 @@
       color: black;
     }
   }
+}
 
-  .actionBar {
-    .flexend;
-    align-items: center;
+.actionBar {
+  .flexend;
+  align-items: center;
+  flex-wrap: wrap;
 
-    .langSelect {
-      margin-left: 15px;
-      margin-right: 35px;
+  @media @phone, @tablet, @desktop1024 {
+    .spaceBetween;
+    margin: 20px 0;
+  }
 
-      fieldset {
-        display: none;
-      }
-      
-      & > div {
-        padding-right: 14px;
+  .langSelect {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    margin-left: 15px;
+    margin-right: 35px;
 
-        &:focus {
-          outline: 1px dotted #212121;
-          outline: 5px auto -webkit-focus-ring-color;
-        }
-      }
+    @media @phone, @tablet, @desktop1024 {
+      margin: 20px 0;
+    }
 
-      & > svg {
-        display: none;
-      }
+    & > div {
+      padding-right: 14px;
+    }
+
+    & > svg {
+      height: 24px;
+      width: 24px;
     }
   }
 }
@@ -93,11 +95,9 @@
     }
   }
 
-  
-
-  @media  @tablet, @desktop1024 {
+  @media @tablet, @desktop1024 {
     height: 30px;
-    
+
     span {
       border-color: @color-primary;
     }
@@ -113,8 +113,16 @@
 }
 
 .startBtn {
-  background: linear-gradient(90.14deg, #FFFFFF 0.15%, #669DDE 104.21%);
+  background: linear-gradient(90.14deg, #ffffff 0.15%, #669dde 104.21%);
   .button;
+
+  @media @phone, @tablet, @desktop1024 {
+    background: unset;
+    .primaryBtnSm;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+  }
 }
 
 .mobileHead {
@@ -129,6 +137,20 @@
 
   @media @phone {
     padding: 15px 0;
+  }
+
+  .global {
+    path {
+      fill: black;
+    }
+  }
+
+  .globalText {
+    color: black;
+  }
+
+  .menuLink {
+    color: black;
   }
 }
 
@@ -152,7 +174,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    transition: all .25s ease;
+    transition: all 0.25s ease;
     width: 100%;
 
     @media @phone {
@@ -211,10 +233,10 @@
   overflow: hidden;
   position: absolute;
   top: 0;
-  transition: all .25s;
+  transition: all 0.25s;
   width: 100%;
   z-index: -1;
-  
+  .flexcenter;
 
   &.open {
     height: 100vh;
@@ -223,7 +245,7 @@
 
 .nav {
   margin-top: 120px;
-
+  position: relative;
 }
 
 .global {
@@ -246,16 +268,28 @@
     display: block;
     margin-right: 40px;
   }
-
-  .menuLink {
-    color: white;
-    display: block;
-    font-family: Inter;
-    font-size: 14px;
-    line-height: 40px;
-    text-decoration: none;
-    .hover;
-  }
 }
 
+.menuLink {
+  background: transparent;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-family: Inter;
+  font-size: 14px;
+  line-height: 40px;
+  text-decoration: none;
+  .hover;
+}
 
+.mobileMenuLink {
+  font-size: 14px;
+  color: black;
+  padding: 20px;
+  .hover;
+}
+
+.turnLeft {
+  transform: rotate(-90deg);
+}

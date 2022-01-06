@@ -1,8 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import Select from "@mui/material/Select";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { globalHistory } from "@reach/router";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import milvusLogo from "../../images/milvus_logo.svg";
@@ -12,19 +17,14 @@ import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import { useWindowSize } from "../../http/hooks";
 
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
-
-const Header = ({ darkMode = false, locale }) => {
-  // const { t } = useTranslation();
-  // console.log("I18NextContext", I18NextContext);
-  const { languages, originalPath } = useI18next();
+const Header = ({ darkMode = false, t }) => {
+  const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
-  // const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
-  const [path, setPath] = useState("/");
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const isLangOpen = Boolean(anchorEl);
   const toolRef = useRef(null);
   const tutRef = useRef(null);
 
@@ -40,15 +40,14 @@ const Header = ({ darkMode = false, locale }) => {
   }, [isLightHeader]);
 
   const currentSize = useWindowSize();
-
   const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
 
-  useEffect(() => {
-    const { pathname } = globalHistory.location;
-    const to = pathname.replace("/en/", "/").replace("/cn", "");
-    console.log("to", to);
-    setPath(to);
-  }, []);
+  const handleLangClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleLangClose = () => {
+    setAnchorEl(null);
+  };
 
   const openTutorial = (open) => {
     let isOpen = open;
@@ -86,6 +85,54 @@ const Header = ({ darkMode = false, locale }) => {
     </div>
   );
 
+  const actionBar = (
+    <div className={styles.actionBar}>
+      <div className={styles.flexend}>
+        <GitHubButton
+          type="star"
+          // className="star-btn"
+          href="https://github.com/milvus-io/milvus"
+        >
+          Star
+        </GitHubButton>
+
+        <GitHubButton type="fork" href="https://github.com/milvus-io/milvus">
+          Forks
+        </GitHubButton>
+      </div>
+      <button
+        className={styles.langSelect}
+        aria-controls={isLangOpen ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={isLangOpen ? "true" : undefined}
+        onClick={handleLangClick}
+      >
+        <>
+          <FontAwesomeIcon className={styles.global} icon={faGlobe} />
+          <span className={styles.globalText}>{language}</span>
+        </>
+      </button>
+      <Menu
+        anchorEl={anchorEl}
+        open={isLangOpen}
+        onClose={handleLangClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        {languages.map((lng) => {
+          return (
+            <MenuItem key={lng} value={lng} onClick={handleLangClose}>
+              <Link to={originalPath} language={lng}>
+                {lng === "en" ? "English" : "中文"}
+              </Link>
+            </MenuItem>
+          );
+        })}
+      </Menu>
+    </div>
+  );
+
   const mobileHead = (
     <header className={styles.mobileHead}>
       <div className={`${styles.spaceBetween} col-4 col-8 col-12`}>
@@ -100,25 +147,135 @@ const Header = ({ darkMode = false, locale }) => {
         </button>
       </div>
 
-      <div className={`${styles.overlay} ${isMenuOpen ? styles.open : ""}`}>
-        <nav className={styles.nav}>
-          <ul>
-            <li>
-              <a href="#">Docs</a>
-            </li>
-            <li>
-              <a href="#">Tutorials</a>
-            </li>
-            <li>
-              <a href="#">Tools</a>
-            </li>
-            <li>
-              <a href="#">Blog</a>
-            </li>
-            <li>
-              <a href="#">Community</a>
-            </li>
-          </ul>
+      <div className={`${styles.overlay}  ${isMenuOpen ? styles.open : ""}`}>
+        <nav className={`${styles.nav} col-4 col-8 col-12`}>
+          <List
+            sx={{ width: "100%" }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+          >
+            <Link to="/docs" className={styles.menuLink}>
+              <ListItemButton>
+                <ListItemText primary={t("v3trans.main.nav.docs")} />
+                <ExpandMore className={styles.turnLeft} />
+              </ListItemButton>
+            </Link>
+
+            <Divider variant="middle" />
+
+            <ListItemButton
+              onClick={() => {
+                openTutorial(!isTutOpen);
+              }}
+            >
+              <ListItemText primary={t("v3trans.main.nav.tutorials")} />
+              {isTutOpen ? (
+                <ExpandMore />
+              ) : (
+                <ExpandMore className={styles.turnLeft} />
+              )}
+            </ListItemButton>
+
+            <Collapse in={isTutOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemText
+                  primary={
+                    <>
+                      <Link to="/bootcamp" className={styles.mobileMenuLink}>
+                        {t("v3trans.main.nav.bootcamp")}
+                      </Link>
+                      <Link to="/demo" className={styles.mobileMenuLink}>
+                        {t("v3trans.main.nav.demo")}
+                      </Link>
+                      <a
+                        href="https://www.youtube.com/zillizchannel"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.mobileMenuLink}
+                      >
+                        {t("v3trans.main.nav.video")}
+                      </a>
+                    </>
+                  }
+                />
+              </List>
+            </Collapse>
+
+            <Divider variant="middle" />
+
+            <ListItemButton
+              onClick={() => {
+                openTool(!isToolOpen);
+              }}
+            >
+              <ListItemText primary={t("v3trans.main.nav.tools")} />
+              {isToolOpen ? (
+                <ExpandMore />
+              ) : (
+                <ExpandMore className={styles.turnLeft} />
+              )}
+            </ListItemButton>
+
+            <Collapse in={isToolOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemText
+                  primary={
+                    <>
+                      <a
+                        href="https://github.com/zilliztech/attu"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.mobileMenuLink}
+                      >
+                        Attu
+                      </a>
+                      <a
+                        href="https://github.com/zilliztech/milvus_cli"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.mobileMenuLink}
+                      >
+                        Milvus_CLI
+                      </a>
+                      <Link to="/" className={styles.mobileMenuLink}>
+                        Sizing Tool
+                      </Link>
+                    </>
+                  }
+                />
+              </List>
+            </Collapse>
+
+            <Divider variant="middle" />
+
+            <Link to="/blog" className={styles.menuLink}>
+              <ListItemButton>
+                <ListItemText primary={t("v3trans.main.nav.blog")} />
+                <ExpandMore className={styles.turnLeft} />
+              </ListItemButton>
+            </Link>
+
+            <Divider variant="middle" />
+
+            <Link to="/community" className={styles.menuLink}>
+              <ListItemButton>
+                <ListItemText primary={t("v3trans.main.nav.community")} />
+                <ExpandMore className={styles.turnLeft} />
+              </ListItemButton>
+            </Link>
+
+            <Divider variant="middle" />
+          </List>
+
+          {actionBar}
+
+          <Divider
+            variant="fullwidth"
+            sx={{ position: "absolute", bottom: "78px", width: "100%" }}
+          />
+          <button className={styles.startBtn}>
+            {t("v3trans.main.nav.getstarted")}
+          </button>
         </nav>
       </div>
     </header>
@@ -133,8 +290,8 @@ const Header = ({ darkMode = false, locale }) => {
         <nav>
           <ul className={`${styles.flexstart} ${styles.menu}`}>
             <li>
-              <Link to="/docs" locale={locale} className={styles.menuLink}>
-                Docs
+              <Link to="/docs" className={styles.menuLink}>
+                {t("v3trans.main.nav.docs")}
               </Link>
             </li>
             <li>
@@ -143,7 +300,7 @@ const Header = ({ darkMode = false, locale }) => {
                 className={styles.menuLink}
                 onClick={openTutorial}
               >
-                Tutorials
+                {t("v3trans.main.nav.tutorials")}
               </button>
             </li>
             <li>
@@ -152,17 +309,17 @@ const Header = ({ darkMode = false, locale }) => {
                 className={styles.menuLink}
                 onClick={openTool}
               >
-                Tools
+                {t("v3trans.main.nav.tools")}
               </button>
             </li>
             <li>
-              <Link to="/blog" locale={locale} className={styles.menuLink}>
-                Blog
+              <Link to="/blog" className={styles.menuLink}>
+                {t("v3trans.main.nav.blog")}
               </Link>
             </li>
             <li>
               <a className={styles.menuLink} href="#">
-                Community
+                {t("v3trans.main.nav.community")}
               </a>
             </li>
           </ul>
@@ -229,40 +386,12 @@ const Header = ({ darkMode = false, locale }) => {
           </Menu>
         </nav>
       </div>
-      <div className={styles.actionBar}>
-        <GitHubButton
-          type="star"
-          // className="star-btn"
-          href="https://github.com/milvus-io/milvus"
-        >
-          Star
-        </GitHubButton>
 
-        <GitHubButton type="fork" href="https://github.com/milvus-io/milvus">
-          Forks
-        </GitHubButton>
-        <Select
-          value={locale}
-          lable="language"
-          className={styles.langSelect}
-          renderValue={(v) => (
-            <>
-              <FontAwesomeIcon className={styles.global} icon={faGlobe} />
-              <span className={styles.globalText}>{v}</span>
-            </>
-          )}
-        >
-          {languages.map((lng) => {
-            return (
-              <MenuItem key={lng} value={lng}>
-                <Link to={originalPath} language={lng}>
-                  {lng === "en" ? "English" : "中文"}
-                </Link>
-              </MenuItem>
-            );
-          })}
-        </Select>
-        <button className={styles.startBtn}>Get Started</button>
+      <div className={styles.flexend}>
+        {actionBar}
+        <button className={styles.startBtn}>
+          {t("v3trans.main.nav.getstarted")}
+        </button>
       </div>
     </header>
   );

@@ -1,5 +1,4 @@
 {
-  "tt": "abc",
   "layout": {
     "notFound": "404 Page Not Found",
     "backtohome": "Take me back to the home page.",
@@ -703,6 +702,20 @@
       "cancel": "Cancel",
       "submit": "Submit",
       "tocTitle": "On this page"
+    },
+    "main": {
+      "nav": {
+        "docs": "Docs",
+        "tutorials": "Tutorials",
+        "tools": "Tools",
+        "blog": "Blog",
+        "community": "Community",
+        "bootcamp": "Bootcamp",
+        "demo": "demo",
+        "video": "video",
+        "getstarted": "Get Started",
+        "about": "About"
+      }
     }
   }
 }

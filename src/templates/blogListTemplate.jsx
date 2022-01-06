@@ -17,7 +17,8 @@ const getCurrentPageArray = (list, pageIndex) =>
   list.slice((pageIndex - 1) * PAGE_SIZE, pageIndex * PAGE_SIZE);
 
 const BlogTemplate = ({ data, pageContext }) => {
-  const { blogList, locale } = pageContext;
+  const { blogList } = pageContext;
+  const { language, t, navigate, originalPath } = useI18next();
   const [currentTag, setCurrentTag] = useState("all");
   const [pageIndex, setPageIndex] = useState(1);
   const featuredBlog = useMemo(() => blogList[0], [blogList]);
@@ -59,7 +60,7 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   const handleFilter = useCallback(
     (tag, isRestore = true) => {
-      window.history.pushState(null, null, `?page=1#${tag}`);
+      navigate(`${originalPath}?page=1#${tag}`);
       isRestore && window.sessionStorage.setItem(FILTER_TAG, tag);
       filterByTag(tag);
     },
@@ -89,78 +90,96 @@ const BlogTemplate = ({ data, pageContext }) => {
     setPageIndex(parseInt(pageIdx));
   }, []);
 
+  console.log("featuredBlog", featuredBlog);
+
   return (
-    <div className={`${styles.listWrapper} col-12 col-8 col-4`}>
-      {/* screen > 1024  */}
+    <Layout t={t}>
+      <div className={`${styles.listWrapper} col-12 col-8 col-4`}>
+        {/* screen > 1024  */}
 
-      <section className={`${styles.featuredBlog} `}>
-        <div className={`${styles.featuredImg}  col-6`}>
-          <img src={`https://${featuredBlog.cover}  `} />
-        </div>
-        <div className={`${styles.featuredBlogContent} col-7`}>
-          <p className={styles.tag}>{featuredBlog.tags.join(" ")}</p>
-          <Link to={featuredBlog.id}>
-            <p className={styles.title}>{featuredBlog.title}</p>
-          </Link>
+        <section className={`${styles.featuredBlog} `}>
+          <div className={`${styles.featuredImg}  col-6`}>
+            <img src={`https://${featuredBlog.cover}  `} />
+          </div>
+          <div className={`${styles.featuredBlogContent} col-7`}>
+            <p className={styles.tag}>{featuredBlog.tags.join(" ")}</p>
+            <Link to={`/blog/${featuredBlog.id}`}>
+              <p className={styles.title}>{featuredBlog.title}</p>
+            </Link>
 
-          <p className={styles.desc}>{featuredBlog.desc}</p>
-        </div>
-      </section>
-      {/* tablet phone, screen <= 1024  */}
-      <BlogCard
-        className={styles.mobileFeatured}
-        locale={locale}
-        title={featuredBlog.title}
-        date={featuredBlog.date}
-        cover={`https://${featuredBlog.cover}`}
-        desc={featuredBlog.desc}
-        tags={featuredBlog.tags}
-        path={`${featuredBlog.id}`}
-      />
-
-      <section className={styles.blogList}>
-        <p className={styles.title}>More Articles</p>
-        <Tags
-          list={tagList}
-          tagsClass={styles.tagsWrapper}
-          genTagClass={(tag) => (currentTag === tag ? styles.active : "")}
-          onClick={handleFilter}
+            <p className={styles.desc}>{featuredBlog.desc}</p>
+          </div>
+        </section>
+        {/* tablet phone, screen <= 1024  */}
+        <BlogCard
+          className={styles.mobileFeatured}
+          locale={language}
+          title={featuredBlog.title}
+          date={featuredBlog.date}
+          cover={`https://${featuredBlog.cover}`}
+          desc={featuredBlog.desc}
+          tags={featuredBlog.tags}
+          path={`${featuredBlog.id}`}
         />
 
-        <ul className={styles.blogCards}>
-          {renderBlogList.map((v, index) => {
-            const { desc, cover, date, tags, title, id } = v;
-            return (
-              <li key={index} className={styles.blogcard}>
-                <BlogCard
-                  locale={locale}
-                  title={title}
-                  date={date}
-                  cover={`https://${cover}`}
-                  desc={desc}
-                  tags={tags}
-                  path={`${id}?#${currentTag}`}
-                />
-              </li>
-            );
-          })}
-        </ul>
-        {/* <Pagination
+        <section className={styles.blogList}>
+          <p className={styles.title}>More Articles</p>
+          <Tags
+            list={tagList}
+            tagsClass={styles.tagsWrapper}
+            genTagClass={(tag) => (currentTag === tag ? styles.active : "")}
+            onClick={handleFilter}
+          />
+
+          <ul className={styles.blogCards}>
+            {renderBlogList.map((v, index) => {
+              const { desc, cover, date, tags, title, id } = v;
+              return (
+                <li key={index} className={styles.blogcard}>
+                  <BlogCard
+                    locale={language}
+                    title={title}
+                    date={date}
+                    cover={`https://${cover}`}
+                    desc={desc}
+                    tags={tags}
+                    path={`${id}?#${currentTag}`}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+          {/* <Pagination
           total={total}
           pageIndex={pageIndex}
           pageSize={PAGE_SIZE}
           handlePageIndexChange={handlePagination}
         /> */}
-        <Pagination
-          count={total}
-          page={pageIndex}
-          size="small"
-          onChange={handlePagination}
-          className={styles.pagination}
-        />
-      </section>
-    </div>
+          <Pagination
+            count={total}
+            page={pageIndex}
+            size="small"
+            onChange={handlePagination}
+            className={styles.pagination}
+          />
+        </section>
+      </div>
+    </Layout>
   );
 };
 
 export default BlogTemplate;
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          data
+          language
+          ns
+        }
+      }
+    }
+  }
+`;

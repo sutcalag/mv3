@@ -1,10 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { graphql } from "gatsby";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
 import LeftNav from "../components/docLeftNavigation";
 import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          data
+          language
+          ns
+        }
+      }
+    }
+  }
+`;
 
 export default function Template({ data, pageContext }) {
   const {
@@ -20,6 +36,7 @@ export default function Template({ data, pageContext }) {
     newestVersion,
   } = pageContext;
   const [targetDocVersion, setTargetDocVersion] = useState();
+  const { t } = useI18next();
 
   const currentWindowSize = useWindowSize();
   const isMobile = ["phone", "tablet"].includes(currentWindowSize);
@@ -93,7 +110,7 @@ export default function Template({ data, pageContext }) {
     ) || [];
 
   return (
-    <Layout>
+    <Layout t={t} >
       <div className={clsx("doc-temp-container", { [`is-mobile`]: isMobile })}>
         <LeftNav
           homeUrl={leftNavHomeUrl}

@@ -1,5 +1,4 @@
 {
-  "tt": "哎彼此你",
   "layout": {
     "notFound": "您访问的页面不存在",
     "backtohome": "返回首页",
@@ -694,6 +693,20 @@
       "cancel": "取消",
       "submit": "提交",
       "tocTitle": "本页目录"
+    },
+    "main": {
+      "nav": {
+        "docs": "文档",
+        "tutorials": "教程",
+        "tools": "工具",
+        "blog": "博客",
+        "community": "社区",
+        "bootcamp": "训练营",
+        "demo": "示例",
+        "video": "视频",
+        "getstarted": "开始",
+        "about": "关于"
+      }
     }
   }
 }
