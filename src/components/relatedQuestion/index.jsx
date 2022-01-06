@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import { useGetFaq } from "../../http/hooks";
 import CustomIconLink from "../customIconLink";

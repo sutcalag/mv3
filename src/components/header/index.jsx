@@ -37,7 +37,7 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isLightHeader]);
+  }, [isLightHeader, darkMode]);
 
   const currentSize = useWindowSize();
   const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
@@ -240,7 +240,7 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
                       >
                         Milvus_CLI
                       </a>
-                      <Link to="/" className={styles.mobileMenuLink}>
+                      <Link to="/tool-sizing" className={styles.mobileMenuLink}>
                         Sizing Tool
                       </Link>
                     </>
@@ -323,9 +323,9 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
               </Link>
             </li>
             <li>
-              <a className={styles.menuLink} href="#">
+              <Link to="/community" className={styles.menuLink}>
                 {t("v3trans.main.nav.community")}
-              </a>
+              </Link>
             </li>
           </ul>
           <Menu

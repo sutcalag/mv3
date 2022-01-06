@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import Layout from "../../components/layout";
 import { graphql } from "gatsby";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import DemoCard from "../../components/card/DemoCard";
 import * as styles from "./index.module.less";
 import imageSearch from "../../images/demos/image-search.png";
@@ -194,7 +194,7 @@ const DemoPage = () => {
 
                 <p>Dive into the source code.</p>
                 <a
-                  className='customButton outlinedBtn'
+                  className="customButton outlinedBtn"
                   href="https://bit.ly/3Ct2dKo"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -210,7 +210,7 @@ const DemoPage = () => {
 
                 <p>Dive into the source code.</p>
                 <a
-                  className='customButton outlinedBtn'
+                  className="customButton outlinedBtn"
                   href="https://bit.ly/3H7KOuu"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -237,7 +237,10 @@ const DemoPage = () => {
                 placeholder="What’s your email?"
                 ref={inputRef}
               />
-              <button className={`customButton containedBtn ${styles.subscribeBtn}`} onClick={handleSubmitEmail}>
+              <button
+                className={`customButton containedBtn ${styles.subscribeBtn}`}
+                onClick={handleSubmitEmail}
+              >
                 Subscribe
               </button>
             </div>

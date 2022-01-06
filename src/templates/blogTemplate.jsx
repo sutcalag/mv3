@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useMemo } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./blogTemplate.module.less";
@@ -17,7 +17,7 @@ export default function Template({ data, pageContext }) {
     author,
     date,
     tags,
-    origin,
+    // origin,
     title,
     id,
     desc,
@@ -25,19 +25,16 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const { language, t, navigate } = useI18next();
-
-  console.log("language", language);
-
-  console.log("t", t);
-
-  const html = useMemo(() => newHtml.replace(/<h1.*<\/h1>/, ""));
-  const shareUrl = useMemo(() => `https://www.milvus.io/blog/${id}`);
+  const html = useMemo(() => newHtml.replace(/<h1.*<\/h1>/, ""), [newHtml]);
+  const shareUrl = useMemo(() => `https://www.milvus.io/blog/${id}`, [id]);
 
   const dateTime = useMemo(() => dayjs(date).format("MMMM DD, YYYY"), [date]);
-  const moreBlogs = useMemo(() =>
-    blogList
-      .filter((v) => v.tags.some((tag) => tags.includes(tag) && v.id !== id))
-      .slice(0, 3)
+  const moreBlogs = useMemo(
+    () =>
+      blogList
+        .filter((v) => v.tags.some((tag) => tags.includes(tag) && v.id !== id))
+        .slice(0, 3),
+    [blogList, id, tags]
   );
   // for seo
   // const canonicalLink = origin

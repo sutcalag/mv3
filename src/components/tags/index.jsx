@@ -12,7 +12,6 @@ const Tags = (props) => {
       {list.map((tag) => (
         <li
           key={tag}
-          role="button"
           onClick={() => onClick(tag)}
           onKeyDown={() => onClick(tag)}
           className={genTagClass(tag)}

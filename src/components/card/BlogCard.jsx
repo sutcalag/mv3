@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import React from "react";
+import { Link } from "gatsby-plugin-react-i18next";
 import * as styles from "./BlogCard.module.less";
 import Tags from "../tags";
 const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {

@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import { Link } from "gatsby-plugin-react-i18next";
 import {
   faGithub,
   faSlack,
@@ -44,7 +44,7 @@ const footerJson = [
         trans: false,
         to: "https://github.com/zilliztech/milvus_cli",
       },
-      { name: "Sizing Tool", trans: false, to: "/sizingtool" },
+      { name: "Sizing Tool", trans: false, to: "/tool-sizing" },
     ],
   },
   {

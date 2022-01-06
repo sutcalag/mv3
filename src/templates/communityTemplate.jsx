@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import React from "react";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import "./communityTemplate.less";
 import "./commonDocTemplate.less";
 import LeftNav from "../components/leftNavigation";
-import TocTreeView from "../components/treeView/TocTreeView";
+// import TocTreeView from "../components/treeView/TocTreeView";
 import Aside from "../components/aside";
 
 export const query = graphql`
@@ -28,13 +28,13 @@ export const query = graphql`
 export default function Template({ data, pageContext }) {
   const {
     locale,
-    fileAbsolutePath,
+    // fileAbsolutePath,
     html,
     headings,
     menuList,
     activePost,
     editPath,
-    isCommunity,
+    // isCommunity,
   } = pageContext;
 
   // console.log(pageContext);

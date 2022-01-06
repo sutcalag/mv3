@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -55,9 +55,7 @@ export const CustomizedContentDialogs = (props) => {
         <BootstrapDialogTitle onClose={handleClose}>
           {title}
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          {props.children}
-        </DialogContent>
+        <DialogContent dividers>{props.children}</DialogContent>
       </Dialog>
     </>
   );

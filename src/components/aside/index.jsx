@@ -8,31 +8,31 @@ import {
   faLightbulb,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./index.module.less";
 import clsx from "clsx";
 
-const result = {
-  doc: {},
-  api: {},
-  community: {
-    edit: {
-      icon: "pencil",
-      label: "edit this page",
-      href: "https://github.com/milvus-io/web-content/edit/master/community/site/en/communityArticles/about/why_contributing.md",
-    },
-    bug: {
-      icon: "bug",
-      label: "report a bug",
-      link: "https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=error-report.md&title=why_contributing.md",
-    },
-    join: {
-      icon: "tag",
-      label: "join slack channel",
-      link: "https://milvusio.slack.com/ssb/redirect",
-    },
-  },
-};
+// const result = {
+//   doc: {},
+//   api: {},
+//   community: {
+//     edit: {
+//       icon: "pencil",
+//       label: "edit this page",
+//       href: "https://github.com/milvus-io/web-content/edit/master/community/site/en/communityArticles/about/why_contributing.md",
+//     },
+//     bug: {
+//       icon: "bug",
+//       label: "report a bug",
+//       link: "https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=error-report.md&title=why_contributing.md",
+//     },
+//     join: {
+//       icon: "tag",
+//       label: "join slack channel",
+//       link: "https://milvusio.slack.com/ssb/redirect",
+//     },
+//   },
+// };
 
 const Aside = (props) => {
   const {
@@ -44,8 +44,7 @@ const Aside = (props) => {
     isHome,
     isShowBtnGroup = "true",
   } = props;
-  console.log(category);
-  const { langugae, t } = useI18next();
+  const { t } = useI18next();
   // editBtn issueBtn; bugBtn; suggestBtn; joinBtn
   const [
     commonEditBtnConf,
@@ -163,7 +162,12 @@ const Aside = (props) => {
       <>
         {btns.map((btn) => (
           <li key={btn.label}>
-            <a href={btn.link} target="_blank" className={styles.link}>
+            <a
+              href={btn.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
               <span className={styles.iconWrapper}>
                 <FontAwesomeIcon className={styles.global} icon={btn.icon} />
               </span>

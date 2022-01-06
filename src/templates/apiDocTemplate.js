@@ -34,7 +34,7 @@ export default function Template({ data, pageContext }) {
     docVersions,
     docVersion,
     category,
-    newestVersion,
+    // newestVersion,
   } = pageContext;
   const [targetDocVersion, setTargetDocVersion] = useState();
   const { t } = useI18next();
@@ -44,9 +44,9 @@ export default function Template({ data, pageContext }) {
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
-  const hljsCfg = {
-    languages: ["java", "go", "python", "javascript"],
-  };
+  // const hljsCfg = {
+  //   languages: ["java", "go", "python", "javascript"],
+  // };
 
   useEffect(() => {
     // Get docVersion from local stroage, to keep the doc verison consistent.
@@ -118,7 +118,6 @@ export default function Template({ data, pageContext }) {
           homeLabel={"Docs Home"}
           menus={menuList.menuList}
           apiMenus={allApiMenus}
-          pageType=""
           currentVersion={targetDocVersion}
           locale={locale}
           docVersions={docVersions}

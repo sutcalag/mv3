@@ -2,9 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import {
   Link,
-  Trans,
   useI18next,
-  I18nextContext,
 } from "gatsby-plugin-react-i18next";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

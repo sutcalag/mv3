@@ -1,7 +1,7 @@
-import React from 'react';
-import { useWindowSize } from '../../../http/hooks';
-import { SearchIcon } from './searchIcon';
-import * as styles from './preview.module.less';
+import React from "react";
+import { useWindowSize } from "../../../http/hooks";
+import { SearchIcon } from "./searchIcon";
+import * as styles from "./preview.module.less";
 
 const PreviewItem = ({ src, distance, handleSearch }) => {
   const currentSize = useWindowSize();
@@ -11,7 +11,7 @@ const PreviewItem = ({ src, distance, handleSearch }) => {
   return (
     <div className={styles.previewContainer}>
       <div className={styles.imgContent}>
-        <img src={src} alt="Preview Image" />
+        <img src={src} alt="Preview" />
       </div>
       <div className={styles.descSection}>
         <div className={styles.distance}>

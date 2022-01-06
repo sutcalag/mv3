@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import { Link } from "gatsby-plugin-react-i18next";
 import * as styles from "./leftNav.module.less";
 import "./leftNav.less";
 import { AlgoliaSearch } from "../search/agloia";

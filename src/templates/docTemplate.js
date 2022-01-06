@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import React, { useMemo } from "react";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
 import LeftNav from "../components/leftNavigation";
 import HorizontalBlogCard from "../components/card/HorizontalBlogCard";
@@ -8,15 +8,13 @@ import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
 import "./commonDocTemplate.less";
 import Typography from "@mui/material/Typography";
-import { useGithubCommits } from "../http/hooks";
 import RelatedQuestion from "../components/relatedQuestion";
 import ScoredFeedback from "../components/scoredFeedback";
-import TocTreeView from "../components/treeView/TocTreeView";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import Aside from "../components/aside";
 import Seo from "../components/seo";
-import Footer from "../components/footer";
+// import Footer from "../components/footer";
 
 export const query = graphql`
   query ($language: String!) {
@@ -40,7 +38,7 @@ export default function Template({ data, pageContext }) {
     headings = [],
     allMenus,
     isBlog,
-    isBenchmark = false,
+    // isBenchmark = false,
     editPath,
     newHtml: mdHtml,
     homeData,
@@ -50,7 +48,6 @@ export default function Template({ data, pageContext }) {
     old: mdId,
     summary,
     newestBlog,
-    homePath,
   } = pageContext;
 
   const currentWindowSize = useWindowSize();
@@ -88,10 +85,10 @@ export default function Template({ data, pageContext }) {
   const leftNavHomeUrl =
     version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
 
-  const commitPath = useMemo(() => {
-    return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
-  }, [locale, editPath]);
-  const isDoc = !(isBlog || isBenchmark);
+  // const commitPath = useMemo(() => {
+  //   return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
+  // }, [locale, editPath]);
+  // const isDoc = !(isBlog || isBenchmark);
   // const commitInfo = useGithubCommits({
   //   commitPath,
   //   version,
@@ -239,7 +236,7 @@ const GitCommitInfo = (props) => {
 };
 
 const DocContent = (props) => {
-  const { htmlContent, commitInfo, mdId, faq, relatedKey, isMobile, trans } =
+  const { htmlContent, commitInfo, mdId, relatedKey, isMobile, trans } =
     props;
   //! TO REMOVE
   const faqMock = {

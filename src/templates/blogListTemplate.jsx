@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./blogListTemplate.module.less";
-import Seo from "../components/seo";
+// import Seo from "../components/seo";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
@@ -89,8 +89,6 @@ const BlogTemplate = ({ data, pageContext }) => {
     setCurrentTag(tag);
     setPageIndex(parseInt(pageIdx));
   }, []);
-
-  console.log("featuredBlog", featuredBlog);
 
   return (
     <Layout t={t}>

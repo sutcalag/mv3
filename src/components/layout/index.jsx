@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import Header from "../header";
 import Footer from "../footer";
-import * as styles from "./index.module.less";
+// import * as styles from "./index.module.less";
 
 const Layout = ({ darkMode, children, showFooter = true, t }) => {
   return (

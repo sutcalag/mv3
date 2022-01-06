@@ -2,16 +2,11 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import "./index.less";
 import Layout from "../components/layout";
-import {
-  Link,
-  Trans,
-  useI18next,
-  I18nextContext,
-} from "gatsby-plugin-react-i18next";
+import { useI18next } from "gatsby-plugin-react-i18next";
 
 // markup
 const IndexPage = () => {
-  const { t, language, routed } = useI18next();
+  const { t } = useI18next();
 
   return (
     <main className="main">
