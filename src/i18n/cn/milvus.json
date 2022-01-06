@@ -692,7 +692,15 @@
       "yourQuestionInvalid": "请输入正确的问题。",
       "cancel": "取消",
       "submit": "提交",
-      "tocTitle": "本页目录"
+      "tocTitle": "本页目录",
+      "issueBtns": {
+        "editBtn": "编辑",
+        "issueBtn": "提交 issue",
+        "bugBtn": "提交 bug",
+        "suggestBtn": "内容建议",
+        "joinBtn": "加入 Slack",
+        "discussBtn": "在 GitHub 讨论"
+      }
     },
     "main": {
       "nav": {

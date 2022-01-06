@@ -13,6 +13,7 @@ import ScoredFeedback from "../components/scoredFeedback";
 import TocTreeView from "../components/treeView/TocTreeView";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
+import Aside from '../components/aside'
 
 export const query = graphql`
   query ($language: String!) {
@@ -150,7 +151,13 @@ export default function Template({ data, pageContext }) {
           )}
         </div>
         {!isPhone && (
-          <TocTreeView
+          // <TocTreeView
+            // items={headings}
+            // title={t("v3trans.docs.tocTitle")}
+            // className="doc-toc-container"
+          // />
+          <Aside 
+            type='doc'
             items={headings}
             title={t("v3trans.docs.tocTitle")}
             className="doc-toc-container"
