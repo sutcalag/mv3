@@ -4,6 +4,7 @@ import * as styles from './DemoCard.module.less';
 import { Link } from 'gatsby-plugin-react-i18next';
 import VideoPlayer from '../videoPlayer';
 import InfoSubmitter from '../infoSubmitter';
+import { useWindowSize } from '../../http/hooks';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
@@ -17,6 +18,9 @@ const DemoCard = ({
   handelOpenDialog,
   handleOpenSnackbar
 }) => {
+  const currentSize = useWindowSize();
+
+  const isMobile = ['phone', 'tablet'].includes(currentSize);
 
   const submitCallback = (statusCode, unique_email_id, href,) => {
 
@@ -42,10 +46,11 @@ const DemoCard = ({
     const { innerWidth } = window;
     const clientWidth =
       innerWidth < 800
-        ? innerWidth
+        ? 260
         : innerWidth < 1200
           ? innerWidth * 0.8
           : 1200 * 0.8;
+    console.log('clientWidth--', clientWidth);
     const content = () => (<VideoPlayer videoSrc={videoSrc} clientWidth={clientWidth} />);
     handelOpenDialog(content, name);
   };
@@ -66,19 +71,17 @@ const DemoCard = ({
     <div className={styles.demoCard}>
 
       {
-        index % 2 === 0 ? (
+        index % 2 !== 0 && !isMobile ? (
           <>
-            <div className={styles.coverWrapper}>
-              <img src={cover} alt={name} />
-            </div>
+
 
             <div className={styles.contentWrapper}>
               <h3>{name}</h3>
               <p>{desc}</p>
               <div className={styles.btnGroup}>
-                <button className={styles.tryBtn} onClick={handleSubmitEmail}>Try Demo</button>
+                <button className={`customButton containedBtn ${styles.tryBtn}`} onClick={handleSubmitEmail}>Try Demo</button>
 
-                <button className={styles.watchBtn} onClick={handleWatchVideo}>Watch Demo
+                <button className={`customButton textBtn ${styles.watchBtn}`} onClick={handleWatchVideo}>Watch Demo
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -93,17 +96,23 @@ const DemoCard = ({
                   </svg>
                 </button>
               </div>
+            </div>
+            <div className={styles.coverWrapper}>
+              <img src={cover} alt={name} />
             </div>
           </>
         ) : (
           <>
+            <div className={styles.coverWrapper}>
+              <img src={cover} alt={name} />
+            </div>
             <div className={styles.contentWrapper}>
               <h3>{name}</h3>
               <p>{desc}</p>
               <div className={styles.btnGroup}>
-                <button className={styles.tryBtn} onClick={handleSubmitEmail}>Try Demo</button>
+                <button className={`customButton containedBtn ${styles.tryBtn}`} onClick={handleSubmitEmail}>Try Demo</button>
 
-                <button className={styles.watchBtn} onClick={handleWatchVideo}>Watch Demo
+                <button className={`customButton textBtn ${styles.watchBtn}`} onClick={handleWatchVideo}>Watch Demo
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -119,9 +128,7 @@ const DemoCard = ({
                 </button>
               </div>
             </div>
-            <div className={styles.coverWrapper}>
-              <img src={cover} alt={name} />
-            </div>
+
           </>
         )
       }
