@@ -110,7 +110,7 @@ export default function Template({ data, pageContext }) {
     ) || [];
 
   return (
-    <Layout t={t} >
+    <Layout t={t}>
       <div className={clsx("doc-temp-container", { [`is-mobile`]: isMobile })}>
         <LeftNav
           homeUrl={leftNavHomeUrl}
@@ -123,6 +123,7 @@ export default function Template({ data, pageContext }) {
           docVersions={docVersions}
           mdId={name}
           isMobile={isMobile}
+          pageType="api"
         />
         <div
           className={clsx("doc-content-container", {
