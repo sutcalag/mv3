@@ -52,7 +52,7 @@ const ImageSearchPage = ({ pageContext }) => {
   const [isShowCode, setIsShowCode] = useState(false);
   const [noData, setNoData] = useState(false);
   const currentSize = useWindowSize();
-  const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
+  const isMobile = ["phone", "tablet"].includes(currentSize);
   const [modalConfig, setModalConfig] = useState({
     open: false,
     handleCloseModal: () => { },

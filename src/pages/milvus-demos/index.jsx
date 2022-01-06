@@ -60,7 +60,7 @@ const DemoPage = () => {
   });
 
   const currentSize = useWindowSize();
-  const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
+  const isMobile = ["phone", "tablet"].includes(currentSize);
 
   const handleSubmitEmail = async () => {
     const regx =
