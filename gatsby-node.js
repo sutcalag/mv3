@@ -248,17 +248,17 @@ exports.createPages = async ({ actions, graphql }) => {
     //   menu: communityMenu,
     // });
 
-    // generateBootcampPages(createPage, {
-    //   nodes: bootcampMd,
-    //   template: bootcampTemplate,
-    //   menu: bootcampMenu,
-    // });
+    generateBootcampPages(createPage, {
+      nodes: bootcampMd,
+      template: bootcampTemplate,
+      menu: bootcampMenu,
+    });
 
-    // generateBootcampHome(createPage, {
-    //   nodes: bootcampHome,
-    //   template: bootcampTemplate,
-    //   menu: bootcampMenu,
-    // });
+    generateBootcampHome(createPage, {
+      nodes: bootcampHome,
+      template: bootcampTemplate,
+      menu: bootcampMenu,
+    });
 
     const allApiMenus = generateApiMenus(result.data.allApIfile.nodes);
     const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
