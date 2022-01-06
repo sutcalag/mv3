@@ -701,7 +701,15 @@
       "yourQuestionInvalid": "Please input valid question.",
       "cancel": "Cancel",
       "submit": "Submit",
-      "tocTitle": "On this page"
+      "tocTitle": "On this page",
+      "btnGroup": {
+        "editBtn": "Edit this page.",
+        "issueBtn": "Report doc issue.",
+        "bugBtn": "Report a bug.",
+        "suggestBtn": "Suggest new content.",
+        "joinBtn": "Join Slack channel.",
+        "discussBtn": "Discuss it on GitHub."
+      }
     },
     "main": {
       "nav": {

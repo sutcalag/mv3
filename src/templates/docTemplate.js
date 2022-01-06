@@ -13,6 +13,7 @@ import ScoredFeedback from "../components/scoredFeedback";
 import TocTreeView from "../components/treeView/TocTreeView";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
+import Aside from '../components/aside'
 import Seo from "../components/seo";
 
 export const query = graphql`
@@ -183,7 +184,13 @@ export default function Template({ data, pageContext }) {
           )}
         </div>
         {!isPhone && (
-          <TocTreeView
+          <Aside 
+            locale={locale}
+            version={version}
+            editPath={editPath}
+            mdTitle={headings[0]}
+            category='doc'
+            isHome={!!homeData}
             items={headings}
             title={t("v3trans.docs.tocTitle")}
             className="doc-toc-container"
