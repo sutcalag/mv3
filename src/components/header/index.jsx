@@ -17,7 +17,7 @@ import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import { useWindowSize } from "../../http/hooks";
 
-const Header = ({ darkMode = false, className = '' }) => {
+const Header = ({ darkMode = false, t, className = '' }) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -156,7 +156,7 @@ const Header = ({ darkMode = false, className = '' }) => {
           >
             <Link to="/docs" className={styles.menuLink}>
               <ListItemButton>
-                <ListItemText primary={"Docs"} />
+                <ListItemText primary={t("v3trans.main.nav.docs")} />
                 <ExpandMore className={styles.turnLeft} />
               </ListItemButton>
             </Link>
@@ -168,7 +168,7 @@ const Header = ({ darkMode = false, className = '' }) => {
                 openTutorial(!isTutOpen);
               }}
             >
-              <ListItemText primary="Tutorials" />
+              <ListItemText primary={t("v3trans.main.nav.tutorials")} />
               {isTutOpen ? (
                 <ExpandMore />
               ) : (
@@ -182,10 +182,10 @@ const Header = ({ darkMode = false, className = '' }) => {
                   primary={
                     <>
                       <Link to="/bootcamp" className={styles.mobileMenuLink}>
-                        Bootcamp
+                        {t("v3trans.main.nav.bootcamp")}
                       </Link>
                       <Link to="/demo" className={styles.mobileMenuLink}>
-                        Demo
+                        {t("v3trans.main.nav.demo")}
                       </Link>
                       <a
                         href="https://www.youtube.com/zillizchannel"
@@ -193,7 +193,7 @@ const Header = ({ darkMode = false, className = '' }) => {
                         rel="noopener noreferrer"
                         className={styles.mobileMenuLink}
                       >
-                        Video
+                        {t("v3trans.main.nav.video")}
                       </a>
                     </>
                   }
@@ -208,7 +208,7 @@ const Header = ({ darkMode = false, className = '' }) => {
                 openTool(!isToolOpen);
               }}
             >
-              <ListItemText primary="Tools" />
+              <ListItemText primary={t("v3trans.main.nav.tools")} />
               {isToolOpen ? (
                 <ExpandMore />
               ) : (
@@ -248,9 +248,9 @@ const Header = ({ darkMode = false, className = '' }) => {
 
             <Divider variant="middle" />
 
-            <Link to="/blogs" className={styles.menuLink}>
+            <Link to="/blog" className={styles.menuLink}>
               <ListItemButton>
-                <ListItemText primary="Blog" />
+                <ListItemText primary={t("v3trans.main.nav.blog")} />
                 <ExpandMore className={styles.turnLeft} />
               </ListItemButton>
             </Link>
@@ -259,7 +259,7 @@ const Header = ({ darkMode = false, className = '' }) => {
 
             <Link to="/community" className={styles.menuLink}>
               <ListItemButton>
-                <ListItemText primary="Community" />
+                <ListItemText primary={t("v3trans.main.nav.community")} />
                 <ExpandMore className={styles.turnLeft} />
               </ListItemButton>
             </Link>
@@ -273,7 +273,9 @@ const Header = ({ darkMode = false, className = '' }) => {
             variant="fullwidth"
             sx={{ position: "absolute", bottom: "78px", width: "100%" }}
           />
-          <button className={styles.startBtn}>Get Started</button>
+          <button className={styles.startBtn}>
+            {t("v3trans.main.nav.getstarted")}
+          </button>
         </nav>
       </div>
     </header>
@@ -289,7 +291,7 @@ const Header = ({ darkMode = false, className = '' }) => {
           <ul className={`${styles.flexstart} ${styles.menu}`}>
             <li>
               <Link to="/docs" className={styles.menuLink}>
-                Docs
+                {t("v3trans.main.nav.docs")}
               </Link>
             </li>
             <li>
@@ -298,7 +300,7 @@ const Header = ({ darkMode = false, className = '' }) => {
                 className={styles.menuLink}
                 onClick={openTutorial}
               >
-                Tutorials
+                {t("v3trans.main.nav.tutorials")}
               </button>
             </li>
             <li>
@@ -307,17 +309,17 @@ const Header = ({ darkMode = false, className = '' }) => {
                 className={styles.menuLink}
                 onClick={openTool}
               >
-                Tools
+                {t("v3trans.main.nav.tools")}
               </button>
             </li>
             <li>
               <Link to="/blog" className={styles.menuLink}>
-                Blog
+                {t("v3trans.main.nav.blog")}
               </Link>
             </li>
             <li>
               <a className={styles.menuLink} href="#">
-                Community
+                {t("v3trans.main.nav.community")}
               </a>
             </li>
           </ul>
@@ -387,7 +389,9 @@ const Header = ({ darkMode = false, className = '' }) => {
 
       <div className={styles.flexend}>
         {actionBar}
-        <button className={styles.startBtn}>Get Started</button>
+        <button className={styles.startBtn}>
+          {t("v3trans.main.nav.getstarted")}
+        </button>
       </div>
     </header>
   );

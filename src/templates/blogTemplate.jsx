@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { navigate } from "gatsby";
+import { graphql } from "gatsby";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./blogTemplate.module.less";
 // import Seo from '../components/seo';
 // import Footer from '../components/footer/v2';
@@ -12,7 +13,6 @@ import Share from "../components/share";
 export default function Template({ data, pageContext }) {
   const {
     blogList,
-    locale,
     newHtml,
     author,
     date,
@@ -23,6 +23,12 @@ export default function Template({ data, pageContext }) {
     desc,
     cover,
   } = pageContext;
+
+  const { language, t, navigate } = useI18next();
+
+  console.log("language", language);
+
+  console.log("t", t);
 
   const html = useMemo(() => newHtml.replace(/<h1.*<\/h1>/, ""));
   const shareUrl = useMemo(() => `https://www.milvus.io/blog/${id}`);
@@ -42,11 +48,10 @@ export default function Template({ data, pageContext }) {
   //   : {};
 
   const handleTagClick = (tag) => {
-    const path = `/blog?page=1#${tag}`;
-    navigate(locale === "en" ? path : `/cn/${path}`);
+    navigate(`/blog?page=1#${tag}`);
   };
   return (
-    <Layout>
+    <Layout t={t}>
       <div
         className={styles.blogImg}
         style={{ backgroundImage: `url("https://${cover}")` }}
@@ -57,11 +62,13 @@ export default function Template({ data, pageContext }) {
           {author && <span>by {author}</span>}
         </p>
         <h1 className={styles.title}>{title}</h1>
+
         <Tags
           list={tags}
           tagsClass={`${styles.tags} col-8`}
           onClick={handleTagClick}
         />
+
         <section className={`${styles.desc} col-8`}>
           <span className={styles.line}></span>
           <span>{desc}</span>
@@ -99,7 +106,7 @@ export default function Template({ data, pageContext }) {
             return (
               <li key={index}>
                 <BlogCard
-                  locale={locale}
+                  locale={language}
                   title={title}
                   date={date}
                   cover={`https://${cover}`}
@@ -115,3 +122,17 @@ export default function Template({ data, pageContext }) {
     </Layout>
   );
 }
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          data
+          language
+          ns
+        }
+      }
+    }
+  }
+`;
