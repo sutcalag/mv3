@@ -90,15 +90,16 @@ const Footer = ({ darkMode = true, t }) => {
       >
         <div className={styles.flexstart}>
           {footerJson.map((f) => (
-            <div className={`${styles.footerItem} col-2`}>
+            <div key={f.title} className={`${styles.footerItem} col-2`}>
               <span className={styles.itemTitle}>
                 {t(`v3trans.main.nav.${f.title}`)}
               </span>
 
-              {f.children.map((c) => {
+              {f.children.map((c, index) => {
                 if (c.to.startsWith("http")) {
                   return (
                     <a
+                      key={`${index}-c.name`}
                       className={styles.itemEntry}
                       href={c.to}
                       target="_blank"
@@ -109,7 +110,11 @@ const Footer = ({ darkMode = true, t }) => {
                   );
                 }
                 return (
-                  <Link className={styles.itemEntry} to={c.to}>
+                  <Link
+                    key={`${index}-c.name`}
+                    className={styles.itemEntry}
+                    to={c.to}
+                  >
                     {c.trans ? t(`v3trans.main.nav.${c.name}`) : c.name}
                   </Link>
                 );
@@ -122,6 +127,7 @@ const Footer = ({ darkMode = true, t }) => {
           <div className={styles.social}>
             {socialJson.map((s) => (
               <a
+                key={s.link}
                 href={s.link}
                 className={styles.link}
                 target="_blank"

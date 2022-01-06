@@ -1,54 +1,78 @@
-import * as React from "react"
-import { Link } from "gatsby"
+import React from 'react';
+import { graphql } from 'gatsby';
+import {
+  Link,
+  Trans,
+  useI18next,
+  I18nextContext,
+} from "gatsby-plugin-react-i18next";
 
-// styles
-const pageStyles = {
-  color: "#232129",
-  padding: "96px",
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+// import Seo from '../components/seo';
+import notFound from '../images/404/404.svg';
+import notFound_mobile from '../images/404/404-mobile.svg';
+import bird from '../images/404/bird.svg';
+import bird_mobile from '../images/404/bird-mobile.svg';
+import './404.less';
 
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
+import Layout from '../components/layout/index';
+import { useWindowSize } from "../http/hooks";
+// import { useMobileScreen } from '../hooks';
 
-// markup
 const NotFoundPage = () => {
-  return (
-    <main style={pageStyles}>
-      <title>Not found</title>
-      <h1 style={headingStyles}>Page not found</h1>
-      <p style={paragraphStyles}>
-        Sorry{" "}
-        <span role="img" aria-label="Pensive emoji">
-          😔
-        </span>{" "}
-        we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === "development" ? (
-          <>
-            <br />
-            Try creating a page in <code style={codeStyles}>src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link to="/">Go home</Link>.
-      </p>
-    </main>
-  )
-}
+  const { t } = useI18next();
+  const currentSize = useWindowSize();
+  const isMobile = ["phone", "tablet"].includes(currentSize);
 
-export default NotFoundPage
+  return (
+    <Layout t={t}>
+      {/* <Seo title="404: Not found" /> */}
+      <div className="notfound-container">
+        <div className="notfount-center-wrapper">
+          <img src={isMobile ? notFound_mobile : notFound} alt="not found" />
+          <div className="notfound-titlebar">
+            <h1 className="notfound-title">{t('v3trans.404.title')}</h1>
+            <img
+              className="notfound-icon"
+              src={isMobile ? bird_mobile : bird}
+              alt="milvus icon"
+            />
+          </div>
+
+          <p className="notfound-content">
+            {t('v3trans.404.desc1')}
+          </p>
+          <p className="notfound-content">
+            {t('v3trans.404.desc2')}
+          </p>
+          <Link
+            to={'/'}
+            className="notfound-button"
+            children={
+              <>
+                <FontAwesomeIcon icon={faChevronLeft} />
+                <span>{t('v3trans.404.gobtn')}</span>
+              </>
+            }
+          />
+        </div>
+      </div>
+    </Layout>
+  );
+};
+export default NotFoundPage;
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          data
+          language
+          ns
+        }
+      }
+    }
+  }
+`;
