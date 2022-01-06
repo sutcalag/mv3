@@ -60,7 +60,7 @@ const DemoPage = () => {
   });
 
   const currentSize = useWindowSize();
-  const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
+  const isMobile = ["phone", "tablet"].includes(currentSize);
 
   const handleSubmitEmail = async () => {
     const regx =
@@ -194,7 +194,7 @@ const DemoPage = () => {
 
                 <p>Dive into the source code.</p>
                 <a
-                  className={styles.mediaLink}
+                  className='customButton outlinedBtn'
                   href="https://bit.ly/3Ct2dKo"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -210,7 +210,7 @@ const DemoPage = () => {
 
                 <p>Dive into the source code.</p>
                 <a
-                  className={styles.mediaLink}
+                  className='customButton outlinedBtn'
                   href="https://bit.ly/3H7KOuu"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -237,7 +237,7 @@ const DemoPage = () => {
                 placeholder="What’s your email?"
                 ref={inputRef}
               />
-              <button className={styles.button} onClick={handleSubmitEmail}>
+              <button className={`customButton containedBtn ${styles.subscribeBtn}`} onClick={handleSubmitEmail}>
                 Subscribe
               </button>
             </div>

@@ -10,7 +10,8 @@ import { search } from '../../http/imageSearch';
 import DemoImg from '../../images/demos/demo.jpg';
 import UploaderHeader from '../../components/demoComponents/uploader';
 import * as styles from './demo.module.less';
-import { Link } from "gatsby-plugin-react-i18next";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import { graphql } from "gatsby";
 import Modal from '../../components/demoComponents/modal';
 import 'gestalt/dist/gestalt.css';
 import FloatBord from '../../components/demoComponents/floatBord';
@@ -21,6 +22,21 @@ const TITLE =
   'Milvus Reverse Image Search - Open-Source Vector Similarity Application Dem';
 const DESC =
   'With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.';
+
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          data
+          language
+          ns
+        }
+      }
+    }
+  }
+`;
 
 const ImageSearchPage = ({ pageContext }) => {
   const [imgs, setImgs] = useState([]);
@@ -36,7 +52,7 @@ const ImageSearchPage = ({ pageContext }) => {
   const [isShowCode, setIsShowCode] = useState(false);
   const [noData, setNoData] = useState(false);
   const currentSize = useWindowSize();
-  const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
+  const isMobile = ["phone", "tablet"].includes(currentSize);
   const [modalConfig, setModalConfig] = useState({
     open: false,
     handleCloseModal: () => { },
@@ -46,7 +62,7 @@ const ImageSearchPage = ({ pageContext }) => {
   const scrollContainer = useRef(null);
 
   const { locale } = pageContext;
-
+  const { t } = useI18next();
   const formatImgData = async (list, setFunc) => {
     const results = list.map(item => {
       const distance = item[1] ? item[1].toFixed(6) : 0;
@@ -163,7 +179,7 @@ const ImageSearchPage = ({ pageContext }) => {
   }, []);
   return (
     <>
-      <Header locale={locale} darkMode={true} className={styles.demoHeader} />
+      <Header t={t} darkMode={true} className={styles.demoHeader} />
       <Seo title={TITLE} lang={locale} description={DESC} />
       <main className={styles.root} ref={scrollContainer}>
         <div className={styles.searchPageContainer}>

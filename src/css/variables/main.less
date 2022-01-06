@@ -24,11 +24,14 @@ a {
   line-height: 18px;
   border: 0;
 
-  @media @phone, @tablet, @desktop1024 {
+  @media @phone,
+  @tablet,
+  @desktop1024 {
     height: 38px;
     padding: 10px 20px;
     font-size: 14px;
   }
+
   .hover;
 }
 
@@ -89,4 +92,60 @@ a {
 .spaceBetween {
   display: flex;
   justify-content: space-between;
+}
+
+.customButton {
+  line-height: 18px;
+  padding: 10px 20px;
+  border-radius: 19px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+
+  &.containedBtn {
+    background-color: @color-primary;
+    color: #fff;
+
+    &:hover {
+      background-color: @color-text;
+    }
+
+    &:disabled {
+      background-color: #8AC9E5;
+    }
+  }
+
+  &.textBtn {
+    background-color: transparent;
+    color: #000;
+
+    &:hover {
+      background-color: @color-primary;
+      color: #fff;
+    }
+
+    &:disabled {
+      background-color: #8AC9E5;
+      color: #fff;
+    }
+  }
+
+  &.outlinedBtn {
+    background-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000;
+    color: #000;
+
+    &:hover {
+      color: @color-primary;
+      border-color: @color-primary;
+    }
+
+    &:disabled {
+      color: #8AC9E5;
+      border-color: #8AC9E5;
+    }
+  }
 }
