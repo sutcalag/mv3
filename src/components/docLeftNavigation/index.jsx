@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./leftNav.module.less";
 import "./leftNav.less";
-// import { AlgoliaSearch } from '../search/algolia';
+import { AlgoliaSearch } from "../search/agloia";
 import clsx from "clsx";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -29,6 +29,7 @@ const LeftNav = (props) => {
     mdId = "home",
     isMobile = false,
     language,
+    version,
   } = props;
 
   const [treeItems, setTreeItems] = useState([]);
@@ -122,18 +123,22 @@ const LeftNav = (props) => {
       >
         <MenuIcon />
       </IconButton>
+
       <Drawer
         // anchor={anchor}
         open={openDrawer}
         onClose={() => {
           setOpenDrawer(false);
         }}
+        className={styles.drawer}
       >
+        <AlgoliaSearch locale={locale} version={version} />
         {generateContent()}
       </Drawer>
     </>
   ) : (
     <aside className={clsx(className, "left-nav", styles.aside)}>
+      <AlgoliaSearch locale={locale} version={version} />
       {generateContent()}
     </aside>
   );
