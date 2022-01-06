@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
-import LeftNav from "../components/docLeftNavigation";
+import LeftNav from "../components/leftNavigation";
 import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
 import clsx from "clsx";
@@ -110,7 +110,7 @@ export default function Template({ data, pageContext }) {
     ) || [];
 
   return (
-    <Layout t={t} >
+    <Layout t={t}>
       <div className={clsx("doc-temp-container", { [`is-mobile`]: isMobile })}>
         <LeftNav
           homeUrl={leftNavHomeUrl}

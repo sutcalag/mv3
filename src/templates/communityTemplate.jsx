@@ -1,12 +1,27 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import Typography from "@mui/material/Typography";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import "./communityTemplate.less";
-import LeftNav from "../components/docLeftNavigation";
+import LeftNav from "../components/leftNavigation";
 import TocTreeView from "../components/treeView/TocTreeView";
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          data
+          language
+          ns
+        }
+      }
+    }
+  }
+`;
 
 export default function Template({ data, pageContext }) {
   const {
@@ -35,7 +50,7 @@ export default function Template({ data, pageContext }) {
   return (
     <Layout t={t}>
       <div
-        className={clsx("community-container", {
+        className={clsx("doc-temp-container", {
           [`is-desktop1024`]: desktop1024,
           [`is-mobile`]: isMobile,
           [`is-phone`]: isPhone,
@@ -43,8 +58,6 @@ export default function Template({ data, pageContext }) {
         })}
       >
         <LeftNav
-          // homeUrl={`/community`}
-          // homeLabel={t("v3trans.docs.homeTitle")}
           menus={leftNavMenus}
           apiMenus={[]}
           pageType="community"
@@ -57,14 +70,14 @@ export default function Template({ data, pageContext }) {
           trans={t}
         />
         <div
-          className={clsx("community-content-container", {
+          className={clsx("doc-content-container", {
             docHome: isHomePage,
             [`is-mobile`]: isMobile,
           })}
         >
           <div
             className={clsx({
-              [`community-home-html-Wrapper`]: isHomePage,
+              [`community-home-html-wrapper`]: isHomePage,
               [`doc-post-content`]: !isHomePage,
             })}
             dangerouslySetInnerHTML={{ __html: html }}

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
-import LeftNav from "../components/docLeftNavigation";
+import LeftNav from "../components/leftNavigation";
 import HorizontalBlogCard from "../components/card/HorizontalBlogCard";
 import { graphql } from "gatsby";
 import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
+import "./commonDocTemplate.less";
 import Typography from "@mui/material/Typography";
 import { useGithubCommits } from "../http/hooks";
 import RelatedQuestion from "../components/relatedQuestion";
