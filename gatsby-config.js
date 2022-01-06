@@ -147,6 +147,7 @@ let gatsbyConfigs = {
             options: {
               maxWidth: 1000,
               quality: 100,
+              backgroundColor: "transparent",
             },
           },
           {
@@ -232,17 +233,16 @@ let gatsbyConfigs = {
             excludeLanguages: ["cn"],
             // languages: ["en", "cn"],
           },
-          // {
-          //   matchPath: "/:lang?/docs",
-          //   getLanguageFromPath: true,
-          //   excludeLanguages: ["cn"],
-          //   // languages: ["en", "cn"],
-          // },
           {
             matchPath: "/:lang?/api-reference/(.*)",
             getLanguageFromPath: true,
             excludeLanguages: ["cn"],
             // languages: ["en", "cn"],
+          },
+          {
+            matchPath: "/:lang?/community(.*)",
+            getLanguageFromPath: true,
+            excludeLanguages: ["cn"],
           },
         ],
       },

@@ -207,7 +207,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
   // templates
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
-  const communityTemplate = path.resolve(`src/templates/community.jsx`);
+  const communityTemplate = path.resolve(`src/templates/communityTemplate.jsx`);
   const bootcampTemplate = path.resolve(`src/templates/bootcamp.jsx`);
   const blogTemplate = path.resolve("src/templates/blogTemplate.jsx");
   const blogListTemplate = path.resolve("src/templates/blogListTemplate.jsx");
@@ -237,16 +237,16 @@ exports.createPages = async ({ actions, graphql }) => {
 
     // initGlobalSearch(legalMd, newestVersion, __dirname);
 
-    // generateCommunityPages(createPage, {
-    //   nodes: communityMd,
-    //   template: communityTemplate,
-    //   menu: communityMenu,
-    // });
-    // generateCommunityHome(createPage, {
-    //   nodes: communityHome,
-    //   template: communityTemplate,
-    //   menu: communityMenu,
-    // });
+    generateCommunityPages(createPage, {
+      nodes: communityMd,
+      template: communityTemplate,
+      menu: communityMenu,
+    });
+    generateCommunityHome(createPage, {
+      nodes: communityHome,
+      template: communityTemplate,
+      menu: communityMenu,
+    });
 
     // generateBootcampPages(createPage, {
     //   nodes: bootcampMd,
