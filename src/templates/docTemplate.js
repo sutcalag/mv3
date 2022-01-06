@@ -130,7 +130,7 @@ export default function Template({ data, pageContext }) {
         />
         <div
           className={clsx("doc-content-container", {
-            docHome: homeData,
+            [`doc-home`]: homeData,
             [`is-mobile`]: isMobile,
           })}
         >

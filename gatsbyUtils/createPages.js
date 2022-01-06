@@ -1015,15 +1015,7 @@ const generateDocHomeWidthMd = (
           : `${homePath}/${originPath}`;
       return [start, formatPath, end].join('"');
     });
-    let doc = HTMLParser.parse(newHtml);
-    const title = doc.querySelector("h1#Welcome-to-Milvus-Docs");
-    const titleHtml = title?.outerHTML;
-    const subTitle = doc.querySelector("h1#Welcome-to-Milvus-Docs + p");
-    const subTitleHtml = subTitle?.outerHTML;
-    subTitle?.remove();
-    title?.replaceWith(`<div class="banner">${titleHtml}${subTitleHtml}</div>`);
-    // return newHtml;
-    return doc.outerHTML;
+    return newHtml;
   };
 
   homeMd.forEach(({ language, html, path, version }) => {
