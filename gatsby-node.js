@@ -271,11 +271,11 @@ exports.createPages = async ({ actions, graphql }) => {
       newestVersion,
       versionsWithHome,
     });
-    // generateBlogArticlePage(createPage, {
-    //   nodes: blogMD,
-    //   template: blogTemplate,
-    //   listTemplate: blogListTemplate,
-    // });
+    generateBlogArticlePage(createPage, {
+      nodes: blogMD,
+      template: blogTemplate,
+      listTemplate: blogListTemplate,
+    });
 
     generateDocHomeWidthMd(createPage, {
       nodes: homeMd,

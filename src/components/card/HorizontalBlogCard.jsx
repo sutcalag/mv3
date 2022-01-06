@@ -17,7 +17,7 @@ export default function HorizontalBlogCard(props) {
     setImgLoading(false);
   };
   return (
-    <Link to={`/${id}`}>
+    <Link to={`/blog/${id}`}>
       <Card classes={{ root: styles.root }}>
         <CardMedia
           component="img"

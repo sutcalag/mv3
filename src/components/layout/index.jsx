@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import Header from "../header";
+import Footer from "../footer";
 import * as styles from "./index.module.less";
 
-const Layout = ({ darkMode, children }) => {
+const Layout = ({ darkMode, children, t }) => {
   return (
     <>
-      <Header darkMode={darkMode} />
+      <Header darkMode={darkMode} t={t} />
       {children}
-      {/* <Footer footer={footer} locale={locale} className={styles.footer} /> */}
+      <Footer t={t} />
     </>
   );
 };

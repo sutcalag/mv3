@@ -232,6 +232,12 @@ let gatsbyConfigs = {
             excludeLanguages: ["cn"],
             // languages: ["en", "cn"],
           },
+          {
+            matchPath: "/:lang?/blog(.*)",
+            getLanguageFromPath: true,
+            excludeLanguages: ["cn"],
+            // languages: ["en", "cn"],
+          },
           // {
           //   matchPath: "/:lang?/docs",
           //   getLanguageFromPath: true,

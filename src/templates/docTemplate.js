@@ -104,7 +104,7 @@ export default function Template({ data, pageContext }) {
   };
 
   return (
-    <Layout>
+    <Layout t={t}>
       <div
         className={clsx("doc-temp-container", {
           [`is-desktop1024`]: desktop1024,
