@@ -33,7 +33,7 @@ export default function Template({ data, pageContext }) {
     menuList?.find((menu) => menu.lang === locale)?.menuList || [];
 
   return (
-    <Layout>
+    <Layout t={t}>
       <div
         className={clsx("community-container", {
           [`is-desktop1024`]: desktop1024,
