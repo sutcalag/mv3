@@ -9,6 +9,7 @@ import "./communityTemplate.less";
 import "./commonDocTemplate.less";
 import LeftNav from "../components/leftNavigation";
 import TocTreeView from "../components/treeView/TocTreeView";
+import Aside from "../components/aside";
 
 export const query = graphql`
   query ($language: String!) {
@@ -85,7 +86,13 @@ export default function Template({ data, pageContext }) {
           />
         </div>
         {!isPhone && !!headings?.length && (
-          <TocTreeView
+          <Aside
+            locale={locale}
+            // version={version}
+            editPath={editPath}
+            mdTitle={headings[0]}
+            category="doc"
+            isHome={isHomePage}
             items={headings}
             title={t("v3trans.docs.tocTitle")}
             className="doc-toc-container"
