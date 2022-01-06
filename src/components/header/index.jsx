@@ -30,7 +30,7 @@ const Header = ({ darkMode = false, t, className = '' }) => {
 
   useEffect(() => {
     if (!darkMode) {
-      return;
+      return; ``;
     }
     const onScroll = (e) => {
       setIsLightHeader(e.target.documentElement.scrollTop > 100);
