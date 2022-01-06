@@ -92,8 +92,9 @@
     "released": "yes"
   },
   {
-    "pymilvus": "v2.0.0rc8",
-    "node": "v1.0.19",
+    "pymilvus": "v2.0.0rc9",
+    "java": "v2.0.0",
+    "node": "v1.0.20",
     "version": "v2.0.0",
     "released": "yes"
   },
