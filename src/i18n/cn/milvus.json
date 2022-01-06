@@ -692,7 +692,15 @@
       "yourQuestionInvalid": "请输入正确的问题。",
       "cancel": "取消",
       "submit": "提交",
-      "tocTitle": "本页目录"
+      "tocTitle": "本页目录",
+      "btnGroup": {
+        "editBtn": "编辑",
+        "issueBtn": "提交 issue",
+        "bugBtn": "提交 bug",
+        "suggestBtn": "内容建议",
+        "joinBtn": "加入 Slack",
+        "discussBtn": "在 GitHub 讨论"
+      }
     },
     "main": {
       "nav": {
@@ -705,8 +713,17 @@
         "demo": "示例",
         "video": "视频",
         "getstarted": "开始",
-        "about": "关于"
+        "about": "关于",
+        "getinvolved": "开始参与",
+        "repo": "项目地址",
+        "forum": "论坛"
       }
+    },
+    "404": {
+      "title":"噢。。好像哪里出错了！",
+      "desc1":"看起来我们走的有点远！",
+      "desc2":"找不到回家的路了:(",
+      "gobtn":"回到首页"
     }
   }
 }

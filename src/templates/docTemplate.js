@@ -14,6 +14,8 @@ import ScoredFeedback from "../components/scoredFeedback";
 import TocTreeView from "../components/treeView/TocTreeView";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
+import Aside from "../components/aside";
+import Seo from "../components/seo";
 
 export const query = graphql`
   query ($language: String!) {
@@ -104,8 +106,39 @@ export default function Template({ data, pageContext }) {
     message: "Update overview.md",
   };
 
+  const docsearchMeta = useMemo(() => {
+    if (
+      typeof window === "undefined" ||
+      !window.location.pathname.includes(version)
+    ) {
+      return [];
+    }
+    return [
+      {
+        name: "docsearch:language",
+        content: locale === "cn" ? "zh-cn" : locale,
+      },
+      {
+        name: "docsearch:version",
+        content: version || "",
+      },
+    ];
+  }, [locale, version]);
+
+  const title =
+    mdHtml === null
+      ? `Milvus documentation`
+      : `${headings[0] && headings[0].value}`;
+
   return (
     <Layout t={t}>
+      <Seo
+        title={title}
+        lang={locale}
+        version={version}
+        meta={docsearchMeta}
+        description={summary}
+      />
       <div
         className={clsx("doc-temp-container", {
           [`is-desktop1024`]: desktop1024,
@@ -127,6 +160,7 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           language={language}
           trans={t}
+          version={version}
         />
         <div
           className={clsx("doc-content-container", {
@@ -151,8 +185,14 @@ export default function Template({ data, pageContext }) {
             />
           )}
         </div>
-        {!isPhone && !!headings?.length && (
-          <TocTreeView
+        {!isPhone && (
+          <Aside
+            locale={locale}
+            version={version}
+            editPath={editPath}
+            mdTitle={headings[0]}
+            category="doc"
+            isHome={!!homeData}
             items={headings}
             title={t("v3trans.docs.tocTitle")}
             className="doc-toc-container"

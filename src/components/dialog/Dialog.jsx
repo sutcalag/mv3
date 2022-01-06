@@ -46,3 +46,19 @@ export const CustomizedDialogs = (props) => {
     </>
   );
 };
+
+export const CustomizedContentDialogs = (props) => {
+  const { open, handleClose, title } = props;
+  return (
+    <>
+      <Dialog onClose={handleClose} open={open} maxWidth="xl">
+        <BootstrapDialogTitle onClose={handleClose}>
+          {title}
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          {props.children}
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+};

@@ -228,27 +228,10 @@ let gatsbyConfigs = {
           //   languages: ["en", "cn"],
           // },
           {
-            matchPath: "/:lang?/docs(.*)",
+            matchPath: "/:lang?/(docs|blog|api-reference|community)(.*)",
             getLanguageFromPath: true,
             excludeLanguages: ["cn"],
             // languages: ["en", "cn"],
-          },
-          {
-            matchPath: "/:lang?/blog(.*)",
-            getLanguageFromPath: true,
-            excludeLanguages: ["cn"],
-            // languages: ["en", "cn"],
-          },
-          {
-            matchPath: "/:lang?/api-reference/(.*)",
-            getLanguageFromPath: true,
-            excludeLanguages: ["cn"],
-            // languages: ["en", "cn"],
-          },
-          {
-            matchPath: "/:lang?/community(.*)",
-            getLanguageFromPath: true,
-            excludeLanguages: ["cn"],
           },
         ],
       },
