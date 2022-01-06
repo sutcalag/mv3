@@ -151,13 +151,13 @@ export default function Template({ data, pageContext }) {
           )}
         </div>
         {!isPhone && (
-          // <TocTreeView
-            // items={headings}
-            // title={t("v3trans.docs.tocTitle")}
-            // className="doc-toc-container"
-          // />
           <Aside 
-            type='doc'
+            locale={locale}
+            version={version}
+            editPath={editPath}
+            mdTitle={headings[0]}
+            category='doc'
+            isHome={!!homeData}
             items={headings}
             title={t("v3trans.docs.tocTitle")}
             className="doc-toc-container"

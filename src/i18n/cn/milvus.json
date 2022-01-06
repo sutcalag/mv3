@@ -693,7 +693,7 @@
       "cancel": "取消",
       "submit": "提交",
       "tocTitle": "本页目录",
-      "issueBtns": {
+      "btnGroup": {
         "editBtn": "编辑",
         "issueBtn": "提交 issue",
         "bugBtn": "提交 bug",

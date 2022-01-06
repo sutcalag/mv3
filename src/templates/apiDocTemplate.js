@@ -7,6 +7,7 @@ import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
+import Aside from '../components/aside'
 
 export const query = graphql`
   query ($language: String!) {
@@ -134,6 +135,13 @@ export default function Template({ data, pageContext }) {
             dangerouslySetInnerHTML={{ __html: doc }}
           ></div>
         </div>
+        {!isMobile && (
+          <Aside 
+            apiReferenceData={apiReferenceData}
+            category='api'
+            isHome={false}
+          />
+        )}
       </div>
     </Layout>
   );

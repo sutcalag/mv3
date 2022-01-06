@@ -34,37 +34,36 @@ const Aside = (props) => {
     items,
     title,
     className = '',
-    locale,
     version,
-    editPath,
-    mdTitle
+    isHome,
+    isShowBtnGroup = 'true'
   } = props;
+  console.log(category);
   const { langugae, t } = useI18next();
-
   // editBtn issueBtn; bugBtn; suggestBtn; joinBtn
-  const [commonEditBtn, issueBtn, bugBtn, suggestBtn, discussBtn, commonJoinBtn] = [
+  const [commonEditBtnConf, issueBtnConf, bugBtnConf, suggestBtnConf, discussBtnConf, commonJoinBtnConf] = [
     {
-      label: t(editBtn.label),
+      label: t("v3trans.docs.btnGroup.editBtn"),
       icon: faPencilAlt,
     },
     {
-      label: t(issueBtn.label),
+      label: t("v3trans.docs.btnGroup.issueBtn"),
       icon: faBug,
     },
     {
-      label: t(bugBtn.label),
+      label: t("v3trans.docs.btnGroup.bugBtn"),
       icon: faBug,
     },
     {
-      label: t(suggestBtn.label),
+      label: t("v3trans.docs.btnGroup.suggestBtn"),
       icon: faLightbulb,
     },
     {
-      label: t(discussBtn.label),
+      label: t("v3trans.docs.btnGroup.discussBtn"),
       icon: faGithub,
     },
     {
-      label: t(joinBtn.label),
+      label: t("v3trans.docs.btnGroup.joinBtn"),
       icon: faHashtag,
     },
 
@@ -74,88 +73,124 @@ const Aside = (props) => {
       const name = editPath.split('/').pop();
       const title = `${version} ${mdTitle} (${name}) Doc Update`;
 
-      return {
-        editBtn: {
-          label: commonEditBtn.label,
+      return [
+        {
+          label: commonEditBtnConf.label,
           link: `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
             }/${editPath}`,
-          icon: commonEditBtn.icon,
+          icon: commonEditBtnConf.icon,
         },
-        issueBtn: {
-          label: issueBtn.label,
+        {
+          label: issueBtnConf.label,
           link: `https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--error-report.yaml&title=${title}`,
-          icon: issueBtn.icon,
+          icon: issueBtnConf.icon,
         },
-        suggestBtn: {
-          label: suggestBtn.label,
+        {
+          label: suggestBtnConf.label,
           link: 'https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--new-content-proposal.yaml&title=New Doc Proposal',
-          icon: suggestBtn.icon,
+          icon: suggestBtnConf.icon,
+        },
+        {
+          label: commonJoinBtnConf.label,
+          link: 'https://slack.milvus.io',
+          icon: commonJoinBtnConf.icon,
         }
-      };
+      ];
     },
     api: ({ apiReferenceData }) => {
       const { projName, relativePath, sourceUrl } = apiReferenceData;
       const title = `${projName},${version},${relativePath}`;
-      return {
-        editBtn: {
-          label: commonEditBtn.label,
+      return [
+        {
+          label: commonEditBtnConf.label,
           link: sourceUrl,
-          icon: commonEditBtn.icon,
+          icon: commonEditBtnConf.icon,
         },
-        discussBtn: {
-          label: discussBtn.label,
+        {
+          label: discussBtnConf.label,
           link: 'https://github.com/milvus-io/milvus/discussions/new',
-          icon: discussBtn.icon,
+          icon: discussBtnConf.icon,
         },
-        bugBtn: {
-          label: bugBtn.label,
+        {
+          label: bugBtnConf.label,
           link: `https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=${title}`,
-          icon: bugBtn.icon,
+          icon: bugBtnConf.icon,
         },
-      };
+        {
+          label: commonJoinBtnConf.label,
+          link: 'https://slack.milvus.io',
+          icon: commonJoinBtnConf.icon,
+        }
+      ];
     },
-    community: ({ locale, editPath, id }) => ({
-      editBtn: {
-        label: commonEditBtn.label,
+    community: ({ locale, editPath, id }) => ([
+      {
+        label: commonEditBtnConf.label,
         link: `https://github.com/milvus-io/web-content/edit/master/community/site/${locale === 'en' ? 'en' : 'zh-CN'
           }/${editPath}`,
-        icon: commonEditBtn.icon,
+        icon: commonEditBtnConf.icon,
       },
-      bugBtn: {
-        label: bugBtn.label,
+      {
+        label: bugBtnConf.label,
         link: 'https://github.com/milvus-io/web-content/discussions/new',
-        icon: bugBtn.icon,
+        icon: bugBtnConf.icon,
       },
-    }),
+      {
+        label: commonJoinBtnConf.label,
+        link: 'https://slack.milvus.io',
+        icon: commonJoinBtnConf.icon,
+      }
+    ]),
   };
 
-  const generateBtnroup = (category, props) => {
-    const btns = btnConfiguration[category](props);
+  const generateBtnroup = (category, props, styles) => {
+
+    const btns = btnConfiguration[category](props) || [];
     return (
       <>
         {
           btns.map(btn => (
-            <a href={btn.link}>
-              <FontAwesomeIcon className={styles.global} icon={btn.icon} />
-              <span>{btn.label}</span>
-            </a>
+            <li key={btn.label}>
+              <a href={btn.link} target="_blank" className={styles.link}>
+                <span className={styles.iconWrapper}>
+                  <FontAwesomeIcon className={styles.global} icon={btn.icon} />
+                </span>
+                <span className={styles.label}>{btn.label}</span>
+              </a>
+            </li>
           ))
         }
       </>
     );
   };
   return (
-    <section className="">
-      <div className=''>
-        {
-          generateBtnroup(category, props)
-        }
-      </div>
-      <TocTreeView
-        items={items}
-        title={title}
-        className={className}
-      />
+    <section className={styles.rightNavWrapper}>
+      {
+        !isHome && (
+          <>
+            {
+              isShowBtnGroup && (
+                <ul className={styles.btnsGroup}>
+                  {
+                    generateBtnroup(category, props, styles)
+                  }
+                </ul>
+              )
+            }
+            {
+              category === 'doc' && (
+                <TocTreeView
+                  items={items}
+                  title={title}
+                  className={className}
+                />
+              )
+            }
+
+          </>
+        )
+      }
+
     </section>
 
   );
