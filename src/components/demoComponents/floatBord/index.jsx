@@ -2,7 +2,8 @@ import React from 'react';
 import * as styles from './index.module.less';
 import github from '../../../images/demos/github.svg';
 import forum from '../../../images/demos/forum.svg';
-import Button from '../../button';
+import Button from '../button';
+import { Forum } from '../item/searchIcon';
 
 const FloatBord = ({ className = '' }) => {
   return (
@@ -33,7 +34,7 @@ const FloatBord = ({ className = '' }) => {
           variant="contained"
           children={
             <div className={styles.content}>
-              <img src={forum} alt="forum" />
+              <Forum />
               <span>Forum</span>
               <i className="fas fa-chevron-right"></i>
             </div>

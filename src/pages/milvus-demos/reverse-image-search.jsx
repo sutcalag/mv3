@@ -10,7 +10,7 @@ import { search } from '../../http/imageSearch';
 import DemoImg from '../../images/demos/demo.jpg';
 import UploaderHeader from '../../components/demoComponents/uploader';
 import * as styles from './demo.module.less';
-import Button from '../../components/button';
+import { Link } from "gatsby-plugin-react-i18next";
 import Modal from '../../components/demoComponents/modal';
 import 'gestalt/dist/gestalt.css';
 import FloatBord from '../../components/demoComponents/floatBord';
@@ -172,17 +172,10 @@ const ImageSearchPage = ({ pageContext }) => {
               }`}
           >
             <div>
-              <Button
-                variant="text"
-                className={styles.backButton}
-                onClick={handleGoBack}
-                children={
-                  <>
-                    <i className="fas fa-chevron-left"></i>
-                    Back to Demo
-                  </>
-                }
-              />
+              <Link to='/milvus-demos' className={styles.backButton}>
+                <i className="fas fa-chevron-left"></i>
+                Back to Demo
+              </Link>
               <UploaderHeader
                 handleImgSearch={handleImgSearch}
                 handleSelectedImg={handleSelectedImg}

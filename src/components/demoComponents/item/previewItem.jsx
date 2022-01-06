@@ -1,6 +1,6 @@
 import React from 'react';
 import { useWindowSize } from '../../../http/hooks';
-import SearchIcon from './searchIcon';
+import { SearchIcon } from './searchIcon';
 import * as styles from './preview.module.less';
 
 const PreviewItem = ({ src, distance, handleSearch }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import LocalizedLink from '../localizedLink/localizedLink';
+import { Link } from "gatsby-plugin-react-i18next";
 import * as styles from './index.module.less';
 
 // type = 'link' || 'button'
@@ -11,7 +11,7 @@ const Button = ({
   className = '',
   children,
   locale = null,
-  onClick = () => {},
+  onClick = () => { },
   disabled = false,
   target = '_self',
 }) => {
@@ -28,20 +28,18 @@ const Button = ({
             {children}
           </a>
         ) : (
-          <LocalizedLink
+          <Link
             to={link}
             className={`${styles[variant]} ${disabled ? styles.disabled : ''}`}
-            locale={locale}
             disabled={disabled}
           >
             {children}
-          </LocalizedLink>
+          </Link>
         )
       ) : (
         <button
-          className={`${styles[variant]} ${styles.button} ${
-            disabled ? styles.disabled : ''
-          } `}
+          className={`${styles[variant]} ${styles.button} ${disabled ? styles.disabled : ''
+            } `}
           onClick={onClick}
           disabled={disabled}
         >
