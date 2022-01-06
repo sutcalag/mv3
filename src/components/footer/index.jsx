@@ -123,7 +123,7 @@ const Footer = ({ darkMode = true, t }) => {
           ))}
         </div>
         <div className={styles.bottombar}>
-          Milvus. 2021 All rights reserved.
+          Milvus. 2022 All rights reserved.
           <div className={styles.social}>
             {socialJson.map((s) => (
               <a

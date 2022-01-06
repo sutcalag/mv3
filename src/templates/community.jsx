@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
-import Layout from '../components/layout';
+import { useI18next } from "gatsby-plugin-react-i18next";
+import Layout from "../components/layout";
 // import Seo from '../components/seo';
 // import Header from '../components/header/v2';
 // import './community.less';
@@ -473,9 +474,24 @@ import Layout from '../components/layout';
 //   }
 // `;
 export default function Template({ data, pageContext }) {
+  const { t } = useI18next();
   return (
-    <Layout>
+    <Layout t={t}>
       <div>test</div>
     </Layout>
   );
 }
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          data
+          language
+          ns
+        }
+      }
+    }
+  }
+`;

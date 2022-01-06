@@ -17,7 +17,7 @@ import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import { useWindowSize } from "../../http/hooks";
 
-const Header = ({ darkMode = false, t, className = '' }) => {
+const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +30,7 @@ const Header = ({ darkMode = false, t, className = '' }) => {
 
   useEffect(() => {
     if (!darkMode) {
-      return; ``;
+      return;
     }
     const onScroll = (e) => {
       setIsLightHeader(e.target.documentElement.scrollTop > 100);
@@ -184,7 +184,10 @@ const Header = ({ darkMode = false, t, className = '' }) => {
                       <Link to="/bootcamp" className={styles.mobileMenuLink}>
                         {t("v3trans.main.nav.bootcamp")}
                       </Link>
-                      <Link to="/demo" className={styles.mobileMenuLink}>
+                      <Link
+                        to="/milvus-demos"
+                        className={styles.mobileMenuLink}
+                      >
                         {t("v3trans.main.nav.demo")}
                       </Link>
                       <a
@@ -283,7 +286,9 @@ const Header = ({ darkMode = false, t, className = '' }) => {
 
   const desktopHead = (
     <header
-      className={`${styles.header} ${isLightHeader ? styles.light : ""} ${className}`}
+      className={`${styles.header} ${
+        isLightHeader ? styles.light : ""
+      } ${className}`}
     >
       <div className={styles.flexstart}>
         {logoSection}
@@ -340,8 +345,12 @@ const Header = ({ darkMode = false, t, className = '' }) => {
               horizontal: "left",
             }}
           >
-            <MenuItem>Bootcamp</MenuItem>
-            <MenuItem>Demo</MenuItem>
+            <MenuItem>{t("v3trans.main.nav.bootcamp")}</MenuItem>
+            <MenuItem>
+              <Link to="/milvus-demos" className={styles.menuLink}>
+                {t("v3trans.main.nav.demo")}
+              </Link>
+            </MenuItem>
             <MenuItem>
               <a
                 href="https://www.youtube.com/zillizchannel"
@@ -349,7 +358,7 @@ const Header = ({ darkMode = false, t, className = '' }) => {
                 rel="noopener noreferrer"
                 className={styles.menuLink}
               >
-                Video
+                {t("v3trans.main.nav.video")}
               </a>
             </MenuItem>
           </Menu>
