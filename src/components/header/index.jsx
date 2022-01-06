@@ -17,7 +17,7 @@ import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import { useWindowSize } from "../../http/hooks";
 
-const Header = ({ darkMode = false, t }) => {
+const Header = ({ darkMode = false, t, className = '' }) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +30,7 @@ const Header = ({ darkMode = false, t }) => {
 
   useEffect(() => {
     if (!darkMode) {
-      return;
+      return; ``;
     }
     const onScroll = (e) => {
       setIsLightHeader(e.target.documentElement.scrollTop > 100);
@@ -134,7 +134,7 @@ const Header = ({ darkMode = false, t }) => {
   );
 
   const mobileHead = (
-    <header className={styles.mobileHead}>
+    <header className={`${styles.mobileHead} ${className}`}>
       <div className={`${styles.spaceBetween} col-4 col-8 col-12`}>
         {logoSection}
         <button
@@ -283,7 +283,7 @@ const Header = ({ darkMode = false, t }) => {
 
   const desktopHead = (
     <header
-      className={`${styles.header} ${isLightHeader ? styles.light : ""} `}
+      className={`${styles.header} ${isLightHeader ? styles.light : ""} ${className}`}
     >
       <div className={styles.flexstart}>
         {logoSection}

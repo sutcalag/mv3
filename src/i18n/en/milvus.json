@@ -722,8 +722,17 @@
         "demo": "demo",
         "video": "video",
         "getstarted": "Get Started",
-        "about": "About"
+        "about": "About",
+        "getinvolved": "Get involved",
+        "repo": "Repo",
+        "forum": "Forum"
       }
+    },
+    "404": {
+      "title":"Uoops...something went wrong!",
+      "desc1":"Looks like you’ve wandered off too far!",
+      "desc2":"We can’t find the page you are looking for:(",
+      "gobtn":"Go to home page"
     }
   }
 }
